@@ -1,7 +1,7 @@
 LIDOC ?= ./bin/lidoc
 GITHUB_REPO ?= rstacruz/lidoc
 
-FILES := README.md lib/*.coffee lib/**/*.coffee
+FILES := README.md Guides.md lib/*.coffee lib/**/*.coffee
 
 docs: $(FILES)
 	$(LIDOC) $^ --output docs
@@ -18,4 +18,4 @@ docs-commit: docs
 docs-deploy: docs
 	git-update-ghpages $(GITHUB_REPO) -i docs --force
 
-.PHONY: docs docs-commit docs-deploy docs-debug
+.PHONY: docs-commit docs-deploy docs-debug
