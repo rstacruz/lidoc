@@ -9,13 +9,16 @@ options
   .usage("<sourcefile ...> [options]")
   .option('-o, --output <path>', 'Write documentation output into this path')
   .option('-j, --json [file]', 'Write JSON info into file (use stdout if no file)')
+  .option('--css <file>', 'Specify custom CSS file')
+  .option('--extra-css <file>', 'Specify extra CSS rules')
+  .option('--html <file>', 'Specify custom HTML file')
   .on('--help', ->
     console.log "At least --output and/or --json must be used."
     console.log ""
     console.log "  Example:"
     console.log ""
     console.log "    $ #{options.name} lib/**/*.js --output docs"
-    console.log "    $ #{options.name} lib/**/*.js --json project.json"
+    console.log "    $ #{options.name} **/*.rb --json project.json"
     console.log ""
   )
 
