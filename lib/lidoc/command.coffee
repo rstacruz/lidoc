@@ -17,7 +17,7 @@ options
   .option('-q, --quiet', 'Suppress messages')
   .option('--css <file>', 'Specify custom CSS file')
   .option('--github <user/repo>', 'Link files to this Github repository')
-  .option('--git-branch <branch>', 'Branch of Git to link to')
+  .option('--git-branch <branch>', 'Branch of Git to link to [master]', 'master')
   .on('--help', ->
     console.log "At least --output and/or --index must be used."
     console.log ""
