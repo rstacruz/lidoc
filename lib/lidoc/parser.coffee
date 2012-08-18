@@ -6,6 +6,83 @@ fs = require 'fs'
 {getLanguage} = require './languages'
 {Struct, slugify, changeExtension} = require './helpers'
 
+# ### parse()
+
+# Parses a project and returns an output like the one below.
+#
+# It takes an options hash with the option `files`.
+#
+#     parse(files: ['a.js','b.js', 'c.js'])
+#
+parse = (options, callback) ->
+  files = options.files
+  i = 0
+  output =
+    pages: {}
+    files: {}
+
+  # Parse each of the given files using `File.create()`.
+  console.warn "Parsing:"
+  files.forEach (fname, i) ->
+
+    #- Reserve the slot so to preserve proper order.
+    id = fname
+    output.files[id] = null
+
+    #- The first file will be the index file.
+    isIndex = i is 0
+
+    File.create fname, isIndex, (file) ->
+      output.files[fname] = file
+      console.warn "  < #{fname}"
+      i += 1
+
+      #- and when it's done...
+      if i is files.length
+        #- Generate a `pages` index...
+        output.pages = Page.createAll(output.files)
+
+        #- and invoke the `callback` function with the final output.
+        callback output
+
+# It then returns something like:
+#
+#     pages: {  /* Pages */
+#       "Helpers": {
+#         title: "Helpers"
+#         file: 'lib/parser.js.html',
+#         headings: [ { /* see 'Heading' */ }, ... ]
+#         pages: { /* see 'Pages' */ }
+#       },
+#       ...
+#     }
+#     files: {
+#       'lib/parser.js.html': { /* File */
+#         htmlFile: 'lib/parser.js.html',
+#         sourceName: 'lib/parser.js.coffee',
+#         sections: [
+#           { /* Section */
+#             codeText: '...',
+#             docsText: '...',
+#             codeHtml: '...',
+#             docsHtml: '...',
+#             headings: [
+#               { /* Heading */
+#                 level: 3,
+#                 title: "Parsing items",
+#                 anchor: "parsing-items",
+#                 htmlFile: "lib/parser.js.html"
+#               },
+#               ...
+#             ]
+#         ]
+#       }
+#     }
+
+# ## Private API
+
+# Okay, the classes and all are mostly private API.
+
 # ## Page
 
 # Extracted from `<h1>`s of files. Looks like this:
@@ -176,81 +253,6 @@ class File extends Struct
       text = (section.codeText for section in @sections)
       pygments.stdin.write text.join language.dividerText # [1]
       pygments.stdin.end()
-
-# ### parse()
-
-# Parses a project and returns an output like the one below.
-#
-# It takes an options hash with the option `files`.
-#
-#     parse(files: ['a.js','b.js', 'c.js'])
-#
-parse = (options, callback) ->
-  files = options.files
-  i = 0
-  output =
-    pages: {}
-    files: {}
-
-  # Parse each of the given files using `File.create()`.
-  console.warn "Parsing:"
-  files.forEach (fname, i) ->
-
-    #- Reserve the slot so to preserve proper order.
-    id = fname
-    output.files[id] = null
-
-    #- The first file will be the index file.
-    isIndex = i is 0
-
-    File.create fname, isIndex, (file) ->
-      output.files[fname] = file
-      console.warn "  < #{fname}"
-      i += 1
-
-      #- and when it's done...
-      if i is files.length
-        #- Generate a `pages` index...
-        output.pages = Page.createAll(output.files)
-
-        #- and invoke the `callback` function with the final output.
-        callback output
-
-# It then returns something like:
-#
-#     pages: {  /* Pages */
-#       "Helpers": {
-#         title: "Helpers"
-#         file: 'lib/parser.js.html',
-#         headings: [ { /* see 'Heading' */ }, ... ]
-#         pages: { /* see 'Pages' */ }
-#       },
-#       ...
-#     }
-#     files: {
-#       'lib/parser.js.html': { /* File */
-#         htmlFile: 'lib/parser.js.html',
-#         sourceName: 'lib/parser.js.coffee',
-#         sections: [
-#           { /* Section */
-#             codeText: '...',
-#             docsText: '...',
-#             codeHtml: '...',
-#             docsHtml: '...',
-#             headings: [
-#               { /* Heading */
-#                 level: 3,
-#                 title: "Parsing items",
-#                 anchor: "parsing-items",
-#                 htmlFile: "lib/parser.js.html"
-#               },
-#               ...
-#             ]
-#         ]
-#       }
-#     }
-#
-# ## Private API
 
 # ### parseCode()
 
