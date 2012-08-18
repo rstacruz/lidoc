@@ -1,0 +1,99 @@
+<!DOCTYPE html>  <html> <head>   <title>Lidoc</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="style.css" /> </head> <body>   <div id="area">     <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="Todo">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#Todo">&#182;</a>               </div>               <h1>Lidoc</h1>
+
+<p>Literate programming documentation generator.</p>
+
+<p>Lidoc takes any code project and generates documentation from its comments.</p>
+
+<p>Lidoc is code-agnostic; it doesn't care about your code at all, just the
+comments.  As a result, it supports Python, PHP, Ruby, CoffeeScript, JavaScript,
+and just about anything that supports comments.</p>
+
+<p>Heavily inspired by <a href="https://github.com/jashkenas/docco">jashkenas/docco</a>, which
+this project actually takes code from.</p>
+
+<h2>Usage</h2>
+
+<p>Build documentation like so:</p>
+
+<pre><code>$ lidoc **/*.js --output docs
+</code></pre>
+
+<p>Or you can view the documentation index as a JSON file like so:</p>
+
+<pre><code>$ lidoc **/*.js --index
+</code></pre>
+
+<h2>The lidoc standard</h2>
+
+<p>The lidoc standard is extremely simple and doesn't prescribe any way for you to
+define methods or arguments or anything.</p>
+
+<p>It is aimed to be primarily human-readable; machine-parsability is of a lesser
+concern.</p>
+
+<p>This documentation assumes CoffeeScript for examples. However, the standard can
+apply to any code language that can support comments.</p>
+
+<h4>Add Markdown comments to your project files in single-line comments.</h4>
+
+<p>You can use all supported Markdown on comments. These comments will be the
+documentation.</p>
+
+<p>These should be done with single-line comments. In JavaScript/C/PHP, this is
+<code>//</code>, in Python/CoffeeScript/Ruby/etc, it's <code>#</code>.</p>
+
+<h4>Any H1 block signifies a page.</h4>
+
+<p>Any first H1 encounted in a file will be counted as a 'page'. Any content under
+it, until a new H1 is found, or until the end of file is reached, is counted as
+content of that page.</p>
+
+<p>This is done by the markdown instruction <code>#</code>.</p>
+
+<pre><code># # Parser
+
+# This is the parser.
+# It gets a bunch of things and outputs a bunch of stuff.
+
+class Parser
+
+  # ### parse()
+
+  # Performs parsing on the given string.
+
+  parse: (string) -&gt;
+</code></pre>
+
+<h4>Each file can have up to one H1 heading maximum.</h4>
+
+<p>Yeah. Totally.</p>
+
+<p>Any subsequent H1s found in the file will not be treated as a page.</p>
+
+<h4>Use H2 and H3 headings for sections.</h4>
+
+<p>H3's are recommended for methods.</p>
+
+<pre><code># ### getDiscountedPrice()
+
+# Applies merchant-specific discounts to the product and
+# returns the discounted price as a number.
+#
+#     product.setPrice(20.00);
+#     merchant.setDiscount(0.10);
+#
+#     product.getDiscountedPrice();
+#     //=&gt; 18.00
+#
+getDiscountedPrice: -&gt;
+  @price * (1.00 - @merchant.discount)
+</code></pre>
+
+<h2>Todo</h2>
+
+<ul>
+<li>Page tree</li>
+<li>Linking of <code>{Foo}</code> references</li>
+<li>Sorting of pages</li>
+<li>JS searching</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                </tbody>     </table>   </div>    <div id="sidebar">     <div class='header search'>       <input type='text' name='search' id='search-box' placeholder='Search...' />     </div>      <div class='header tabs'>       <button class='active'>Pages</button>       <button>Files</button>     </div>      <div class='list files hidden'>     </div>      <div class='list pages'>       <ul>                                          <li class='page'>             <a href='README.html'>Lidoc</a>             <ul>                                                                  <li class='heading level-2'>                   <a href="README.html#Usage">                     Usage                   </a>                 </li>                                                                  <li class='heading level-2'>                   <a href="README.html#The-lidoc-standard">                     The lidoc standard                   </a>                 </li>                                                                  <li class='heading level-2'>                   <a href="README.html#Todo">                     Todo                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc.html'>Lidoc</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc.html#build">                     build()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc.html#parse">                     parse()                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc/builder.html'>Lidoc.Builder</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/builder.html#build">                     build()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/builder.html#writeAssets">                     writeAssets()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/builder.html#writeFiles">                     writeFiles()                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc/command.html'>Lidoc.Command</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/command.html#Command-line-parser">                     Command line parser                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc/helpers.html'>Lidoc.Helpers</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/helpers.html#getResource">                     getResource()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/helpers.html#template">                     template()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/helpers.html#slugify">                     slugify()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/helpers.html#changeExtension">                     changeExtension()                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc/languages.html'>Lidoc.Languages</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/languages.html#languages">                     languages                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/languages.html#getLanguage">                     getLanguage()                   </a>                 </li>                            </ul>           </li>                                          <li class='page'>             <a href='lib/lidoc/parser.html'>Lidoc.Parser</a>             <ul>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#parse">                     parse()                   </a>                 </li>                                                                  <li class='heading level-2'>                   <a href="lib/lidoc/parser.html#Private-API">                     Private API                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#parseCode">                     parseCode()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#Highlight-block-markup">                     Highlight block markup                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#highlight">                     highlight()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#addHeadings">                     addHeadings()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#parseFile">                     parseFile()                   </a>                 </li>                                                                  <li class='heading level-3'>                   <a href="lib/lidoc/parser.html#getPages">                     getPages()                   </a>                 </li>                            </ul>           </li>                </ul>     </div>    </div>    <script src='http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.6/prefixfree.min.js'></script> </body> </html> 
