@@ -7,7 +7,7 @@ GITHUB_REPO ?= rstacruz/lidoc
 FILES := \
 	README.md \
 	TODO.md \
-	Guides.md \
+	manual/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
 	test/*.js \
