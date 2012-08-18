@@ -66,7 +66,7 @@ class File extends Objekt
       sourceFile: source
       headings: []
 
-    highlight file.sourceFile, file.sections, ->
+    file.highlight ->
       #- Inject headings into each section.
       addHeadings file.sections, file.htmlFile
 
@@ -79,6 +79,67 @@ class File extends Objekt
 
       #- Invoke the callback.
       callback file
+
+  # ### File#highlight()
+
+  # Gets `sections` given by parse(), and adds to HTML fields to it `docsHtml`
+  # and `codeHtml`.
+  #
+  #     {
+  #       docsText: ...
+  #       docsHtml: ...
+  #       codeText: ...
+  #       codeHtml: ...
+  #     }
+  #
+  # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
+  # and runs the text of its corresponding comment through **Markdown**, using
+  # [Showdown.js](http://attacklab.net/showdown/).
+  #
+  # We process the entire file in a single call to Pygments *[1]* by inserting
+  # little marker comments between each section *[1]* and then splitting the
+  # result string wherever our markers occur *[2]*.
+
+  highlight: (callback) ->
+    #* The start and end of each Pygments highlight block.
+    highlightStart = '<div class="highlight"><pre>'
+    highlightEnd   = '</pre></div>'
+
+    showdown = require('../../vendor/showdown').Showdown
+    {spawn} = require 'child_process'
+
+    language = getLanguage @sourceFile
+    pygments = spawn 'pygmentize', [
+      '-l', language.name,
+      '-f', 'html',
+      '-O', 'encoding=utf-8,tabsize=2'
+    ]
+    output   = ''
+
+    pygments.stderr.on 'data',  (error)  ->
+      console.error error.toString() if error
+
+    pygments.stdin.on 'error',  (error)  ->
+      console.error 'Could not use Pygments to highlight the source.'
+      process.exit 1
+
+    pygments.stdout.on 'data', (result) ->
+      output += result if result
+
+    pygments.on 'exit', =>
+      output = output.replace(highlightStart, '').replace(highlightEnd, '')
+      fragments = output.split language.dividerHtml # [2]
+      for section, i in @sections
+        section.codeHtml = highlightStart + fragments[i] + highlightEnd
+        section.docsHtml = showdown.makeHtml section.docsText
+
+      callback @sections
+
+    if pygments.stdin.writable
+      text = (section.codeText for section in @sections)
+      pygments.stdin.write text.join language.dividerText # [1]
+      pygments.stdin.end()
+
 
 # ### parse()
 
@@ -191,67 +252,6 @@ parseCode = (source, code) ->
 
 # ### Highlight block markup
 
-#* The start of each Pygments highlight block.
-highlightStart = '<div class="highlight"><pre>'
-
-#* The end of each Pygments highlight block.
-highlightEnd   = '</pre></div>'
-
-# ### highlight()
-
-# Gets `sections` given by parse(), and adds to HTML fields to it `docsHtml`
-# and `codeHtml`.
-#
-#     {
-#       docsText: ...
-#       docsHtml: ...
-#       codeText: ...
-#       codeHtml: ...
-#     }
-#
-# Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
-# and runs the text of its corresponding comment through **Markdown**, using
-# [Showdown.js](http://attacklab.net/showdown/).
-#
-# We process the entire file in a single call to Pygments *[1]* by inserting
-# little marker comments between each section *[1]* and then splitting the
-# result string wherever our markers occur *[2]*.
-
-highlight = (source, sections, callback) ->
-  showdown = require('../../vendor/showdown').Showdown
-  {spawn} = require 'child_process'
-
-  language = getLanguage source
-  pygments = spawn 'pygmentize', [
-    '-l', language.name,
-    '-f', 'html',
-    '-O', 'encoding=utf-8,tabsize=2'
-  ]
-  output   = ''
-
-  pygments.stderr.on 'data',  (error)  ->
-    console.error error.toString() if error
-
-  pygments.stdin.on 'error',  (error)  ->
-    console.error 'Could not use Pygments to highlight the source.'
-    process.exit 1
-
-  pygments.stdout.on 'data', (result) ->
-    output += result if result
-
-  pygments.on 'exit', ->
-    output = output.replace(highlightStart, '').replace(highlightEnd, '')
-    fragments = output.split language.dividerHtml # [2]
-    for section, i in sections
-      section.codeHtml = highlightStart + fragments[i] + highlightEnd
-      section.docsHtml = showdown.makeHtml section.docsText
-
-    callback sections
-
-  if pygments.stdin.writable
-    text = (section.codeText for section in sections)
-    pygments.stdin.write text.join language.dividerText # [1]
-    pygments.stdin.end()
 
 # ### addHeadings()
 
