@@ -381,3 +381,23 @@ body #sidebar {
   font-size: 0.8em;
   padding-left: 20px;
 }
+
+/* ============================================================================
+ * File header */
+
+.file-header {
+  background: #fafafa;
+  border-bottom: solid 1px #eee;
+
+  height: 35px;
+  line-height: 35px;
+
+  font-family: sans-serif;
+  color: #9090a0;
+  font-weight: bold;
+  font-size: 9pt;
+
+  text-align: right;
+
+  padding: 0 20px;
+}
