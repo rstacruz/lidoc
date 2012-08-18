@@ -1,10 +1,60 @@
+# # Lidoc
+# yes.
+
 fs = require 'fs'
 {getLanguage} = require './lidoc/languages'
 {slugify, changeExtension} = require './lidoc/helpers'
+
+# ### build()
+
+# Bulids a project. See {Builder.build}.
+#
 {build} = require './lidoc/builder'
 
-# # Lidoc
-# yes.
+# ### parse()
+
+# Parses a project and returns an output like the one below.
+#
+# It takes an options hash with the option `files`.
+#
+#     parse files: ['...']
+#
+#     pages: [
+#       {
+#         title: "Helpers"
+#         file: 'lib/parser.js.html',
+#         headings: [ ... ]
+#       },
+#       ...
+#     }
+#     files: {
+#       'lib/parser.js.html': {
+#         htmlName: 'lib/parser.js.html',
+#         sourceName: 'lib/parser.js.coffee',
+#         sections: [ ... ]
+#       }
+#     }
+#
+parse = (options, callback) ->
+  files = options.files
+
+  output =
+    pages: {}
+    files: {}
+
+  i = 0
+
+  files.forEach (fname) ->
+    parseFile fname, (file) ->
+      output.files[file.htmlFile] = file
+      i += 1
+
+      # We're done collecting outputs
+      if i is files.length
+        # Collect pages
+        output.pages = getPages(output.files)
+
+        callback output
 
 # ### parseCode()
 
@@ -172,51 +222,6 @@ parseFile = (source, callback) ->
       mainHeading: mainHeading
       headings: headings
       sections: sections
-
-# ### parse()
-
-# Parses a project and returns an output like the one below.
-#
-# It takes an options hash with the option `files`.
-#
-#     parse files: ['...']
-#
-#     pages: [
-#       {
-#         title: "Helpers"
-#         file: 'lib/parser.js.html',
-#         headings: [ ... ]
-#       },
-#       ...
-#     }
-#     files: {
-#       'lib/parser.js.html': {
-#         htmlName: 'lib/parser.js.html',
-#         sourceName: 'lib/parser.js.coffee',
-#         sections: [ ... ]
-#       }
-#     }
-#
-parse = (options, callback) ->
-  files = options.files
-
-  output =
-    pages: {}
-    files: {}
-
-  i = 0
-
-  files.forEach (fname) ->
-    parseFile fname, (file) ->
-      output.files[file.htmlFile] = file
-      i += 1
-
-      # We're done collecting outputs
-      if i is files.length
-        # Collect pages
-        output.pages = getPages(output.files)
-
-        callback output
 
 # ### getPages()
 

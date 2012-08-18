@@ -9,7 +9,8 @@ options
   .option('-o, --output <path>', 'Write documentation output into this path')
   .option('--debug', 'Print info in stdout')
   .option('--json <file>', 'Write JSON info into file')
-  .parse(process.argv)
+
+options.parse(process.argv)
 
 options.files = options.args
 

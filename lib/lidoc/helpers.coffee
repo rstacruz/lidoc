@@ -1,8 +1,8 @@
-fs = require 'fs'
-path = require 'path'
-
 # # Helpers
 # Hello.
+
+fs = require 'fs'
+path = require 'path'
 
 # ### getResource()
 
