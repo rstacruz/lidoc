@@ -45,12 +45,12 @@ writeAssets = (project, options) ->
 getFileDepth = (filepath) ->
   path = require 'path'
   m = filepath.match(new RegExp(path.sep, 'g'))
-  if m then m.length else 0
+  if m? then m.length else 0
 
 strRepeat = (str, count) ->
   return ""  if count <= 0
   output = ""
-  for i in [0..count]
+  for i in [1..count]
     output += str
   output
 
@@ -72,9 +72,9 @@ writeFiles = (project, options) ->
       title: file.mainHeading?.title
       sections: file.sections
       #- Prefix for For relative paths.
-      root: strRepeat('../', depth-1)
+      root: strRepeat('../', depth)
       #- URL path to CSS file.
-      css: strRepeat('../', depth-1) + 'style.css'
+      css: strRepeat('../', depth) + 'style.css'
       file: file
       project: project
       depth: depth

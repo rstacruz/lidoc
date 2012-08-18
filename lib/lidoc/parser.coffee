@@ -24,8 +24,13 @@ parse = (options, callback) ->
   # Parse each of the given files using `parseFile`.
   console.warn "Parsing:"
   files.forEach (fname) ->
+
+    #- Reserve the slot so to preserve proper order.
+    id = fname
+    output.files[id] = null
+
     parseFile fname, (file) ->
-      output.files[file.htmlFile] = file
+      output.files[fname] = file
       console.warn "  < #{fname}"
       i += 1
 
@@ -263,7 +268,13 @@ getPages = (files) ->
     current = null
     file.headings.forEach (heading) ->
       if heading.level is 1
-        current = heading.title
+        current = "#{heading.title}"
+
+        #- If there is already a page with the same title, append the filename
+        #  in there.
+        if pages[current]
+          current = "#{heading.title} (#{fname})"
+
         pages[current] =
           title: heading.title
           file: fname
