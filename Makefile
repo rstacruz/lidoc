@@ -25,4 +25,4 @@ docs-deploy: docs
 test:
 	$(VOWS) test/**.coffee --spec
 
-.PHONY: docs-commit docs-deploy docs-debug test
+.PHONY: docs docs-commit docs-deploy docs-debug test

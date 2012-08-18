@@ -103,6 +103,9 @@ writeFiles = (project, options) ->
       root: strRepeat('../', depth)
       #- URL path to CSS file.
       css: strRepeat('../', depth) + 'style.css'
+      current:
+        file: file
+        page: {}
       file: file
       project: project
       depth: depth

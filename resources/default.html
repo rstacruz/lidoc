@@ -9,10 +9,10 @@
 <body>
   <div id="area">
     <div class='file-header'>
-      <%= file.sourceFile %>
+      <%= current.file.sourceFile %>
     </div>
 
-    <table cellpadding="0" cellspacing="0" class="extension-<%= file.extension %>">
+    <table cellpadding="0" cellspacing="0" class="extension-<%= current.file.extension %>">
       <thead>
         <tr>
           <th class="docs">
@@ -81,8 +81,9 @@
         <ul>
         <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
           <% var file = project.files[i]; %>
+          <% var isActive = (current.file.htmlFile === file.htmlFile) ? 'active' : ''; %>
           <li class='file'>
-            <a href='<%= root + file.htmlFile %>#_files'>
+            <a href='<%= root + file.htmlFile %>#f' class='<%= isActive %>'>
               <%= file.sourceFile %>
             </a>
           </li>

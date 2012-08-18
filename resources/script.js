@@ -14,7 +14,7 @@
   });
 
   $(function() {
-    if (window.location.hash === '#_files') {
+    if (window.location.hash === '#f') {
       openSidebarTab('files');
     }
   });
