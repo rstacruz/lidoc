@@ -1,6 +1,22 @@
 {
   "name": "lidoc",
+  "description": "Literate-programming-style documentation generator",
   "version": "0.0.1",
+  "keywords": ["documentation", "language", "docs", "generator", "coffeescript"],
+  "directories": {
+    "lib": "./lib"
+  },
+  "main": "./lib/lidoc",
+  "bin": {
+    "lidoc": "./bin/lidoc"
+  },
+  "homepage": {
+    "http://ricostacruz.com/lidoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rstacruz/lidoc.git"
+  },
   "dependencies": {
     "coffee-script": "1.3.3",
     "commander": ">= 1.0.1 < 1.1.0",
