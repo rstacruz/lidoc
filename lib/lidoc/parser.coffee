@@ -18,25 +18,24 @@ path = require 'path'
 #
 parse = (options, callback) ->
   files = options.files
-  i = 0
   output = new Project
+  i = 0
 
   # Parse each of the given files using `File.create()`.
   console.warn "Parsing:"
-  files.forEach (fname, i) ->
+  files.forEach (fname, ii) ->
 
     #- Reserve the slot so to preserve proper order.
-    id = fname
-    output.files[id] = null
+    output.files[fname] = null
 
     #- The first file will be the index file.
-    isIndex = i is 0
+    isIndex = ii is 0
 
     #- Parse and highlight the file...
     File.create fname, isIndex, (file) ->
-      output.files[fname] = file
-      console.warn "  < #{fname}"
       i += 1
+      output.files[file.sourceFile] = file
+      console.warn "  < (#{i}/#{files.length}) #{file.sourceFile}"
 
       #- and when it's done...
       if i is files.length
