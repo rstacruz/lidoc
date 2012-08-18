@@ -8,7 +8,8 @@ fs = require 'fs'
 
 # ### parse()
 
-# Parses a project and returns an output like the one below.
+# Parses a project and returns a big JSON output of everything about it (see
+# later below for example).
 #
 # It takes an options hash with the option `files`.
 #
@@ -32,6 +33,7 @@ parse = (options, callback) ->
     #- The first file will be the index file.
     isIndex = i is 0
 
+    #- Parse and highlight the file...
     File.create fname, isIndex, (file) ->
       output.files[fname] = file
       console.warn "  < #{fname}"
@@ -47,27 +49,27 @@ parse = (options, callback) ->
 
 # It then returns something like:
 #
-#     pages: {  /* Pages */
-#       "Helpers": {
+#     pages: {  /*Pages*/
+#       "Helpers": { /*Page*/
 #         title: "Helpers"
 #         file: 'lib/parser.js.html',
-#         headings: [ { /* see 'Heading' */ }, ... ]
-#         pages: { /* see 'Pages' */ }
+#         headings: [ { /*Heading*/ }, ... ]
+#         pages: { /*Pages*/ }
 #       },
 #       ...
 #     }
 #     files: {
-#       'lib/parser.js.html': { /* File */
+#       'lib/parser.js.html': { /*File*/
 #         htmlFile: 'lib/parser.js.html',
 #         sourceName: 'lib/parser.js.coffee',
 #         sections: [
-#           { /* Section */
+#           { /*Section*/
 #             codeText: '...',
 #             docsText: '...',
 #             codeHtml: '...',
 #             docsHtml: '...',
 #             headings: [
-#               { /* Heading */
+#               { /*Heading*/
 #                 level: 3,
 #                 title: "Parsing items",
 #                 anchor: "parsing-items",
@@ -94,8 +96,11 @@ parse = (options, callback) ->
 #     }
 #
 class Page extends Struct
-  title: null
-  htmlFile: null
+  constructor: ->
+    @title    = null
+    @htmlFile = null
+    @headings = []
+    super
 
   # ### Page.createAll()
 
@@ -143,10 +148,12 @@ class Page extends Struct
 #     }
 #
 class Heading extends Struct
-  level: null
-  title: null
-  anchor: null
-  htmlFile: null
+  constructor: ->
+    @level    = null
+    @title    = null
+    @anchor   = null
+    @htmlFile = null
+    super
 
 # ## File
 
@@ -160,6 +167,8 @@ class Heading extends Struct
 #       headings: [ Heading, ... ]
 #     }
 #
+# ### Instanciating
+#
 # It's built with `File.create`:
 #
 #     File.create 'lib/parser.js.coffee', false, (file) ->
@@ -167,11 +176,12 @@ class Heading extends Struct
 #       # `file` is a File object
 #
 class File extends Struct
-  htmlFile: null
-  sourceName: null
-  sections: []
-  headings: []
-
+  constructor: ->
+    @htmlFile   = null
+    @sourceName = null
+    @sections   = []
+    @headings   = []
+    super
 
   # ### File.create()
 
