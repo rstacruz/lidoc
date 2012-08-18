@@ -10,7 +10,7 @@ options
   .option('-o, --output <path>', 'Write documentation output into this path')
   .option('-j, --json [file]', 'Write JSON info into file (use stdout if no file)')
   .on('--help', ->
-    console.log "At least one --output and/or --json must be used."
+    console.log "At least --output and/or --json must be used."
     console.log ""
     console.log "  Example:"
     console.log ""
