@@ -24,7 +24,10 @@
       <tbody>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
           <% var section = sections[i]; %>
-          <tr id="<%= section.anchor %>">
+          <% var klass = ''; %>
+          <% if (section.headings.length > 0) { klass += 'heading'; } %>
+
+          <tr id="<%= section.anchor %>" class="<%= klass %>">
             <td class="docs">
               <div class="pilwrap">
                 <a class="pilcrow" href="#<%= section.anchor %>">&#182;</a>
