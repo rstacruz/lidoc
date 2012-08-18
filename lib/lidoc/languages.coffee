@@ -11,15 +11,16 @@ languages = JSON.parse getResource 'languages.json'
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
 
-  #- Does the line begin with a comment?
-  if l.symbol is ""
-    l.commentMatcher = ///^///
-  else
-    l.commentMatcher = ///^\s*#{l.symbol}\s?///
-
   #- Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   #  and interpolations...
   l.commentFilter = /(^#![/]|^\s*#\{)/
+
+  #- Does the line begin with a comment?
+  if l.symbol is ""
+    l.commentMatcher = ///^///
+    l.commentFilter = /^$/
+  else
+    l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
   #- The dividing token we feed into Pygments, to delimit the boundaries between
   #  sections.

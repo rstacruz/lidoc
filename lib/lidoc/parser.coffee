@@ -266,7 +266,10 @@ File::highlight = (callback) ->
     output = output.replace(highlightStart, '').replace(highlightEnd, '')
     fragments = output.split language.dividerHtml # [2]
     for section, i in @sections
-      section.codeHtml = highlightStart + fragments[i] + highlightEnd
+      section.codeHtml = if fragments[i]
+        highlightStart + fragments[i] + highlightEnd
+      else
+        ""
       section.docsHtml = showdown.makeHtml section.docsText
 
     callback @sections
