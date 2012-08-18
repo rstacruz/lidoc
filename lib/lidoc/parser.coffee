@@ -3,6 +3,7 @@
 # Handles parsing of documents and outputs them into a general-purpose JSON.
 
 fs = require 'fs'
+path = require 'path'
 {getLanguage} = require './languages'
 {Struct, slugify, changeExtension} = require './helpers'
 
@@ -161,6 +162,7 @@ class File extends Struct
   constructor: ->
     @htmlFile   = null
     @sourceName = null
+    @extension  = null
     @sections   = []
     @headings   = []
     super
@@ -205,6 +207,7 @@ File.create = (source, isIndex=false, callback) ->
     htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
     sections: parseCode(source, code)
     sourceFile: source
+    extension: path.extname(source).substr(1)
     headings: []
 
   file.highlight ->

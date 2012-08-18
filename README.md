@@ -40,8 +40,10 @@ apply to any code language that can support comments.
 You can use all supported Markdown on comments. These comments will be the
 documentation.
 
-These should be done with single-line comments. In JavaScript/C/PHP, this is
-`//`, in Python/CoffeeScript/Ruby/etc, it's `#`.
+These should be done with single-line comments.
+
+ * This is `//` in JavaScript, C, PHP, and others.
+ * This is `#` in Python, CoffeeScript, Ruby, and so on.
 
 #### Any H1 block signifies a page.
 
@@ -63,12 +65,6 @@ This is done by the markdown instruction `#`.
       # Performs parsing on the given string.
 
       parse: (string) ->
-
-#### Each file can have up to one H1 heading maximum.
-
-Yeah. Totally.
-
-Any subsequent H1s found in the file will not be treated as a page.
 
 #### Use H2 and H3 headings for sections.
 

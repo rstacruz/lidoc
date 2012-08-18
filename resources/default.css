@@ -160,6 +160,19 @@ body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
 
+/* Different extensions */
+table.extension-md td.code,
+table.extension-md th.code {
+  background: transparent;
+  border-left: 0;
+}
+
+table.extension-md td.docs,
+table.extension-md th.docs {
+  min-width: 650px;
+  max-width: 650px;
+}
+
 /* Misc */
 .hidden {
   display: none;
