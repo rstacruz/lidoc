@@ -19,9 +19,9 @@ Build documentation like so:
 
     $ lidoc **/*.js --output docs
 
-Or
+Or you can view the documentation index as a JSON file like so:
 
-    $ lidoc **/*.js --debug
+    $ lidoc **/*.js --index
 
 The lidoc standard
 ------------------
