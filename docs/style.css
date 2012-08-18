@@ -413,3 +413,19 @@ body #sidebar {
 
   padding: 0 20px;
 }
+
+/* Scroll */
+.list::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+.list::-webkit-scrollbar-thumb {
+  background: #eee;
+  border-radius: 8px;
+  border: solid 4px #fafafa;
+  box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.07);
+}
+.list:hover::-webkit-scrollbar-thumb {
+  background: #999;
+  box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2);
+}

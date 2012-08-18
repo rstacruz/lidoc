@@ -86,15 +86,18 @@ H3's are recommended for methods.
 Todo
 ----
 
- * Show file path in page
- * Make Markdown pages look better
  * Link to Github?
  * Custom HTML
- * Page tree
+ * Page hierarchy
  * JS searching
  * JS pages/files switch
- * Highlighting of `<pre>`
+ * Syntax highlighting of `<pre>`
  * Linking of `{Foo}` references
+
+Done
+
+ * Show file path in page
+ * Make Markdown pages look better
 
 Acknowledgements
 ----------------
