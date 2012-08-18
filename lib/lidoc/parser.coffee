@@ -13,9 +13,20 @@ class Objekt
     for key, value of source
       @[key] = value
 
+# ## Page
+
+# Extracted from `<h1>`s of files. Looks like this:
+#
+#     {
+#       title: "Helpers",
+#       htmlFile: "lib/helpers.html",
+#       headings: [ Heading, Heading, ... ]
+#     }
+#
 class Page extends Objekt
   title: null
   htmlFile: null
+
 
   # ### Page.createAll()
 
@@ -51,15 +62,25 @@ class Page extends Objekt
 
     pages
 
+# ## Heading
 
+# A h1, h2 or h3 heading. Looks like:
+#
+#     {
+#       level: 2,
+#       title: "parse()',
+#       anchor: "parse",
+#       htmlFile: "lib/parser.html"
+#     }
+#
 class Heading extends Objekt
   level: null
   title: null
   anchor: null
   htmlFile: null
 
-# ### File
-#
+# ## File
+
 # Represents a source file and it's generated HTML file. Stores code/docs in
 # `sections`. Looks like this:
 #
@@ -75,6 +96,7 @@ class File extends Objekt
   sourceName: null
   sections: []
   headings: []
+
 
   # ### File.create()
 
