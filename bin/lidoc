@@ -6,13 +6,16 @@ fs = require 'fs'
 options = require 'commander'
 options
   .version('0.0.1')
+  .usage("<sourcefile ...> [options]")
   .option('-o, --output <path>', 'Write documentation output into this path')
-  .option('--debug', 'Print info in stdout')
-  .option('--json <file>', 'Write JSON info into file')
+  .option('-j, --json [file]', 'Write JSON info into file (use stdout if no file)')
   .on('--help', ->
+    console.log "At least one --output and/or --json must be used."
+    console.log ""
     console.log "  Example:"
     console.log ""
     console.log "    $ #{options.name} lib/**/*.js --output docs"
+    console.log "    $ #{options.name} lib/**/*.js --json project.json"
     console.log ""
   )
 
@@ -25,7 +28,7 @@ if options.files.length is 0
   console.warn "See `#{options.name} --help` for more information."
   process.exit 1
 
-if !options.debug and !options.json and !options.output
+if !options.json and !options.output
   console.warn "Nothing to do. Try using --output to write to a directory:"
   console.warn ""
   console.warn "    #{options.name} **/*.js --output docs"
@@ -34,12 +37,12 @@ if !options.debug and !options.json and !options.output
   process.exit 15
 
 Lidoc.parse options, (output) ->
-  if options.debug
-    console.log JSON.stringify(output, null, 2)
-
   if options.json
     out = JSON.stringify(output, null, 2)
-    fs.writeFileSync(options.json, out)
+    if options.json is true
+      console.log out
+    else
+      fs.writeFileSync(options.json, out)
 
   if options.output
     Lidoc.build(output, options)
