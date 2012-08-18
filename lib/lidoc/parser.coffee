@@ -17,6 +17,41 @@ class Page extends Objekt
   title: null
   htmlFile: null
 
+  # ### Page.createAll()
+
+  # Collects the `<h1>` headings in the given files and returns a list of them.
+  #
+  # `files` a key/value object of many `File` instances.
+  #
+  # Returns an key/value object of `Page` instances, with keys being the Page
+  # titles.
+  #
+  @createAll: (files) ->
+    pages = {}
+    for fname, file of files
+
+      current = null
+      file.headings.forEach (heading) ->
+        if heading.level is 1
+          current = "#{heading.title}"
+
+          #- If there is already a page with the same title, append the filename
+          #  in there.
+          if pages[current]
+            current = "#{heading.title} (#{fname})"
+
+          pages[current] = new Page
+            title: heading.title
+            htmlFile: fname
+            headings: []
+
+        else
+          if pages[current]?
+            pages[current].headings.push heading
+
+    pages
+
+
 class Heading extends Objekt
   level: null
   title: null
@@ -140,7 +175,6 @@ class File extends Objekt
       pygments.stdin.write text.join language.dividerText # [1]
       pygments.stdin.end()
 
-
 # ### parse()
 
 # Parses a project and returns an output like the one below.
@@ -175,7 +209,7 @@ parse = (options, callback) ->
       #- and when it's done...
       if i is files.length
         #- Generate a `pages` index...
-        output.pages = getPages(output.files)
+        output.pages = Page.createAll(output.files)
 
         #- and invoke the `callback` function with the final output.
         callback output
@@ -250,9 +284,6 @@ parseCode = (source, code) ->
   save docsText, codeText
   sections
 
-# ### Highlight block markup
-
-
 # ### addHeadings()
 
 # Takes a `sections` array of **section** objects and adds *heading* and
@@ -291,36 +322,5 @@ addHeadings = (sections, htmlFile) ->
       section.anchor = "section-#{i}"
 
   sections
-
-# ### getPages()
-
-# Collects the `<h1>` headings in the given files and returns them as an array.
-#
-# `files` is a hash, equivalent to parse's `files`.
-#
-getPages = (files) ->
-  pages = {}
-  for fname, file of files
-
-    current = null
-    file.headings.forEach (heading) ->
-      if heading.level is 1
-        current = "#{heading.title}"
-
-        #- If there is already a page with the same title, append the filename
-        #  in there.
-        if pages[current]
-          current = "#{heading.title} (#{fname})"
-
-        pages[current] = new Page
-          title: heading.title
-          htmlFile: fname
-          headings: []
-
-      else
-        if pages[current]?
-          pages[current].headings.push heading
-
-  pages
 
 module.exports = {parse}
