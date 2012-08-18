@@ -58,7 +58,7 @@ parse = (options, callback) ->
 #     }
 #     files: {
 #       'lib/parser.js.html': { /* File */
-#         htmlName: 'lib/parser.js.html',
+#         htmlFile: 'lib/parser.js.html',
 #         sourceName: 'lib/parser.js.coffee',
 #         sections: [
 #           { /* Section */
@@ -70,7 +70,8 @@ parse = (options, callback) ->
 #               { /* Heading */
 #                 level: 3,
 #                 title: "Parsing items",
-#                 anchor: "parsing-items"
+#                 anchor: "parsing-items",
+#                 htmlFile: "lib/parser.js.html"
 #               },
 #               ...
 #             ]
@@ -195,7 +196,7 @@ highlight = (source, sections, callback) ->
 #       ]
 #     }
 #
-addHeadings = (sections) ->
+addHeadings = (sections, htmlFile) ->
   sections.forEach (section, i) ->
     section.headings = []
 
@@ -210,6 +211,7 @@ addHeadings = (sections) ->
             level: level
             title: mm[2]
             anchor: slugify(mm[2])
+            htmlFile: htmlFile
 
     else
       section.anchor = "section-#{i}"
@@ -236,8 +238,13 @@ parseFile = (source, isIndex=false, callback) ->
   sections = parseCode(source, code)
   highlight source, sections, ->
 
+    htmlFile = if isIndex
+      "index.html"
+    else
+      changeExtension(source, '.html')
+
     #- Inject headings.
-    addHeadings sections
+    addHeadings sections, htmlFile
 
     #- Collect sub headings into `headings`.
     #  Also keep the first `<h1>` and place it onto `mainHeading`.
@@ -249,11 +256,6 @@ parseFile = (source, isIndex=false, callback) ->
           mainHeading = heading
 
         headings.push heading
-
-    htmlFile = if isIndex
-      "index.html"
-    else
-      changeExtension(source, '.html')
 
     #- Invoke the callback.
     callback

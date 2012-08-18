@@ -91,8 +91,11 @@ H3's are recommended for methods.
 Todo
 ----
 
+ * Show file path in page
+ * Link to Github?
+ * Custom HTML
  * Page tree
- * Linking of `{Foo}` references
  * JS searching
  * JS pages/files switch
  * Highlighting of `<pre>`
+ * Linking of `{Foo}` references
