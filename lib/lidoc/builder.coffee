@@ -69,13 +69,13 @@ writeFiles = (project, options) ->
     output = tpl
       title: file.mainHeading?.title
       sections: file.sections
-
-      root: strRepeat('../', depth-1)  # For relative paths
-
+      #- Prefix for For relative paths.
+      root: strRepeat('../', depth-1)
+      #- URL path to CSS file.
+      css: strRepeat('../', depth-1) + 'style.css'
       file: file
       project: project
       depth: depth
-      css: strRepeat('../', depth-1) + 'style.css'
 
     mkdirp path.dirname(outFile)
     console.log "  > #{outFile}"
