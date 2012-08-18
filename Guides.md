@@ -52,7 +52,6 @@ In fact, you may want to integrate this into your Makefile.
     # Makefile
     NOBODY := "Nobody <nobody@localhost>"
     
-    # This invokes `docs` before doing committing to the repo.
     docs-commit: docs
       git add docs
       git commit -m "Update documentation." --author "$(NOBODY)"
@@ -61,3 +60,5 @@ This way, you can just type:
 
     $ make docs-commit
 
+This builds your documentation (because `docs-commit` depends on `docs`) then
+commits it under a different author.
