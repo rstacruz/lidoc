@@ -1,4 +1,6 @@
 LIDOC ?= ./bin/lidoc
+VOWS ?= ./node_modules/vows/bin/vows
+
 GITHUB_REPO ?= rstacruz/lidoc
 
 FILES := README.md Guides.md lib/*.coffee lib/**/*.coffee
@@ -19,4 +21,7 @@ docs-commit: docs
 docs-deploy: docs
 	git-update-ghpages $(GITHUB_REPO) -i docs --force
 
-.PHONY: docs-commit docs-deploy docs-debug
+test:
+	$(VOWS) test/**.coffee --spec
+
+.PHONY: docs-commit docs-deploy docs-debug test
