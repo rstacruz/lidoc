@@ -12,8 +12,12 @@
 
 # See {Builder.build()} and {Parser.parse()} for more info.
 
-{parse} = require './lidoc/parser'
+fs = require 'fs'
+path = require 'path'
+
+pkg = JSON.parse fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8')
 
 module.exports =
   build: require('./lidoc/builder').build
   parse: require('./lidoc/parser').parse
+  version: pkg.version

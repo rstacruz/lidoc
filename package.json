@@ -22,7 +22,7 @@
     "stylus": ">= 0.29.0 < 0.30.0",
     "nib": ">= 0.7.1 < 0.8.0"
   },
-  "devDependencies" {
+  "devDependencies": {
     "vows": ">= 0.6.3 < 0.7.0"
   },
   "scripts": {
