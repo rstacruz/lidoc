@@ -48,13 +48,14 @@ writeCSS = (project, options) ->
   console.warn "Writing assets:"
 
   #- Fetch the default CSS file.
-  css = getResource('default.css')
-  outFile = path.join(options.output, 'style.css')
-
-  #- Inject extra CSS needed
-  #  (TODO)
+  css = if options.css?
+    fs.readFileSync(options.css, 'utf-8')
+  else
+    getResource('default.css')
 
   #- Render and write it
+  outFile = path.join(options.output, 'style.css')
+
   compileCSS css, (data) ->
     fs.writeFileSync(outFile, data)
     console.warn "  > #{outFile}"

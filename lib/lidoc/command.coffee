@@ -14,8 +14,7 @@ options
   .usage("<sourcefile ...> [options]")
   .option('-o, --output <path>', 'Write documentation output into this path')
   .option('-i, --index [file]', 'Write index into file (use stdout if no file)')
-  # .option('--css <file>', 'Specify custom CSS file')
-  # .option('--extra-css <file>', 'Specify extra CSS rules')
+  .option('--css <file>', 'Specify custom CSS file')
   # .option('--html <file>', 'Specify custom HTML file')
   .on('--help', ->
     console.log "At least --output and/or --index must be used."
