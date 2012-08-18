@@ -46,10 +46,7 @@
       <button>Files</button>
     </div>
 
-    <div class='list files hidden'>
-    </div>
-
-    <div class='list pages'>
+    <div class='list pages hidden'>
       <ul>
         <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
           <% var page = project.pages[i]; %>
@@ -71,6 +68,20 @@
         <% } } %>
       </ul>
     </div>
+
+    <div class='list files'>
+      <ul>
+      <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
+        <% var file = project.files[i]; %>
+        <li class='file'>
+          <a href='<%= root + file.htmlFile %>'>
+            <%= file.sourceFile %>
+          </a>
+        </li>
+      <% } } %>
+      </ul>
+    </div>
+
 
   </div>
 

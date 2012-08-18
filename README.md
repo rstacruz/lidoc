@@ -92,6 +92,7 @@ Todo
 ----
 
  * Show file path in page
+ * Make Markdown pages look better
  * Link to Github?
  * Custom HTML
  * Page tree
