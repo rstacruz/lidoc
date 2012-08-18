@@ -4,14 +4,7 @@
 
 fs = require 'fs'
 {getLanguage} = require './languages'
-{slugify, changeExtension} = require './helpers'
-
-# TODO: Put those functions in here to make everything more OOP-like.
-# These are supposed to be JSON-able, by the way
-class Objekt
-  constructor: (source) ->
-    for key, value of source
-      @[key] = value
+{Struct, slugify, changeExtension} = require './helpers'
 
 # ## Page
 
@@ -23,10 +16,9 @@ class Objekt
 #       headings: [ Heading, Heading, ... ]
 #     }
 #
-class Page extends Objekt
+class Page extends Struct
   title: null
   htmlFile: null
-
 
   # ### Page.createAll()
 
@@ -73,7 +65,7 @@ class Page extends Objekt
 #       htmlFile: "lib/parser.html"
 #     }
 #
-class Heading extends Objekt
+class Heading extends Struct
   level: null
   title: null
   anchor: null
@@ -91,7 +83,13 @@ class Heading extends Objekt
 #       headings: [ Heading, ... ]
 #     }
 #
-class File extends Objekt
+# It's built with `File.create`:
+#
+#     File.create 'lib/parser.js.coffee', false, (file) ->
+#       console.log file
+#       # `file` is a File object
+#
+class File extends Struct
   htmlFile: null
   sourceName: null
   sections: []
@@ -101,16 +99,7 @@ class File extends Objekt
   # ### File.create()
 
   # Parses a given filename `source`.
-  # When it's done, invokes `callback` with the completed sections.
-  #
-  # Callback is invoked with a file object that look like:
-  #
-  #     {
-  #       htmlFile: 'parser.html',
-  #       sourceFile: 'parser.js',
-  #       sections: /* see addHeadings() */
-  #       headings: []
-  #     }
+  # When it's done, invokes `callback` with a new `File` instance.
   #
   @create: (source, isIndex=false, callback) ->
     # Parse the code into blocks using `parseCode`, then:
@@ -139,15 +128,7 @@ class File extends Objekt
 
   # ### File#highlight()
 
-  # Gets `sections` given by parse(), and adds to HTML fields to it `docsHtml`
-  # and `codeHtml`.
-  #
-  #     {
-  #       docsText: ...
-  #       docsHtml: ...
-  #       codeText: ...
-  #       codeHtml: ...
-  #     }
+  # Adds to HTML fields to it `docsHtml` and `codeHtml` to all sections.
   #
   # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
   # and runs the text of its corresponding comment through **Markdown**, using

@@ -52,4 +52,13 @@ slugify = (str, space='-') ->
 changeExtension = (filename, ext) ->
   filename.replace(/(\.[^\.]+)?$/, ext)
 
-module.exports = {getResource, template, slugify, changeExtension}
+# ### Struct
+
+# Structure.
+#
+class Struct
+  constructor: (source) ->
+    for key, value of source
+      @[key] = value
+
+module.exports = {getResource, template, slugify, changeExtension, Struct}
