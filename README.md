@@ -86,6 +86,8 @@ H3's are recommended for methods.
 Todo
 ----
 
+ * 'Files' tab should stay even when clicked
+ * 'Files' should be a tree
  * Link to Github?
  * Custom HTML
  * Page hierarchy

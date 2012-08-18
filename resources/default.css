@@ -56,11 +56,17 @@ table td {
       padding-left: 15px;
       color: #8080a7;
     }
-    .docs p tt, .docs p code {
+    .docs tt, .docs code {
       background: #f8f8ff;
       border: 1px solid #dedede;
       font-size: 12px;
       padding: 0 0.2em;
+    }
+    .docs pre code {
+      background: transparent;
+      border: 0;
+      font-size: 1em;
+      padding: 0;
     }
     .pilwrap {
       position: relative;
