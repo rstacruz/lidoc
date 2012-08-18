@@ -107,21 +107,25 @@ highlight = (source, sections, callback) ->
 #       docsHtml: ...
 #       codeText: ...
 #       codeHtml: ...
-#       heading: {
-#         level: 3
-#         title: 'addHeadings()'
-#         anchor: 'addHeadings'
-#       }
+#       heading: [
+#         { level: 3, title: 'Expanding sections', anchor: 'expanding-sections' },
+#         ...
+#       ]
 #     }
 #
 addHeadings = (sections) ->
   sections.forEach (section) ->
-    m = section.docsHtml.match /<h([1-6])>(.*?)<\/h[1-6]>/i
+    section.headings = []
+
+    m = section.docsHtml.match /<h[1-6]>.*?<\/h[1-6]>/ig
     if m?
-      section.heading =
-        level: parseInt(m[1])
-        title: m[2]
-        anchor: slugify(m[2])
+      m.forEach (match) ->
+        mm = match.match /<h([1-6])>(.*?)<\/h[1-6]>/i
+        section.headings.push
+          level: parseInt(mm[1])
+          title: mm[2]
+          anchor: slugify(mm[2])
+
   sections
 
 # ### parseFile()
