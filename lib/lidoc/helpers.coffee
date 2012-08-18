@@ -39,7 +39,7 @@ template = (str) ->
 #     slugify("50% off")  #=> "50-off"
 #
 slugify = (str, space='-') ->
-  str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/, space)
+  str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/g, space)
 
 # ### changeExtension()
 
