@@ -57,10 +57,13 @@ Vows
           assert.equal file.sections[0].anchor, 'Parser-object'
           assert.equal file.sections[1].anchor, 'parse'
 
+        'sections should have headings': (file) ->
+          file.sections.forEach (section) ->
+            assert.isArray section.headings
+            assert section.headings.length >= 0
+
         'sections should have rendered': (file) ->
           file.sections.forEach (section) ->
             assert section.docsHtml.length >= 0
-
-
 
   .export(module)
