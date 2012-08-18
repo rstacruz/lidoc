@@ -1,6 +1,7 @@
 #Welcome to Lidoc
 
-**Lidoc** is the literate programming documentation generator.
+**Lidoc** generates literate programming documentation from your code
+painlessly.
 
 It takes any code project and generates documentation from its comments.
 
