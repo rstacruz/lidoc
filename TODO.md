@@ -8,6 +8,7 @@ To do
 
 Later:
 
+ * Proper `.md` integration
  * For files with no comments
  * Syntax highlighting of `<pre>`
  * Linking of `{Foo}` references

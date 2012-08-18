@@ -68,3 +68,13 @@ This way, you can just type:
 
 This builds your documentation (because `docs-commit` depends on `docs`) then
 commits it under a different author.
+
+Github integration
+------------------
+
+You can invoke **Lidoc** with `--github`:
+
+    $ lidoc lib/**/*.js --output docs --github rstacruz/lidoc
+
+This gets you a *fork me on Github* button on the first page, and links to
+Github files in the lower-left.
