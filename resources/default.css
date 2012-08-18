@@ -162,17 +162,7 @@ html, body {
   min-height: 100%;
 }
 
-body #header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 36px;
-  z-index: 1;
-}
-
 body #area {
-  padding-top: 36px;
   margin-left: 200px;
 }
 

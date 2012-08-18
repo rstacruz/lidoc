@@ -13,17 +13,17 @@ options
   .version('0.0.1')
   .usage("<sourcefile ...> [options]")
   .option('-o, --output <path>', 'Write documentation output into this path')
-  .option('-j, --json [file]', 'Write JSON info into file (use stdout if no file)')
+  .option('-i, --index [file]', 'Write index into file (use stdout if no file)')
   .option('--css <file>', 'Specify custom CSS file')
   .option('--extra-css <file>', 'Specify extra CSS rules')
   .option('--html <file>', 'Specify custom HTML file')
   .on('--help', ->
-    console.log "At least --output and/or --json must be used."
+    console.log "At least --output and/or --index must be used."
     console.log ""
     console.log "  Example:"
     console.log ""
     console.log "    $ #{options.name} lib/**/*.js --output docs"
-    console.log "    $ #{options.name} **/*.rb --json project.json"
+    console.log "    $ #{options.name} **/*.rb --index project.json"
     console.log ""
   )
 
@@ -39,7 +39,7 @@ if options.files.length is 0
   console.warn "See `#{options.name} --help` for more information."
   process.exit 1
 
-if !options.json and !options.output
+if !options.index and !options.output
   console.warn "Nothing to do. Try using --output to write to a directory:"
   console.warn ""
   console.warn "    #{options.name} **/*.js --output docs"
@@ -49,10 +49,10 @@ if !options.json and !options.output
 
 #- Do the actual parsing.
 Lidoc.parse options, (output) ->
-  if options.json
+  if options.index
     out = JSON.stringify(output, null, 2)
 
-    if options.json is true
+    if options.index is true
       console.log out
     else
       fs.writeFileSync(options.json, out)

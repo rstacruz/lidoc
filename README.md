@@ -78,3 +78,9 @@ H3's are recommended for methods.
     getDiscountedPrice: ->
       @price * (1.00 - @merchant.discount)
 
+Todo
+----
+
+ * Linking of `{Foo}` references
+ * Sorting of pages
+ * JS searching
