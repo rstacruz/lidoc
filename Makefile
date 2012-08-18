@@ -4,6 +4,7 @@ GITHUB_REPO ?= rstacruz/lidoc
 FILES := README.md Guides.md lib/*.coffee lib/**/*.coffee
 
 docs: $(FILES)
+	rm -rf docs
 	$(LIDOC) $^ --output docs
 
 docs-debug: $(FILES)

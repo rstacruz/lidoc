@@ -21,7 +21,10 @@ Create a file called `Makefile`.
     
     # Define the files you need as input here.
     docs: README.md lib/*.js lib/**/*.js
+      rm -rf docs
       $(LIDOC) $^ --output docs
+
+    .PHONY: docs
 
 #### Invoking it
 
