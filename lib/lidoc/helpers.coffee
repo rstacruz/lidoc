@@ -1,6 +1,9 @@
 fs = require 'fs'
 path = require 'path'
 
+# # Helpers
+# Hello.
+
 # ### getResource()
 
 # Read resource file `name` and return its content.
@@ -38,4 +41,14 @@ template = (str) ->
 slugify = (str, space='-') ->
   str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/, space)
 
-module.exports = {getResource, template, slugify}
+# ### changeExtension()
+
+# Replaces the extension of `filename` to `ext`.
+#
+#     changeExtension("parser.js", ".html")
+#     #=> "parser.html"
+#
+changeExtension = (filename, ext) ->
+  filename.replace(/(\.[^\.]+)?$/, ext)
+
+module.exports = {getResource, template, slugify, changeExtension}
