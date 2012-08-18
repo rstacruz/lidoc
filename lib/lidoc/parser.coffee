@@ -23,13 +23,16 @@ parse = (options, callback) ->
 
   # Parse each of the given files using `parseFile`.
   console.warn "Parsing:"
-  files.forEach (fname) ->
+  files.forEach (fname, i) ->
 
     #- Reserve the slot so to preserve proper order.
     id = fname
     output.files[id] = null
 
-    parseFile fname, (file) ->
+    #- The first file will be the index file.
+    isIndex = i is 0
+
+    parseFile fname, isIndex, (file) ->
       output.files[fname] = file
       console.warn "  < #{fname}"
       i += 1
@@ -227,7 +230,7 @@ addHeadings = (sections) ->
 #       headings: []
 #     }
 #
-parseFile = (source, callback) ->
+parseFile = (source, isIndex=false, callback) ->
   # Parse the code into blocks using `parseCode`, then:
   code = fs.readFileSync(source).toString()
   sections = parseCode(source, code)
@@ -247,9 +250,14 @@ parseFile = (source, callback) ->
 
         headings.push heading
 
+    htmlFile = if isIndex
+      "index.html"
+    else
+      changeExtension(source, '.html')
+
     #- Invoke the callback.
     callback
-      htmlFile: changeExtension(source, '.html')
+      htmlFile: htmlFile
       sourceFile: source
       mainHeading: mainHeading
       headings: headings
