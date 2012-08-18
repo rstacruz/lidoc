@@ -53,40 +53,42 @@
       <button data-tab='files'>Files</button>
     </div>
 
-    <div class='list pages'>
-      <ul>
-        <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
-          <% var page = project.pages[i]; %>
-          <% var file = project.files[page.htmlFile]; %>
-          <li class='page'>
-            <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
-            <ul>
-              <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
-                <% var heading = page.headings[j]; %>
-                <% if (heading.level === 1) { continue; } %>
-                <li class='heading level-<%= heading.level %>'>
-                  <a href="<%= root + file.htmlFile + '#' + heading.anchor %>">
-                    <%= heading.title %>
-                  </a>
-                </li>
-              <% } %>
-            </ul>
+    <div class='scroll-area'>
+      <div class='list pages'>
+        <ul>
+          <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
+            <% var page = project.pages[i]; %>
+            <% var file = project.files[page.htmlFile]; %>
+            <li class='page'>
+              <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
+              <ul>
+                <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
+                  <% var heading = page.headings[j]; %>
+                  <% if (heading.level === 1) { continue; } %>
+                  <li class='heading level-<%= heading.level %>'>
+                    <a href="<%= root + file.htmlFile + '#' + heading.anchor %>">
+                      <%= heading.title %>
+                    </a>
+                  </li>
+                <% } %>
+              </ul>
+            </li>
+          <% } } %>
+        </ul>
+      </div>
+
+      <div class='list files hidden'>
+        <ul>
+        <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
+          <% var file = project.files[i]; %>
+          <li class='file'>
+            <a href='<%= root + file.htmlFile %>'>
+              <%= file.sourceFile %>
+            </a>
           </li>
         <% } } %>
-      </ul>
-    </div>
-
-    <div class='list files hidden'>
-      <ul>
-      <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
-        <% var file = project.files[i]; %>
-        <li class='file'>
-          <a href='<%= root + file.htmlFile %>'>
-            <%= file.sourceFile %>
-          </a>
-        </li>
-      <% } } %>
-      </ul>
+        </ul>
+      </div>
     </div>
 
   </div>

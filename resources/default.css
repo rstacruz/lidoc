@@ -328,7 +328,7 @@ body #sidebar {
   height: 36px;
 }
 
-#sidebar .list {
+#sidebar .scroll-area {
   position: absolute;
   top: 72px;
   left: 0;
@@ -415,17 +415,20 @@ body #sidebar {
 }
 
 /* Scroll */
-.list::-webkit-scrollbar {
+.scroll-area {
+  box-shadow: inset 0 4px 4px -2px rgba(0, 0, 0, 0.12);
+}
+.scroll-area::-webkit-scrollbar {
   width: 15px;
   height: 15px;
 }
-.list::-webkit-scrollbar-thumb {
+.scroll-area::-webkit-scrollbar-thumb {
   background: #eee;
   border-radius: 8px;
   border: solid 4px #fafafa;
   box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.07);
 }
-.list:hover::-webkit-scrollbar-thumb {
+.scroll-area:hover::-webkit-scrollbar-thumb {
   background: #999;
   box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
