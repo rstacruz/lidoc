@@ -13,11 +13,27 @@ options
 
 options.files = options.args
 
+if options.files.length is 0
+  console.warn "No files to work on."
+  console.warn "See `#{options.name} --help` for more information."
+  process.exit 1
+
+if !options.debug and !options.json and !options.output
+  console.warn "Nothing to do. Try using --output to write to a directory:"
+  console.warn ""
+  console.warn "    #{options.name} **/*.js --output docs"
+  console.warn ""
+  console.warn "See `#{options.name} --help` for more information."
+  process.exit 15
+
 Lidoc.parse options, (output) ->
   if options.debug
     console.log JSON.stringify(output, null, 2)
 
   if options.json
-    out = JSON.stringify(output)
+    out = JSON.stringify(output, null, 2)
     fs.writeFileSync(options.json, out)
+
+  if options.output
+    Lidoc.build(output, options)
 

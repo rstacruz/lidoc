@@ -1,6 +1,7 @@
 fs = require 'fs'
 {getLanguage} = require './lidoc/languages'
 {slugify, changeExtension} = require './lidoc/helpers'
+{build} = require './lidoc/builder'
 
 # # Lidoc
 # yes.
@@ -217,7 +218,12 @@ parse = (options, callback) ->
 
         callback output
 
+# ### getPages()
+
+# Collects the <h1> headings in the given files and returns them as an array.
+#
 # `files` is a hash, equivalent to parse's `files`.
+#
 getPages = (files) ->
   re = []
   for fname, file of files
@@ -230,4 +236,4 @@ getPages = (files) ->
 
   re
 
-module.exports = {parse}
+module.exports = {parse, build}
