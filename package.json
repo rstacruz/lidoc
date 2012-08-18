@@ -10,9 +10,7 @@
   "bin": {
     "lidoc": "./bin/lidoc"
   },
-  "homepage": {
-    "http://ricostacruz.com/lidoc"
-  },
+  "homepage": "http://ricostacruz.com/lidoc",
   "repository": {
     "type": "git",
     "url": "git://github.com/rstacruz/lidoc.git"
@@ -20,7 +18,9 @@
   "dependencies": {
     "coffee-script": "1.3.3",
     "commander": ">= 1.0.1 < 1.1.0",
-    "mkdirp": ">= 0.0.1"
+    "mkdirp": ">= 0.0.1",
+    "stylus": ">= 0.29.0 < 0.30.0",
+    "nib": ">= 0.7.1 < 0.8.0"
   },
   "scripts": {
     "test": "make test"
