@@ -55,11 +55,11 @@ parse = (options, callback) ->
     files: {}
 
   # Parse each of the given files using `parseFile`.
-  console.log "Parsing:"
+  console.warn "Parsing:"
   files.forEach (fname) ->
     parseFile fname, (file) ->
       output.files[file.htmlFile] = file
-      console.log "  < #{fname}"
+      console.warn "  < #{fname}"
       i += 1
 
       #- and when it's done...

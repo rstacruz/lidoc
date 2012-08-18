@@ -29,7 +29,7 @@ build = (project, options) ->
 # Writes CSS files to the output path.
 
 writeAssets = (project, options) ->
-  console.log "Writing assets:"
+  console.warn "Writing assets:"
 
   #- Fetch the default CSS file.
   css = getResource('default.css')
@@ -40,7 +40,7 @@ writeAssets = (project, options) ->
 
   #- Write it
   fs.writeFileSync(outFile, css)
-  console.log "  > #{outFile}"
+  console.warn "  > #{outFile}"
 
 getFileDepth = (filepath) ->
   path = require 'path'
@@ -57,7 +57,7 @@ strRepeat = (str, count) ->
 # Writes HTML files to the output path.
 
 writeFiles = (project, options) ->
-  console.log "Writing:"
+  console.warn "Writing:"
 
   tpl = template(getResource('default.html'))
 
@@ -78,7 +78,7 @@ writeFiles = (project, options) ->
       depth: depth
 
     mkdirp path.dirname(outFile)
-    console.log "  > #{outFile}"
+    console.warn "  > #{outFile}"
     fs.writeFileSync outFile, output
 
 module.exports = {build}
