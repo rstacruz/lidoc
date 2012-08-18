@@ -23,13 +23,25 @@ class Heading extends Objekt
   anchor: null
   htmlFile: null
 
+# ### File
+#
+# Represents a source file and it's generated HTML file. Stores code/docs in
+# `sections`. Looks like this:
+#
+#     {
+#       htmlFile: 'lib/parser.js.html',
+#       sourceName: 'lib/parser.js.coffee',
+#       sections: [ Section, ... ]
+#       headings: [ Heading, ... ]
+#     }
+#
 class File extends Objekt
   htmlFile: null
   sourceName: null
   sections: []
   headings: []
 
-  # ### parseFile()
+  # ### File.create()
 
   # Parses a given filename `source`.
   # When it's done, invokes `callback` with the completed sections.
@@ -46,35 +58,27 @@ class File extends Objekt
   @create: (source, isIndex=false, callback) ->
     # Parse the code into blocks using `parseCode`, then:
     code = fs.readFileSync(source).toString()
-    sections = parseCode(source, code)
-    highlight source, sections, ->
 
-      htmlFile = if isIndex
-        "index.html"
-      else
-        changeExtension(source, '.html')
+    # Parse the code into blocks using `parseCode`, then:
+    file = new File
+      htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
+      sections: parseCode(source, code)
+      sourceFile: source
+      headings: []
 
-      #- Inject headings.
-      addHeadings sections, htmlFile
+    highlight file.sourceFile, file.sections, ->
+      #- Inject headings into each section.
+      addHeadings file.sections, file.htmlFile
 
       #- Collect sub headings into `headings`.
       #  Also keep the first `<h1>` and place it onto `mainHeading`.
-      headings = []
-      mainHeading = null
-      sections.forEach (section) ->
+      file.sections.forEach (section) ->
         section.headings.forEach (heading) ->
-          if heading.level is 1
-            mainHeading = heading
-
-          headings.push heading
+          file.mainHeading = heading  if heading.level is 1
+          file.headings.push heading
 
       #- Invoke the callback.
-      callback new File
-        htmlFile: htmlFile
-        sourceFile: source
-        mainHeading: mainHeading
-        headings: headings
-        sections: sections
+      callback file
 
 # ### parse()
 
