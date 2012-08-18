@@ -82,7 +82,7 @@
         <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
           <% var file = project.files[i]; %>
           <li class='file'>
-            <a href='<%= root + file.htmlFile %>'>
+            <a href='<%= root + file.htmlFile %>#_files'>
               <%= file.sourceFile %>
             </a>
           </li>
