@@ -26,6 +26,7 @@ fs = require 'fs'
 #       'lib/parser.js.html': { /* File */
 #         htmlName: 'lib/parser.js.html',
 #         sourceName: 'lib/parser.js.coffee',
+#         mainHeading: { /* see 'Heading */ } || null,
 #         sections: [
 #           { /* Section */
 #             codeText: '...',
@@ -52,9 +53,11 @@ parse = (options, callback) ->
     files: {}
 
   # Parse each of the given files using `parseFile`.
+  console.log "Parsing:"
   files.forEach (fname) ->
     parseFile fname, (file) ->
       output.files[file.htmlFile] = file
+      console.log "  < #{fname}"
       i += 1
 
       #- and when it's done...
