@@ -2,7 +2,7 @@
 
 fs = require 'fs'
 path = require 'path'
-mkdirp = require 'mkdirp'
+mkdirp = require('mkdirp').sync
 {template, getResource} = require './helpers'
 
 # ### build()
