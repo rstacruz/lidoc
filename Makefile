@@ -7,6 +7,8 @@ docs:
 docs-debug:
 	$(LIDOC) README.md lib/*.coffee lib/**/*.coffee --index
 
+# Commit the documentation to the repo under a different author.
+# This way, it will not pollute statistics like Github's graphs.
 docs-commit: docs
 	git add -u docs --force
 	git commit -m "Documentation update." --author "Nobody <nobody@nadarei.co>"

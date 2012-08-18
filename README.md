@@ -95,4 +95,4 @@ Todo
  * Linking of `{Foo}` references
  * JS searching
  * JS pages/files switch
- * Highlighting of <pre>
+ * Highlighting of `<pre>`
