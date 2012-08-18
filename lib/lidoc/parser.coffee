@@ -81,11 +81,9 @@ parse = (options, callback) ->
 #       }
 #     }
 
-# ## Private API
+# ## Structures
 
-# Okay, the classes and all are mostly private API.
-
-# ## Page
+# ### Page
 
 # Extracted from `<h1>`s of files. Looks like this:
 #
@@ -102,41 +100,7 @@ class Page extends Struct
     @headings = []
     super
 
-  # ### Page.createAll()
-
-  # Collects the `<h1>` headings in the given files and returns a list of them.
-  #
-  # `files` a key/value object of many `File` instances.
-  #
-  # Returns an key/value object of `Page` instances, with keys being the Page
-  # titles.
-  #
-  @createAll: (files) ->
-    pages = {}
-    for fname, file of files
-
-      current = null
-      file.headings.forEach (heading) ->
-        if heading.level is 1
-          current = "#{heading.title}"
-
-          #- If there is already a page with the same title, append the filename
-          #  in there.
-          if pages[current]
-            current = "#{heading.title} (#{fname})"
-
-          pages[current] = new Page
-            title: heading.title
-            htmlFile: fname
-            headings: []
-
-        else
-          if pages[current]?
-            pages[current].headings.push heading
-
-    pages
-
-# ## Heading
+# ### Heading
 
 # A h1, h2 or h3 heading. Looks like:
 #
@@ -155,7 +119,7 @@ class Heading extends Struct
     @htmlFile = null
     super
 
-# ## File
+# ### File
 
 # Represents a source file and it's generated HTML file. Stores code/docs in
 # `sections`. Looks like this:
@@ -166,8 +130,6 @@ class Heading extends Struct
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
 #     }
-#
-# ### Instanciating
 #
 # It's built with `File.create`:
 #
@@ -183,86 +145,134 @@ class File extends Struct
     @headings   = []
     super
 
-  # ### File.create()
+# ### Section
 
-  # Parses a given filename `source`.
-  # When it's done, invokes `callback` with a new `File` instance.
-  #
-  @create: (source, isIndex=false, callback) ->
-    code = fs.readFileSync(source).toString()
+# Represents a comment/code block pair.
+#
+#     {
+#       docsText: '# Parsing code ...'
+#       docsHtml: '<h3>Parsing code</h3> ...'
+#
+#       codeText: 'def parsingCode() ...'
+#       codeHtml: '...'
+#
+#       anchor: 'Parsing-code'
+#     }
+#
+class Section extends Struct
+  constructor: ->
+    @docsText = null
+    @codeText = null
+    @docsHtml = null
+    @codeHtml = null
+    @anchor = null
+    super
 
-    # Parse the code into blocks to be sectionized using `parseCode`.
-    file = new File
-      htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
-      sections: parseCode(source, code)
-      sourceFile: source
-      headings: []
+# ## Private API
 
-    file.highlight ->
-      #- Inject headings into each section.
-      addHeadings file.sections, file.htmlFile
+# Okay, these are mostly private stuff.
 
-      #- Collect sub headings into `headings`.
-      #  Also keep the first `<h1>` and place it onto `mainHeading`.
-      file.sections.forEach (section) ->
-        section.headings.forEach (heading) ->
-          file.mainHeading = heading  if heading.level is 1
-          file.headings.push heading
+# ### File.create()
 
-      #- Invoke the callback.
-      callback file
+# Parses a given filename `source`.
+# When it's done, invokes `callback` with a new `File` instance.
+#
+File.create = (source, isIndex=false, callback) ->
+  code = fs.readFileSync(source).toString()
 
-  # ### File#highlight()
+  # Parse the code into blocks to be sectionized using `parseCode`.
+  file = new File
+    htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
+    sections: parseCode(source, code)
+    sourceFile: source
+    headings: []
 
-  # Adds to HTML fields to it `docsHtml` and `codeHtml` to all sections.
-  #
-  # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
-  # and runs the text of its corresponding comment through **Markdown**, using
-  # [Showdown.js](http://attacklab.net/showdown/).
-  #
-  # We process the entire file in a single call to Pygments *[1]* by inserting
-  # little marker comments between each section *[1]* and then splitting the
-  # result string wherever our markers occur *[2]*.
+  file.highlight ->
+    #- Inject headings into each section.
+    file.addHeadings()
 
-  highlight: (callback) ->
-    #* The start and end of each Pygments highlight block.
-    highlightStart = '<div class="highlight"><pre>'
-    highlightEnd   = '</pre></div>'
+    #- Collect sub headings into `headings`.
+    #  Also keep the first `<h1>` and place it onto `mainHeading`.
+    file.sections.forEach (section) ->
+      section.headings.forEach (heading) ->
+        file.mainHeading = heading  if heading.level is 1
+        file.headings.push heading
 
-    showdown = require('../../vendor/showdown').Showdown
-    {spawn} = require 'child_process'
+    #- Invoke the callback.
+    callback file
 
-    language = getLanguage @sourceFile
-    pygments = spawn 'pygmentize', [
-      '-l', language.name,
-      '-f', 'html',
-      '-O', 'encoding=utf-8,tabsize=2'
-    ]
-    output   = ''
+# ### File::highlight()
 
-    pygments.stderr.on 'data',  (error)  ->
-      console.error error.toString() if error
+# Adds to HTML fields to it `docsHtml` and `codeHtml` to all sections.
+#
+# Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
+# and runs the text of its corresponding comment through **Markdown**, using
+# [Showdown.js](http://attacklab.net/showdown/).
+#
+# We process the entire file in a single call to Pygments *[1]* by inserting
+# little marker comments between each section *[1]* and then splitting the
+# result string wherever our markers occur *[2]*.
 
-    pygments.stdin.on 'error',  (error)  ->
-      console.error 'Could not use Pygments to highlight the source.'
-      process.exit 1
+File::highlight = (callback) ->
+  #- The start and end of each Pygments highlight block.
+  highlightStart = '<div class="highlight"><pre>'
+  highlightEnd   = '</pre></div>'
 
-    pygments.stdout.on 'data', (result) ->
-      output += result if result
+  showdown = require('../../vendor/showdown').Showdown
+  {spawn} = require 'child_process'
 
-    pygments.on 'exit', =>
-      output = output.replace(highlightStart, '').replace(highlightEnd, '')
-      fragments = output.split language.dividerHtml # [2]
-      for section, i in @sections
-        section.codeHtml = highlightStart + fragments[i] + highlightEnd
-        section.docsHtml = showdown.makeHtml section.docsText
+  language = getLanguage @sourceFile
+  pygments = spawn 'pygmentize', [
+    '-l', language.name,
+    '-f', 'html',
+    '-O', 'encoding=utf-8,tabsize=2'
+  ]
+  output   = ''
 
-      callback @sections
+  pygments.stderr.on 'data',  (error)  ->
+    console.error error.toString() if error
 
-    if pygments.stdin.writable
-      text = (section.codeText for section in @sections)
-      pygments.stdin.write text.join language.dividerText # [1]
-      pygments.stdin.end()
+  pygments.stdin.on 'error',  (error)  ->
+    console.error 'Could not use Pygments to highlight the source.'
+    process.exit 1
+
+  pygments.stdout.on 'data', (result) ->
+    output += result if result
+
+  pygments.on 'exit', =>
+    output = output.replace(highlightStart, '').replace(highlightEnd, '')
+    fragments = output.split language.dividerHtml # [2]
+    for section, i in @sections
+      section.codeHtml = highlightStart + fragments[i] + highlightEnd
+      section.docsHtml = showdown.makeHtml section.docsText
+
+    callback @sections
+
+  if pygments.stdin.writable
+    text = (section.codeText for section in @sections)
+    pygments.stdin.write text.join language.dividerText # [1]
+    pygments.stdin.end()
+
+# ### File::addHeadings()
+
+# Takes a `sections` array of **section** objects and adds *heading* and
+# *anchor* so that they look like:
+#
+#     {
+#       docsText: ...
+#       docsHtml: ...
+#       codeText: ...
+#       codeHtml: ...
+#       anchor: '...'
+#       headings: [
+#         { level: 3, title: 'Expanding sections', anchor: 'expanding-sections' },
+#         ...
+#       ]
+#     }
+#
+File::addHeadings = ->
+  @sections.forEach (section, i) =>
+    section.buildHeadings @htmlFile, i
 
 # ### parseCode()
 
@@ -284,7 +294,9 @@ parseCode = (source, code) ->
   hasCode  = docsText = codeText = ''
 
   save = (docsText, codeText) ->
-    sections.push {docsText, codeText}
+    sections.push new Section
+      docsText: docsText
+      codeText: codeText
 
   for line in lines
     if line.match(language.commentMatcher) and not line.match(language.commentFilter)
@@ -298,43 +310,62 @@ parseCode = (source, code) ->
   save docsText, codeText
   sections
 
-# ### addHeadings()
+# ### Page.createAll()
 
-# Takes a `sections` array of **section** objects and adds *heading* and
-# *anchor* so that they look like:
+# Collects the `<h1>` headings in the given files and returns a list of them.
 #
-#     {
-#       docsText: ...
-#       docsHtml: ...
-#       codeText: ...
-#       codeHtml: ...
-#       anchor: '...'
-#       headings: [
-#         { level: 3, title: 'Expanding sections', anchor: 'expanding-sections' },
-#         ...
-#       ]
-#     }
+# `files` a key/value object of many `File` instances.
 #
-addHeadings = (sections, htmlFile) ->
-  sections.forEach (section, i) ->
-    section.headings = []
+# Returns an key/value object of `Page` instances, with keys being the Page
+# titles.
+#
+Page.createAll = (files) ->
+  pages = {}
+  for fname, file of files
 
-    m = section.docsHtml.match /<h[1-6]>.*?<\/h[1-6]>/ig
-    if m?
-      m.forEach (match) ->
-        mm = match.match /<h([1-6])>(.*?)<\/h[1-6]>/i
-        section.anchor = slugify(mm[2])
-        level = parseInt(mm[1])
-        if level <= 3
-          section.headings.push new Heading
-            level: level
-            title: mm[2]
-            anchor: slugify(mm[2])
-            htmlFile: htmlFile
+    current = null
+    file.headings.forEach (heading) ->
+      if heading.level is 1
+        current = "#{heading.title}"
 
-    else
-      section.anchor = "section-#{i}"
+        #- If there is already a page with the same title, append the filename
+        #  in there.
+        if pages[current]
+          current = "#{heading.title} (#{fname})"
 
-  sections
+        pages[current] = new Page
+          title: heading.title
+          htmlFile: fname
+          headings: []
+
+      else
+        if pages[current]?
+          pages[current].headings.push heading
+
+  pages
+
+# ### Section::buildHeadings()
+
+# Sets `headings` and `anchor` for the section. The assumption is that this is
+# being done after the sections were pygmentized.
+#
+Section::buildHeadings = (htmlFile, i) ->
+  @headings = []
+
+  m = @docsHtml.match /<h[1-6]>.*?<\/h[1-6]>/ig
+  if m?
+    m.forEach (match) =>
+      mm = match.match /<h([1-6])>(.*?)<\/h[1-6]>/i
+      @anchor = slugify(mm[2])
+      level = parseInt(mm[1])
+      if level <= 3
+        @headings.push new Heading
+          level: level
+          title: mm[2]
+          anchor: slugify(mm[2])
+          htmlFile: htmlFile
+
+  else
+    @anchor = "section-#{i}"
 
 module.exports = {parse}
