@@ -60,6 +60,8 @@ In fact, you may want to integrate this into your Makefile.
       git add docs
       git commit -m "Update documentation." --author "$(NOBODY)"
 
+    .PHONY: docs-commit
+
 This way, you can just type:
 
     $ make docs-commit

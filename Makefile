@@ -4,7 +4,12 @@ VOWS ?= ./node_modules/vows/bin/vows
 
 GITHUB_REPO ?= rstacruz/lidoc
 
-FILES := README.md Guides.md lib/*.coffee lib/**/*.coffee
+FILES := \
+	README.md \
+	TODO.md \
+	Guides.md \
+	lib/*.coffee \
+	lib/**/*.coffee
 
 docs: $(FILES)
 	rm -rf $@

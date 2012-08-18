@@ -52,6 +52,24 @@ slugify = (str, space='-') ->
 changeExtension = (filename, ext) ->
   filename.replace(/(\.[^\.]+)?$/, ext)
 
+# ### getFileDepth()
+
+getFileDepth = (filepath) ->
+  path = require 'path'
+  m = filepath.match(new RegExp(path.sep, 'g'))
+  if m? then m.length else 0
+
+# ### strRepeat()
+
+# Repeats a given string `str` up to `count` times.
+
+strRepeat = (str, count=1) ->
+  return ""  if count <= 0
+  output = ""
+  for i in [1..count]
+    output += str
+  output
+
 # ### Struct
 
 # Structure.
@@ -61,4 +79,6 @@ class Struct
     for key, value of source
       @[key] = value
 
-module.exports = {getResource, template, slugify, changeExtension, Struct}
+module.exports =
+  {getResource, template, slugify, changeExtension, Struct, strRepeat,
+  getFileDepth}

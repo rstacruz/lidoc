@@ -5,7 +5,7 @@
 fs = require 'fs'
 path = require 'path'
 mkdirp = require('mkdirp').sync
-{template, getResource} = require './helpers'
+{template, getResource, getFileDepth, strRepeat} = require './helpers'
 
 # ### build()
 
@@ -59,18 +59,6 @@ writeCSS = (project, options) ->
   compileCSS css, (data) ->
     fs.writeFileSync(outFile, data)
     console.warn "  > #{outFile}"  unless options.quiet
-
-getFileDepth = (filepath) ->
-  path = require 'path'
-  m = filepath.match(new RegExp(path.sep, 'g'))
-  if m? then m.length else 0
-
-strRepeat = (str, count) ->
-  return ""  if count <= 0
-  output = ""
-  for i in [1..count]
-    output += str
-  output
 
 # ### writeAssets()
 

@@ -83,24 +83,6 @@ H3's are recommended for methods.
     getDiscountedPrice: ->
       @price * (1.00 - @merchant.discount)
 
-Todo
-----
-
- * 'Files' tab should stay even when clicked
- * 'Files' should be a tree
- * Link to Github?
- * Custom HTML
- * Page hierarchy
- * JS searching
- * JS pages/files switch
- * Syntax highlighting of `<pre>`
- * Linking of `{Foo}` references
-
-Done
-
- * Show file path in page
- * Make Markdown pages look better
-
 Acknowledgements
 ----------------
 
