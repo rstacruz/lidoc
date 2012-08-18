@@ -1,4 +1,4 @@
-# # Lidoc/Command
+# # Lidoc.Command
 
 # Lidoc command line tool.
 

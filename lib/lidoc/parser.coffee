@@ -230,15 +230,21 @@ parseFile = (source, callback) ->
     addHeadings sections
 
     #- Collect sub headings into `headings`.
+    #  Also keep the first `<h1>` and place it onto `mainHeading`.
     headings = []
+    mainHeading = null
     sections.forEach (section) ->
       section.headings.forEach (heading) ->
+        if heading.level is 1
+          mainHeading = heading
+
         headings.push heading
 
     #- Invoke the callback.
     callback
       htmlFile: changeExtension(source, '.html')
       sourceFile: source
+      mainHeading: mainHeading
       headings: headings
       sections: sections
 
