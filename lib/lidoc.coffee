@@ -19,8 +19,8 @@ fs = require 'fs'
 #
 #     parse files: ['...']
 #
-#     pages: [
-#       {
+#     pages: {
+#       "Helpers": {
 #         title: "Helpers"
 #         file: 'lib/parser.js.html',
 #         headings: [ ... ]
@@ -230,11 +230,11 @@ parseFile = (source, callback) ->
 # `files` is a hash, equivalent to parse's `files`.
 #
 getPages = (files) ->
-  re = []
+  re = {}
   for fname, file of files
     if file.mainHeading?
       page = file.mainHeading
-      re.push
+      re[page.title] =
         title: page.title
         file: fname
         headings: file.headings
