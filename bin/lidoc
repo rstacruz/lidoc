@@ -1,0 +1,23 @@
+#!/usr/bin/env coffee
+
+Lidoc = require '../lib/lidoc'
+fs = require 'fs'
+
+options = require 'commander'
+options
+  .version('0.0.1')
+  .option('-o, --output <path>', 'Write documentation output into this path')
+  .option('--debug', 'Print info in stdout')
+  .option('--json <file>', 'Write JSON info into file')
+  .parse(process.argv)
+
+options.files = options.args
+
+Lidoc.parse options, (output) ->
+  if options.debug
+    console.log JSON.stringify(output, null, 2)
+
+  if options.json
+    out = JSON.stringify(output)
+    fs.writeFileSync(options.json, out)
+

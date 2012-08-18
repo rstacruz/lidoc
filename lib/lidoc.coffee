@@ -5,7 +5,7 @@ fs = require 'fs'
 # # Lidoc
 # yes.
 
-# ### parse()
+# ### parseCode()
 
 # Given a string of source code `code` with filename `source`, parse out each
 # comment and the code that follows it, and create an individual **section**
@@ -18,7 +18,7 @@ fs = require 'fs'
 #
 # Returns an array of sections.
 #
-parse = (source, code) ->
+parseCode = (source, code) ->
   lines    = code.split '\n'
   sections = []
   language = getLanguage source
@@ -149,7 +149,7 @@ addHeadings = (sections) ->
 #
 parseFile = (source, callback) ->
   code = fs.readFileSync(source).toString()
-  sections = parse(source, code)
+  sections = parseCode(source, code)
   highlight source, sections, ->
 
     # inject headings
@@ -172,13 +172,13 @@ parseFile = (source, callback) ->
       headings: headings
       sections: sections
 
-# ### parseProject()
+# ### parse()
 
 # Parses a project and returns an output like the one below.
 #
 # It takes an options hash with the option `files`.
 #
-#     parseProject files: ['...']
+#     parse files: ['...']
 #
 #     pages: [
 #       {
@@ -196,7 +196,7 @@ parseFile = (source, callback) ->
 #       }
 #     }
 #
-parseProject = (options, callback) ->
+parse = (options, callback) ->
   files = options.files
 
   output =
@@ -217,7 +217,7 @@ parseProject = (options, callback) ->
 
         callback output
 
-# `files` is a hash, equivalent to parseProject's `files`.
+# `files` is a hash, equivalent to parse's `files`.
 getPages = (files) ->
   re = []
   for fname, file of files
@@ -230,15 +230,4 @@ getPages = (files) ->
 
   re
 
-options = require 'commander'
-
-options
-  .version('0.0.1')
-  .option('-o, --output <path>', 'Output path [build]', 'build')
-  .parse(process.argv)
-
-options.files = options.args
-
-parseProject options, (output) ->
-  console.log JSON.stringify(output, null, 2)
-
+module.exports = {parse}
