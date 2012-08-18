@@ -3,6 +3,12 @@ Lidoc
 
 Literate programming documentation generator.
 
+Lidoc takes any code project and generates documentation from its comments.
+
+Lidoc is code-agnostic; it doesn't care about your code at all, just the
+comments.  As a result, it supports Python, PHP, Ruby, CoffeeScript, JavaScript,
+and just about anything that supports comments.
+
 Heavily inspired by [jashkenas/docco](https://github.com/jashkenas/docco), which
 this project actually takes code from.
 
@@ -26,10 +32,13 @@ define methods or arguments or anything.
 It is aimed to be primarily human-readable; machine-parsability is of a lesser
 concern.
 
-#### Add Markdown comments to your project files.
+#### Add Markdown comments to your project files in single-line comments.
 
 You can use all supported Markdown on comments. These comments will be the
 documentation.
+
+These should be done with single-line comments. In JavaScript/C/PHP, this is 
+`//`, in Python/CoffeeScript/Ruby/etc, it's `#`.
 
 #### Add H1 at the beginning of a file to signify a page.
 

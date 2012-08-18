@@ -9,20 +9,20 @@ languages = JSON.parse getResource 'languages.json'
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
 
-  # Does the line begin with a comment?
+  #- Does the line begin with a comment?
   l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
-  # Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
-  # and interpolations...
+  #- Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
+  #  and interpolations...
   l.commentFilter = /(^#![/]|^\s*#\{)/
 
-  # The dividing token we feed into Pygments, to delimit the boundaries between
-  # sections.
+  #- The dividing token we feed into Pygments, to delimit the boundaries between
+  #  sections.
   l.dividerText = "\n#{l.symbol}DIVIDER\n"
 
-  # The mirror of `dividerText` that we expect Pygments to return. We can split
-  # on this to recover the original sections.
-  # Note: the class is "c" for Python and "c1" for the other languages
+  #- The mirror of `dividerText` that we expect Pygments to return. We can split
+  #  on this to recover the original sections.
+  #  Note: the class is "c" for Python and "c1" for the other languages
   l.dividerHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
 
 # ### getLanguage()
@@ -35,4 +35,5 @@ for ext, l of languages
 #
 getLanguage = (source) -> languages[path.extname(source)]
 
+# ...
 module.exports = {languages, getLanguage}

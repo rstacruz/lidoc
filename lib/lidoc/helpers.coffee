@@ -1,4 +1,4 @@
-# # Helpers
+# # Lidoc.Helpers
 # Hello.
 
 fs = require 'fs'
