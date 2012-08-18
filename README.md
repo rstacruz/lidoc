@@ -3,7 +3,9 @@
 **Lidoc** generates literate programming documentation from your code
 painlessly.
 
-It takes any code project and generates documentation from its comments.
+It takes any code project, parses its inline comments, and and generates
+documentation in the form of a gorgeous-looking, standalone HTML package like
+this one.
 
 Lidoc is code-agnostic; it doesn't care about your code at all, just the
 comments.  As a result, it supports Python, PHP, Ruby, CoffeeScript, JavaScript,

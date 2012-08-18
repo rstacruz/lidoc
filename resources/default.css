@@ -1,3 +1,4 @@
+sidebar-width = 200px;
 @import 'nib';
 
 /*--------------------- Layout and Typography ----------------------------*/
@@ -225,7 +226,7 @@ body #area {
   left: 0;
   right: 0;
   bottom: 0;
-  padding-left: 200px;
+  padding-left: sidebar-width;
   overflow: auto;
 }
 
@@ -233,8 +234,8 @@ body #sidebar {
   position: fixed;
   top: 10px;
   left: 10px;
-  bottom: 40px;
-  width: 200px;
+  bottom: 10px + 46px + 10px;
+  width: sidebar-width;
   z-index: 1;
 }
 
@@ -246,7 +247,7 @@ body #sidebar {
 }
 
 /* Style: Header */
-#header, #sidebar .header {
+header-bg() {
   background: #eee;
   background-image: -webkit-linear-gradient(top, #eee, #ddd);
   background-image: -moz-linear-gradient(top, #eee, #ddd);
@@ -254,9 +255,14 @@ body #sidebar {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
 }
 
+#header, #sidebar .header {
+  header-bg();
+}
+
 /* Style: search box */
 .header.search {
-  border-top-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   text-align: center;
   line-height: 36px;
   vertical-align: middle;
@@ -265,7 +271,7 @@ body #sidebar {
 .header.search input {
   box-sizing: border-box;
 
-  width: 180px;
+  width: sidebar-width - 20px;
   height: 24px;
   border-radius: 15px;
   border: 0;
@@ -416,23 +422,65 @@ body #sidebar {
  * File header */
 
 .file-header {
+  width: sidebar-width;
+
   /* background: #fafafa; */
   /* border-radius: 3px; */
   /* border: solid 1px #ccc; */
   /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); */
 
-  height: 24px;
-  line-height: 24px;
+  height: 40px;
+  line-height: 20px;
 
   font-family: sans-serif;
   color: #9090a0;
-  font-size: 9pt;
-
-  text-align: right;
+  font-size: 8pt;
 
   position: fixed;
   bottom: 10px;
   left: 10px;
+
+  a, button {
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+
+    text-align: left;
+    line-height: 1.4;
+
+    padding-right: 36px;
+    padding-top: 3px;
+    position: relative;
+  }
+
+  a, button {
+    &:before {
+      content: '';
+      float: left;
+      width: 24px;
+      height: 24px;
+      background: #ddd;
+      absolute: right 0 top 3px;
+      border-radius: 4px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  strong, small {
+    display: block;
+    overflow: hidden;
+    height: 14px;
+    line-height: 14px;
+    text-align: right;
+  }
+  strong {
+    color: #9090a0;
+    font-weight: normal;
+  }
+  small {
+    font-weight: bold;
+  }
 }
 
 /* Scroll */

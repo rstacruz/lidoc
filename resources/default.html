@@ -9,7 +9,17 @@
 <body>
   <div id="area">
     <div class='file-header'>
-      <%= current.file.sourceFile %>
+      <% if (sourceUrl) { %>
+        <a href="<%= sourceUrl %>">
+          <strong><%= current.file.sourceFile %></strong>
+          <small>View source</small>
+        </a>
+      <% } else { %>
+        <button>
+          <small>File:</small>
+          <strong><%= current.file.sourceFile %></strong>
+        </button>
+      <% } %>
     </div>
 
     <table cellpadding="0" cellspacing="0" class="extension-<%= current.file.extension %>">

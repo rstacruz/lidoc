@@ -70,6 +70,12 @@ writeAssets = (project, options) ->
   console.warn "  > #{outFile}"  unless options.quiet
   fs.writeFileSync(outFile, contents)
 
+getSourceUrl = (file, options) ->
+  if options.github? and options.gitBranch?
+    "https://github.com/#{options.github}/blob/#{options.gitBranch}/#{file.sourceFile}"
+  else
+    null
+
 # ### writeFiles()
 
 # Writes HTML files to the output path.
@@ -95,8 +101,10 @@ writeFiles = (project, options) ->
         file: file
         page: {}
       file: file
+      sourceUrl: getSourceUrl(file, options)
       project: project
       depth: depth
+      options: options
 
     mkdirp path.dirname(outFile)
     console.warn "  > #{outFile}"  unless options.quiet

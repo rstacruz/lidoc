@@ -16,7 +16,8 @@ options
   .option('-i, --index [file]', 'Write index into file (use stdout if no file)')
   .option('-q, --quiet', 'Suppress messages')
   .option('--css <file>', 'Specify custom CSS file')
-  # .option('--html <file>', 'Specify custom HTML file')
+  .option('--github <user/repo>', 'Link files to this Github repository')
+  .option('--git-branch <branch>', 'Branch of Git to link to')
   .on('--help', ->
     console.log "At least --output and/or --index must be used."
     console.log ""

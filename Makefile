@@ -1,5 +1,5 @@
 LIDOC ?= ./bin/lidoc
-LIDOC_OPTS ?=
+LIDOC_OPTS ?= --github $(GITHUB_REPO) --git-branch master
 VOWS ?= ./node_modules/vows/bin/vows
 
 GITHUB_REPO ?= rstacruz/lidoc
@@ -9,7 +9,9 @@ FILES := \
 	TODO.md \
 	Guides.md \
 	lib/*.coffee \
-	lib/**/*.coffee
+	lib/**/*.coffee \
+	test/*.js \
+	test/*.coffee
 
 docs: $(FILES)
 	rm -rf $@
