@@ -10,8 +10,8 @@ docs-debug:
 # Commit the documentation to the repo under a different author.
 # This way, it will not pollute statistics like Github's graphs.
 docs-commit: docs
-	git add -u docs --force
-	git commit -m "Documentation update." --author "Nobody <nobody@nadarei.co>"
+	git add docs --force
+	git commit -m "Update documentation." --author "Nobody <nobody@nadarei.co>"
 
 docs-deploy: docs
 	git-update-ghpages $(GITHUB_REPO) -i docs --force
