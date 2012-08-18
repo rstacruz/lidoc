@@ -51,20 +51,20 @@ content of that page.
 
 This is done by the markdown instruction `#`.
 
-``` coffee
-# # Parser
+<pre>
+    # # Parser
 
-# This is the parser.
+    # This is the parser.
+    # It gets a bunch of things and outputs a bunch of stuff.
 
-class Parser
+    class Parser
 
-  # ### parse()
+      # ### parse()
 
-  # Performs parsing.
+      # Performs parsing on the given string.
 
-  parse: ->
-    ...
-```
+      parse: (string) ->
+</pre>
 
 #### Each file can have up to one H1 heading maximum.
 
@@ -76,21 +76,21 @@ Any subsequent H1s found in the file will not be treated as a page.
 
 H3's are recommended for methods.
 
-``` coffee
-# ### getDiscountedPrice()
+<pre>
+    # ### getDiscountedPrice()
 
-# Applies merchant-specific discounts to the product and
-# returns the discounted price as a number.
-#
-#     product.setPrice(20.00);
-#     merchant.setDiscount(0.10);
-#
-#     product.getDiscountedPrice();
-#     //=> 18.00
-#
-getDiscountedPrice: ->
-  @price * (1.00 - @merchant.discount)
-```
+    # Applies merchant-specific discounts to the product and
+    # returns the discounted price as a number.
+    #
+    #     product.setPrice(20.00);
+    #     merchant.setDiscount(0.10);
+    #
+    #     product.getDiscountedPrice();
+    #     //=> 18.00
+    #
+    getDiscountedPrice: ->
+      @price * (1.00 - @merchant.discount)
+</pre>
 
 Todo
 ----

@@ -2,7 +2,7 @@ LIDOC ?= ./bin/lidoc
 GITHUB_REPO ?= rstacruz/lidoc
 
 docs:
-	$(LIDOC) lib/**/*.coffee --output docs
+	$(LIDOC) README.md lib/**/*.coffee --output docs
 
 docs-commit: docs
 	git add -u docs --force

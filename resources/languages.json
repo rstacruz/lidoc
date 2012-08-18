@@ -27,5 +27,7 @@
   ".erl":
     {"name" : "erlang", "symbol" : "%"},
   ".hrl":
-    {"name" : "erlang", "symbol" : "%"}
+    {"name" : "erlang", "symbol" : "%"},
+  ".md":
+    {"name" : "markdown", "symbol" : ""}
 }

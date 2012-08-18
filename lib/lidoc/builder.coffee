@@ -44,9 +44,11 @@ writeAssets = (project, options) ->
 
 getFileDepth = (filepath) ->
   path = require 'path'
-  filepath.match(new RegExp(path.sep, 'g')).length
+  m = filepath.match(new RegExp(path.sep, 'g'))
+  if m then m.length else 0
 
 strRepeat = (str, count) ->
+  return ""  if count <= 0
   output = ""
   for i in [0..count]
     output += str

@@ -14,7 +14,30 @@ fs = require 'fs'
 #
 #     parse(files: ['a.js','b.js', 'c.js'])
 #
-# Returns something like:
+parse = (options, callback) ->
+  files = options.files
+  i = 0
+  output =
+    pages: {}
+    files: {}
+
+  # Parse each of the given files using `parseFile`.
+  console.warn "Parsing:"
+  files.forEach (fname) ->
+    parseFile fname, (file) ->
+      output.files[file.htmlFile] = file
+      console.warn "  < #{fname}"
+      i += 1
+
+      #- and when it's done...
+      if i is files.length
+        #- Generate a `pages` index...
+        output.pages = getPages(output.files)
+
+        #- and invoke the `callback` function with the final output.
+        callback output
+
+# It then returns something like:
 #
 #     pages: {  /* Pages */
 #       "Helpers": {
@@ -47,29 +70,6 @@ fs = require 'fs'
 #       }
 #     }
 #
-parse = (options, callback) ->
-  files = options.files
-  i = 0
-  output =
-    pages: {}
-    files: {}
-
-  # Parse each of the given files using `parseFile`.
-  console.warn "Parsing:"
-  files.forEach (fname) ->
-    parseFile fname, (file) ->
-      output.files[file.htmlFile] = file
-      console.warn "  < #{fname}"
-      i += 1
-
-      #- and when it's done...
-      if i is files.length
-        #- Generate a `pages` index
-        output.pages = getPages(output.files)
-
-        #- and invoke the `callback` function with the final output
-        callback output
-
 # ## Private API
 
 # ### parseCode()
@@ -196,10 +196,12 @@ addHeadings = (sections) ->
       m.forEach (match) ->
         mm = match.match /<h([1-6])>(.*?)<\/h[1-6]>/i
         section.anchor = slugify(mm[2])
-        section.headings.push
-          level: parseInt(mm[1])
-          title: mm[2]
-          anchor: slugify(mm[2])
+        level = parseInt(mm[1])
+        if level <= 3
+          section.headings.push
+            level: level
+            title: mm[2]
+            anchor: slugify(mm[2])
 
     else
       section.anchor = "section-#{i}"
