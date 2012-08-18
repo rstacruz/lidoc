@@ -27,52 +27,6 @@ hr {
     height: 1px;
     margin: 20px 0;
 }
-#container {
-  position: relative;
-}
-#background {
-  position: fixed;
-  top: 0; left: 525px; right: 0; bottom: 0;
-  background: #f5f5ff;
-  border-left: 1px solid #e5e5ee;
-  z-index: -1;
-}
-#jump_to, #jump_page {
-  background: white;
-  -webkit-box-shadow: 0 0 25px #777; -moz-box-shadow: 0 0 25px #777;
-  -webkit-border-bottom-left-radius: 5px; -moz-border-radius-bottomleft: 5px;
-  font: 10px Arial;
-  text-transform: uppercase;
-  cursor: pointer;
-  text-align: right;
-}
-#jump_to, #jump_wrapper {
-  position: fixed;
-  right: 0; top: 0;
-  padding: 5px 10px;
-}
-  #jump_wrapper {
-    padding: 0;
-    display: none;
-  }
-    #jump_to:hover #jump_wrapper {
-      display: block;
-    }
-    #jump_page {
-      padding: 5px 0 3px;
-      margin: 0 0 25px 25px;
-    }
-      #jump_page .source {
-        display: block;
-        padding: 5px 10px;
-        text-decoration: none;
-        border-top: 1px solid #eee;
-      }
-        #jump_page .source:hover {
-          background: #f5f5ff;
-        }
-        #jump_page .source:first-child {
-        }
 table td {
   border: 0;
   outline: 0;
@@ -193,3 +147,77 @@ body .vc { color: #19469D }                     /* Name.Variable.Class */
 body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
+
+/* Misc */
+.hidden {
+  display: none;
+}
+
+/* Layout */
+html, body {
+  height: 100%;
+}
+
+#area {
+  min-height: 100%;
+}
+
+body #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  z-index: 1;
+}
+
+body #area {
+  padding-top: 36px;
+  margin-left: 200px;
+}
+
+body #sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Style: Area */
+#area {
+  border-left: solid 1px #ccc;
+}
+
+/* Style: Header */
+#header, #sidebar .header {
+  background: #444;
+  background-image: -webkit-linear-gradient(top, #444, #282828);
+  background-image: linear-gradient(top, #444, #282828);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.5), inset 0 2px 0 rgba(255, 255, 255, 0.2), inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Style: Sidebar */
+#sidebar {
+  background: #fafafa;
+}
+
+#sidebar .header {
+  height: 36px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+#sidebar .list {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+}

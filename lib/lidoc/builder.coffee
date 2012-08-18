@@ -70,6 +70,8 @@ writeFiles = (project, options) ->
       title: file.mainHeading?.title
       sections: file.sections
 
+      root: strRepeat('../', depth-1)  # For relative paths
+
       file: file
       project: project
       depth: depth

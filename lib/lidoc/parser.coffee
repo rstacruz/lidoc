@@ -170,14 +170,15 @@ highlight = (source, sections, callback) ->
 
 # ### addHeadings()
 
-# Takes a `sections` array of **section** objects and adds *heading* so that
-# they look like:
+# Takes a `sections` array of **section** objects and adds *heading* and
+# *anchor* so that they look like:
 #
 #     {
 #       docsText: ...
 #       docsHtml: ...
 #       codeText: ...
 #       codeHtml: ...
+#       anchor: '...'
 #       headings: [
 #         { level: 3, title: 'Expanding sections', anchor: 'expanding-sections' },
 #         ...
@@ -185,17 +186,21 @@ highlight = (source, sections, callback) ->
 #     }
 #
 addHeadings = (sections) ->
-  sections.forEach (section) ->
+  sections.forEach (section, i) ->
     section.headings = []
 
     m = section.docsHtml.match /<h[1-6]>.*?<\/h[1-6]>/ig
     if m?
       m.forEach (match) ->
         mm = match.match /<h([1-6])>(.*?)<\/h[1-6]>/i
+        section.anchor = slugify(mm[2])
         section.headings.push
           level: parseInt(mm[1])
           title: mm[2]
           anchor: slugify(mm[2])
+
+    else
+      section.anchor = "section-#{i}"
 
   sections
 

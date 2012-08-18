@@ -7,8 +7,10 @@
   <link rel="stylesheet" media="all" href="<%= css %>" />
 </head>
 <body>
-  <div id="container">
-    <div id="background"></div>
+  <div id="header">
+  </div>
+
+  <div id="area">
     <table cellpadding="0" cellspacing="0">
       <thead>
         <tr>
@@ -21,10 +23,10 @@
       <tbody>
         <% for (var i=0, l=sections.length; i<l; i++) { %>
           <% var section = sections[i]; %>
-          <tr id="section-<%= i + 1 %>">
+          <tr id="<%= section.anchor %>">
             <td class="docs">
               <div class="pilwrap">
-                <a class="pilcrow" href="#section-<%= i + 1 %>">&#182;</a>
+                <a class="pilcrow" href="#<%= section.anchor %>">&#182;</a>
               </div>
               <%= section.docsHtml %>
             </td>
@@ -36,5 +38,37 @@
       </tbody>
     </table>
   </div>
+
+  <div id="sidebar">
+    <div class='header'>
+      <button class='active'>Pages</button>
+      <button>Files</button>
+    </div>
+
+    <div class='list files hidden'>
+    </div>
+
+    <div class='list pages'>
+      <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
+        <% var page = project.pages[i]; %>
+        <% var file = project.files[page.file]; %>
+        <li>
+          <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
+          <ul>
+            <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
+              <li>
+                <a href="<%= root + file.htmlFile + '#' + page.headings[j].anchor %>">
+                  <%= page.headings[j].title %>
+                </a>
+              </li>
+            <% } %>
+          </ul>
+        </li>
+      <% } } %>
+    </div>
+
+  </div>
+
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.6/prefixfree.min.js'></script>
 </body>
 </html>
