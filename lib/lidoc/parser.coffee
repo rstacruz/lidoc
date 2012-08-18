@@ -29,6 +29,53 @@ class File extends Objekt
   sections: []
   headings: []
 
+  # ### parseFile()
+
+  # Parses a given filename `source`.
+  # When it's done, invokes `callback` with the completed sections.
+  #
+  # Callback is invoked with a file object that look like:
+  #
+  #     {
+  #       htmlFile: 'parser.html',
+  #       sourceFile: 'parser.js',
+  #       sections: /* see addHeadings() */
+  #       headings: []
+  #     }
+  #
+  @create: (source, isIndex=false, callback) ->
+    # Parse the code into blocks using `parseCode`, then:
+    code = fs.readFileSync(source).toString()
+    sections = parseCode(source, code)
+    highlight source, sections, ->
+
+      htmlFile = if isIndex
+        "index.html"
+      else
+        changeExtension(source, '.html')
+
+      #- Inject headings.
+      addHeadings sections, htmlFile
+
+      #- Collect sub headings into `headings`.
+      #  Also keep the first `<h1>` and place it onto `mainHeading`.
+      headings = []
+      mainHeading = null
+      sections.forEach (section) ->
+        section.headings.forEach (heading) ->
+          if heading.level is 1
+            mainHeading = heading
+
+          headings.push heading
+
+      #- Invoke the callback.
+      callback new File
+        htmlFile: htmlFile
+        sourceFile: source
+        mainHeading: mainHeading
+        headings: headings
+        sections: sections
+
 # ### parse()
 
 # Parses a project and returns an output like the one below.
@@ -44,7 +91,7 @@ parse = (options, callback) ->
     pages: {}
     files: {}
 
-  # Parse each of the given files using `parseFile`.
+  # Parse each of the given files using `File.create()`.
   console.warn "Parsing:"
   files.forEach (fname, i) ->
 
@@ -55,7 +102,7 @@ parse = (options, callback) ->
     #- The first file will be the index file.
     isIndex = i is 0
 
-    parseFile fname, isIndex, (file) ->
+    File.create fname, isIndex, (file) ->
       output.files[fname] = file
       console.warn "  < #{fname}"
       i += 1
@@ -240,53 +287,6 @@ addHeadings = (sections, htmlFile) ->
       section.anchor = "section-#{i}"
 
   sections
-
-# ### parseFile()
-
-# Parses a given filename `source`.
-# When it's done, invokes `callback` with the completed sections.
-#
-# Callback is invoked with a file object that look like:
-#
-#     {
-#       htmlFile: 'parser.html',
-#       sourceFile: 'parser.js',
-#       sections: /* see addHeadings() */
-#       headings: []
-#     }
-#
-parseFile = (source, isIndex=false, callback) ->
-  # Parse the code into blocks using `parseCode`, then:
-  code = fs.readFileSync(source).toString()
-  sections = parseCode(source, code)
-  highlight source, sections, ->
-
-    htmlFile = if isIndex
-      "index.html"
-    else
-      changeExtension(source, '.html')
-
-    #- Inject headings.
-    addHeadings sections, htmlFile
-
-    #- Collect sub headings into `headings`.
-    #  Also keep the first `<h1>` and place it onto `mainHeading`.
-    headings = []
-    mainHeading = null
-    sections.forEach (section) ->
-      section.headings.forEach (heading) ->
-        if heading.level is 1
-          mainHeading = heading
-
-        headings.push heading
-
-    #- Invoke the callback.
-    callback new File
-      htmlFile: htmlFile
-      sourceFile: source
-      mainHeading: mainHeading
-      headings: headings
-      sections: sections
 
 # ### getPages()
 
