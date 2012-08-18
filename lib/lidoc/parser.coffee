@@ -29,7 +29,6 @@ fs = require 'fs'
 #       'lib/parser.js.html': { /* File */
 #         htmlName: 'lib/parser.js.html',
 #         sourceName: 'lib/parser.js.coffee',
-#         mainHeading: { /* see 'Heading */ } || null,
 #         sections: [
 #           { /* Section */
 #             codeText: '...',
@@ -218,7 +217,6 @@ addHeadings = (sections) ->
 #       htmlFile: 'parser.html',
 #       sourceFile: 'parser.js',
 #       sections: /* see addHeadings() */
-#       mainHeading: null or {...},
 #       headings: []
 #     }
 #
@@ -233,19 +231,14 @@ parseFile = (source, callback) ->
 
     #- Collect sub headings into `headings`.
     headings = []
-    mainHeading = null
     sections.forEach (section) ->
       section.headings.forEach (heading) ->
-        if heading.level is 1
-          mainHeading = heading
-        else
-          headings.push heading
+        headings.push heading
 
     #- Invoke the callback.
     callback
       htmlFile: changeExtension(source, '.html')
       sourceFile: source
-      mainHeading: mainHeading
       headings: headings
       sections: sections
 
@@ -256,15 +249,22 @@ parseFile = (source, callback) ->
 # `files` is a hash, equivalent to parse's `files`.
 #
 getPages = (files) ->
-  re = {}
+  pages = {}
   for fname, file of files
-    if file.mainHeading?
-      page = file.mainHeading
-      re[page.title] =
-        title: page.title
-        file: fname
-        headings: file.headings
 
-  re
+    current = null
+    file.headings.forEach (heading) ->
+      if heading.level is 1
+        current = heading.title
+        pages[current] =
+          title: heading.title
+          file: fname
+          headings: []
+
+      else
+        if pages[current]?
+          pages[current].headings.push heading
+
+  pages
 
 module.exports = {parse}

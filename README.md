@@ -32,27 +32,39 @@ define methods or arguments or anything.
 It is aimed to be primarily human-readable; machine-parsability is of a lesser
 concern.
 
+This documentation assumes CoffeeScript for examples. However, the standard can
+apply to any code language that can support comments.
+
 #### Add Markdown comments to your project files in single-line comments.
 
 You can use all supported Markdown on comments. These comments will be the
 documentation.
 
-These should be done with single-line comments. In JavaScript/C/PHP, this is 
+These should be done with single-line comments. In JavaScript/C/PHP, this is
 `//`, in Python/CoffeeScript/Ruby/etc, it's `#`.
 
-#### Add H1 at the beginning of a file to signify a page.
+#### Any H1 block signifies a page.
 
-Any first H1 encounted in a file will be counted as a 'page'.
+Any first H1 encounted in a file will be counted as a 'page'. Any content under
+it, until a new H1 is found, or until the end of file is reached, is counted as
+content of that page.
 
 This is done by the markdown instruction `#`.
 
-    # # Parser
-    # This is the parser.
+``` coffee
+# # Parser
 
-    class Parser
+# This is the parser.
 
-      parse: ->
-        ...
+class Parser
+
+  # ### parse()
+
+  # Performs parsing.
+
+  parse: ->
+    ...
+```
 
 #### Each file can have up to one H1 heading maximum.
 
@@ -64,19 +76,21 @@ Any subsequent H1s found in the file will not be treated as a page.
 
 H3's are recommended for methods.
 
-    # ### getDiscountedPrice()
+``` coffee
+# ### getDiscountedPrice()
 
-    # Applies merchant-specific discounts to the product and
-    # returns the discounted price as a number.
-    #
-    #     product.setPrice(20.00);
-    #     merchant.setDiscount(0.10);
-    #
-    #     product.getDiscountedPrice();
-    #     //=> 18.00
-    #
-    getDiscountedPrice: ->
-      @price * (1.00 - @merchant.discount)
+# Applies merchant-specific discounts to the product and
+# returns the discounted price as a number.
+#
+#     product.setPrice(20.00);
+#     merchant.setDiscount(0.10);
+#
+#     product.getDiscountedPrice();
+#     //=> 18.00
+#
+getDiscountedPrice: ->
+  @price * (1.00 - @merchant.discount)
+```
 
 Todo
 ----
