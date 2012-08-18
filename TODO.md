@@ -1,7 +1,7 @@
 To do
 =====
 
- * Link to Github file
+ * Fork me on Github
  * Custom HTML
  * Page hierarchy
  * JS searching
@@ -15,6 +15,7 @@ Later:
 
 Done
 
+ * Link to Github file
  * JS pages/files switch
  * Custom CSS
  * 'Files' tab should stay even when clicked
