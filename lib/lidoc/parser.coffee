@@ -6,6 +6,29 @@ fs = require 'fs'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
 
+# TODO: Put those functions in here to make everything more OOP-like.
+# These are supposed to be JSON-able, by the way
+class Objekt
+  constructor: (source) ->
+    for key, value of source
+      @[key] = value
+
+class Page extends Objekt
+  title: null
+  htmlFile: null
+
+class Heading extends Objekt
+  level: null
+  title: null
+  anchor: null
+  htmlFile: null
+
+class File extends Objekt
+  htmlFile: null
+  sourceName: null
+  sections: []
+  headings: []
+
 # ### parse()
 
 # Parses a project and returns an output like the one below.
@@ -207,7 +230,7 @@ addHeadings = (sections, htmlFile) ->
         section.anchor = slugify(mm[2])
         level = parseInt(mm[1])
         if level <= 3
-          section.headings.push
+          section.headings.push new Heading
             level: level
             title: mm[2]
             anchor: slugify(mm[2])
@@ -258,7 +281,7 @@ parseFile = (source, isIndex=false, callback) ->
         headings.push heading
 
     #- Invoke the callback.
-    callback
+    callback new File
       htmlFile: htmlFile
       sourceFile: source
       mainHeading: mainHeading
@@ -285,9 +308,9 @@ getPages = (files) ->
         if pages[current]
           current = "#{heading.title} (#{fname})"
 
-        pages[current] =
+        pages[current] = new Page
           title: heading.title
-          file: fname
+          htmlFile: fname
           headings: []
 
       else
