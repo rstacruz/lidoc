@@ -1,7 +1,7 @@
 Guides
 ======
 
-Because I'm helpful.
+Because I'm helpful tool.
 
 Makefiles
 ---------
@@ -21,10 +21,11 @@ Create a file called `Makefile`.
     
     # Define the files you need as input here.
     docs: README.md lib/*.js lib/**/*.js
-      rm -rf docs
-      $(LIDOC) $^ --output docs
+      rm -rf $@
+      $(LIDOC) $^ --output $@
 
-    .PHONY: docs
+In GNU Make, the `$@` variable refers to the file being built (in this case,
+`docs`) and `$^` refers to its dependencies (in this case, `README.md` et al).
 
 #### Invoking it
 

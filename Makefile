@@ -7,8 +7,8 @@ GITHUB_REPO ?= rstacruz/lidoc
 FILES := README.md Guides.md lib/*.coffee lib/**/*.coffee
 
 docs: $(FILES)
-	rm -rf docs
-	$(LIDOC) $(LIDOC_OPTS) $^ --output docs
+	rm -rf $@
+	$(LIDOC) $(LIDOC_OPTS) $^ --output $@
 
 docs-debug: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index
