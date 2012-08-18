@@ -1,9 +1,8 @@
-Lidoc
-=====
+#Welcome to Lidoc
 
-Literate programming documentation generator.
+**Lidoc** is the literate programming documentation generator.
 
-Lidoc takes any code project and generates documentation from its comments.
+It takes any code project and generates documentation from its comments.
 
 Lidoc is code-agnostic; it doesn't care about your code at all, just the
 comments.  As a result, it supports Python, PHP, Ruby, CoffeeScript, JavaScript,

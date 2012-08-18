@@ -1,14 +1,19 @@
 # # Lidoc
-# yes.
 
-# ### build()
-
-# Bulids a project. See {Builder.build}.
+# This is the main entry point for the entire library.
 #
-{build} = require './lidoc/builder'
+#     Lidoc = require('lidoc')
 
-# ### parse()
+# From here, you can do:
+#
+#     project = Lidoc.parse(files: [...])
+#
+#     Lidoc.build(project, output: 'docs')
+
+# See {Builder.build()} and {Parser.parse()} for more info.
 
 {parse} = require './lidoc/parser'
 
-module.exports = {build, parse}
+module.exports =
+  build: require('./lidoc/builder').build
+  parse: require('./lidoc/parser').parse
