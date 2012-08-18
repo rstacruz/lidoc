@@ -9,6 +9,6 @@ docs-commit: docs
 	git commit -m "Documentation update." --author "Nobody <nobody@nadarei.co>"
 
 docs-deploy: docs
-	git-update-ghpages $(GITHUB_REPO) -i docs
+	git-update-ghpages $(GITHUB_REPO) -i docs --force
 
 .PHONY: docs docs-commit docs-deploy
