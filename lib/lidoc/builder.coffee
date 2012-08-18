@@ -33,6 +33,9 @@ build = (project, options) ->
 # Writes CSS files to the output path.
 
 writeCSS = (project, options) ->
+  stylus = require 'stylus'
+  nib = require 'nib'
+
   console.warn "Writing assets:"
 
   #- Fetch the default CSS file.
@@ -42,9 +45,11 @@ writeCSS = (project, options) ->
   #- Inject extra CSS needed
   #  (TODO)
 
-  #- Write it
-  fs.writeFileSync(outFile, css)
-  console.warn "  > #{outFile}"
+  #- Render and write it
+  stylus(css).use(nib()).render (err, actual) ->
+    css = actual
+    fs.writeFileSync(outFile, css)
+    console.warn "  > #{outFile}"
 
 getFileDepth = (filepath) ->
   path = require 'path'

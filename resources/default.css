@@ -16,22 +16,23 @@ button {
 a {
   color: #261a3b;
 }
-  a:visited {
-    color: #261a3b;
-  }
+a:visited {
+  color: #261a3b;
+}
 p {
   margin: 0 0 15px 0;
 }
 h1, h2, h3, h4, h5, h6 {
   margin: 0px 0 15px 0;
   border-bottom: solid 1px #ddd;
-  padding-bottom: 10px; }
-  tr.heading td {
-    padding-top: 30px;
-  }
-  h1 {
-    margin-top: 40px;
-  }
+  padding-bottom: 10px;
+}
+tr.heading td {
+  padding-top: 30px;
+}
+h1 {
+  margin-top: 40px;
+}
 hr {
     border: 0 none;
     border-top: 1px solid #e5e5ee;
@@ -42,76 +43,75 @@ table td {
   border: 0;
   outline: 0;
 }
-  td.docs, th.docs {
-    max-width: 450px;
-    min-width: 450px;
-    min-height: 5px;
-    padding: 10px 25px 1px 50px;
-    overflow-x: hidden;
-    vertical-align: top;
-    text-align: left;
-  }
-    .docs pre {
-      margin: 15px 0 15px;
-      padding-left: 15px;
-      color: #8080a7;
-    }
-    .docs tt, .docs code {
-      background: #f8f8ff;
-      border: 1px solid #dedede;
-      font-size: 12px;
-      padding: 0 0.2em;
-    }
-    .docs pre code {
-      background: transparent;
-      border: 0;
-      font-size: 1em;
-      padding: 0;
-    }
-    .pilwrap {
-      position: relative;
-    }
-    .pilwrap + * {
-      margin-top: 0 !important;
-    }
-      .pilcrow {
-        font: 10px Arial;
-        text-decoration: none;
-        position: absolute;
-        top: 3px; left: -30px;
-        padding: 3px 6px;
+td.docs, th.docs {
+  max-width: 450px;
+  min-width: 450px;
+  min-height: 5px;
+  padding: 10px 25px 1px 50px;
+  overflow-x: hidden;
+  vertical-align: top;
+  text-align: left;
+}
+.docs pre {
+  margin: 15px 0 15px;
+  padding-left: 15px;
+  color: #8080a7;
+}
+.docs tt, .docs code {
+  background: #f8f8ff;
+  border: 1px solid #dedede;
+  font-size: 12px;
+  padding: 0 0.2em;
+}
+.docs pre code {
+  background: transparent;
+  border: 0;
+  font-size: 1em;
+  padding: 0;
+}
+.pilwrap {
+  position: relative;
+}
+.pilwrap + * {
+  margin-top: 0 !important;
+}
+.pilcrow {
+  font: 10px Arial;
+  text-decoration: none;
+  position: absolute;
+  top: 3px; left: -30px;
+  padding: 3px 6px;
 
-        background: #ccc;
-        color: #fff;
-        border-radius: 18px;
+  background: #ccc;
+  color: #fff;
+  border-radius: 18px;
 
-        opacity: 0;
-        -webkit-transition: opacity 0.2s linear;
-      }
-        .pilcrow,
-        .pilcrow:visited {
-          color: #fff;
-        }
-        .pilcrow:hover {
-          background: #888;
-        }
-        tr:hover .pilcrow,
-        td.docs:hover .pilcrow {
-          opacity: 1;
-        }
-  td.code, th.code {
-    padding: 14px 15px 16px 25px;
-    width: 100%;
-    vertical-align: top;
-    background: #f5f5ff;
-    border-left: 1px solid #e5e5ee;
-  }
-    pre, tt, code {
-      font-size: 12px; line-height: 18px;
-      font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
-      margin: 0; padding: 0;
-    }
-
+  opacity: 0;
+  -webkit-transition: opacity 0.2s linear;
+}
+.pilcrow,
+.pilcrow:visited {
+  color: #fff;
+}
+.pilcrow:hover {
+  background: #888;
+}
+tr:hover .pilcrow,
+td.docs:hover .pilcrow {
+  opacity: 1;
+}
+td.code, th.code {
+  padding: 14px 15px 16px 25px;
+  width: 100%;
+  vertical-align: top;
+  background: #f5f5ff;
+  border-left: 1px solid #e5e5ee;
+}
+pre, tt, code {
+  font-size: 12px; line-height: 18px;
+  font-family: Menlo, Monaco, Consolas, "Lucida Console", monospace;
+  margin: 0; padding: 0;
+}
 
 /*---------------------- Syntax Highlighting -----------------------------*/
 td.linenos { background-color: #f0f0f0; padding-right: 10px; }
