@@ -220,24 +220,27 @@ html, body {
 body #area {
   position: fixed;
   top: 0;
-  left: 200px;
+  left: 0;
   right: 0;
   bottom: 0;
+  padding-left: 200px;
   overflow: auto;
 }
 
 body #sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
+  top: 10px;
+  left: 10px;
+  bottom: 40px;
   width: 200px;
-  height: 100%;
   z-index: 1;
 }
 
-/* Style: Area */
-#area {
-  border-left: solid 5px #ccc;
+/* Style: sidebar */
+#sidebar {
+  border-radius: 4px;
+  border: solid 1px #ccc;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
 }
 
 /* Style: Header */
@@ -251,6 +254,7 @@ body #sidebar {
 
 /* Style: search box */
 .header.search {
+  border-top-radius: 4px;
   text-align: center;
   line-height: 36px;
   vertical-align: middle;
@@ -404,20 +408,23 @@ body #sidebar {
  * File header */
 
 .file-header {
-  background: #fafafa;
-  border-bottom: solid 1px #eee;
+  /* background: #fafafa; */
+  /* border-radius: 3px; */
+  /* border: solid 1px #ccc; */
+  /* box-shadow: 0 0 6px rgba(0, 0, 0, 0.1); */
 
-  height: 35px;
-  line-height: 35px;
+  height: 24px;
+  line-height: 24px;
 
   font-family: sans-serif;
   color: #9090a0;
-  font-weight: bold;
   font-size: 9pt;
 
   text-align: right;
 
-  padding: 0 20px;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
 }
 
 /* Scroll */
