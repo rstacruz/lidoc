@@ -1,5 +1,6 @@
 fs = require 'fs'
 {getLanguage} = require './lidoc/languages'
+{slugify} = require './lidoc/helpers'
 
 # ### parse()
 
@@ -96,6 +97,33 @@ highlight = (source, sections, callback) ->
     pygments.stdin.write text.join language.dividerText
     pygments.stdin.end()
 
+# ### addHeadings()
+
+# Takes a `sections` array of **section** objects and adds *heading* so that
+# they look like:
+#
+#     {
+#       docsText: ...
+#       docsHtml: ...
+#       codeText: ...
+#       codeHtml: ...
+#       heading: {
+#         level: 3
+#         title: 'addHeadings()'
+#         anchor: 'addHeadings'
+#       }
+#     }
+#
+addHeadings = (sections) ->
+  sections.forEach (section) ->
+    m = section.docsHtml.match /<h([1-6])>(.*?)<\/h[1-6]>/i
+    if m?
+      section.heading =
+        level: parseInt(m[1])
+        title: m[2]
+        anchor: slugify(m[2])
+  sections
+
 # ### parseFile()
 
 # Parses a given filename `source`.
@@ -105,9 +133,12 @@ parseFile = (source, callback) ->
   code = fs.readFileSync(source).toString()
   sections = parse(source, code)
   highlight source, sections, ->
+
+    # inject headings
+    sections = addHeadings sections
+
     callback
       sections: sections
 
 parseFile "lib/lidoc.coffee", (s) ->
-  console.log s
-
+  console.log JSON.stringify(s, null, 4)

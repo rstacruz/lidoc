@@ -29,4 +29,13 @@ template = (str) ->
        .split('%>').join("p.push('") +
        "');}return p.join('');"
 
-module.exports = {getResource, template}
+# ### slugify()
+
+# Takes a given string `str` and normalizes it to be an alpha-numeric string.
+#
+#     slugify("50% off")  #=> "50-off"
+#
+slugify = (str, space='-') ->
+  str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/, space)
+
+module.exports = {getResource, template, slugify}
