@@ -1,4 +1,5 @@
 # # Lidoc/Command
+
 # Lidoc command line tool.
 
 Lidoc = require '../lidoc'

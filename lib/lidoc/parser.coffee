@@ -1,6 +1,7 @@
 # # Lidoc.Parser
+
 # Handles parsing of documents and outputs them into a general-purpose JSON.
-#
+
 fs = require 'fs'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
