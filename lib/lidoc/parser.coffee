@@ -102,10 +102,9 @@ class File extends Struct
   # When it's done, invokes `callback` with a new `File` instance.
   #
   @create: (source, isIndex=false, callback) ->
-    # Parse the code into blocks using `parseCode`, then:
     code = fs.readFileSync(source).toString()
 
-    # Parse the code into blocks using `parseCode`, then:
+    # Parse the code into blocks to be sectionized using `parseCode`.
     file = new File
       htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
       sections: parseCode(source, code)
