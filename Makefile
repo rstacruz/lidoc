@@ -1,11 +1,13 @@
 LIDOC ?= ./bin/lidoc
 GITHUB_REPO ?= rstacruz/lidoc
 
-docs:
-	$(LIDOC) README.md lib/*.coffee lib/**/*.coffee --output docs
+FILES := README.md lib/*.coffee lib/**/*.coffee
 
-docs-debug:
-	$(LIDOC) README.md lib/*.coffee lib/**/*.coffee --index
+docs: $(FILES)
+	$(LIDOC) $^ --output docs
+
+docs-debug: $(FILES)
+	$(LIDOC) $^ --index
 
 # Commit the documentation to the repo under a different author.
 # This way, it will not pollute statistics like Github's graphs.
