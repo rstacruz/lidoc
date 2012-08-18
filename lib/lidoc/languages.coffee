@@ -12,7 +12,10 @@ languages = JSON.parse getResource 'languages.json'
 for ext, l of languages
 
   #- Does the line begin with a comment?
-  l.commentMatcher = ///^\s*#{l.symbol}\s?///
+  if l.symbol is ""
+    l.commentMatcher = ///^///
+  else
+    l.commentMatcher = ///^\s*#{l.symbol}\s?///
 
   #- Ignore [hashbangs](http://en.wikipedia.org/wiki/Shebang_(Unix\))
   #  and interpolations...

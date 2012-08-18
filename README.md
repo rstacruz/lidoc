@@ -51,7 +51,6 @@ content of that page.
 
 This is done by the markdown instruction `#`.
 
-<pre>
     # # Parser
 
     # This is the parser.
@@ -64,7 +63,6 @@ This is done by the markdown instruction `#`.
       # Performs parsing on the given string.
 
       parse: (string) ->
-</pre>
 
 #### Each file can have up to one H1 heading maximum.
 
@@ -76,7 +74,6 @@ Any subsequent H1s found in the file will not be treated as a page.
 
 H3's are recommended for methods.
 
-<pre>
     # ### getDiscountedPrice()
 
     # Applies merchant-specific discounts to the product and
@@ -90,7 +87,6 @@ H3's are recommended for methods.
     #
     getDiscountedPrice: ->
       @price * (1.00 - @merchant.discount)
-</pre>
 
 Todo
 ----
