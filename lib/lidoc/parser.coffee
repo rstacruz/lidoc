@@ -5,6 +5,8 @@ fs = require 'fs'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
 
+# ### parse()
+
 # Parses a project and returns an output like the one below.
 #
 # It takes an options hash with the option `files`.
