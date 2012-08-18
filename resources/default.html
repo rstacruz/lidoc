@@ -5,6 +5,7 @@
   <title><%= title %></title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" media="all" href="<%= css %>" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
 </head>
 <body>
   <div id="area">
@@ -42,11 +43,11 @@
     </div>
 
     <div class='header tabs'>
-      <button class='active'>Pages</button>
-      <button>Files</button>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
     </div>
 
-    <div class='list pages hidden'>
+    <div class='list pages'>
       <ul>
         <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
           <% var page = project.pages[i]; %>
@@ -69,7 +70,7 @@
       </ul>
     </div>
 
-    <div class='list files'>
+    <div class='list files hidden'>
       <ul>
       <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
         <% var file = project.files[i]; %>
@@ -82,9 +83,7 @@
       </ul>
     </div>
 
-
   </div>
-
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.6/prefixfree.min.js'></script>
+  <script src='<%= root %>script.js'></script>
 </body>
 </html>

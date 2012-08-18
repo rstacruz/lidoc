@@ -18,9 +18,7 @@ fs = require 'fs'
 parse = (options, callback) ->
   files = options.files
   i = 0
-  output =
-    pages: {}
-    files: {}
+  output = new Project
 
   # Parse each of the given files using `File.create()`.
   console.warn "Parsing:"
@@ -82,6 +80,28 @@ parse = (options, callback) ->
 #     }
 
 # ## Structures
+
+# ### Project
+
+# Holds indexes of `Page`s and `File`s.
+#
+#     {
+#       pages: {
+#         'Parser': { Page },
+#         'Helpers': { Page },
+#         ...
+#       },
+#       files: {
+#         'index.html': { File },
+#         'lib/parser.html': { File },
+#         '...'
+#       }
+#     }
+#
+class Project extends Struct
+  constructor: ->
+    @pages = {}
+    @files = {}
 
 # ### Page
 

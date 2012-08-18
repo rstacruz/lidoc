@@ -1,5 +1,7 @@
 # # Lidoc.Builder
 
+# Builds HTML/CSS files.
+#
 fs = require 'fs'
 path = require 'path'
 mkdirp = require('mkdirp').sync
@@ -7,7 +9,8 @@ mkdirp = require('mkdirp').sync
 
 # ### build()
 
-# Builds the HTML/CSS files in the path in `options.output`.
+# Builds the HTML/CSS files in the path in `options.output`. The argument
+# `project` is something that comes from {parse()}.
 #
 #     options = {
 #       files: ['a.js', 'b.js'],
@@ -21,14 +24,15 @@ build = (project, options) ->
   #- Build the output directory.
   mkdirp options.output
 
+  writeCSS project, options
   writeAssets project, options
   writeFiles project, options
 
-# ### writeAssets()
+# ### writeCSS()
 
 # Writes CSS files to the output path.
 
-writeAssets = (project, options) ->
+writeCSS = (project, options) ->
   console.warn "Writing assets:"
 
   #- Fetch the default CSS file.
@@ -53,6 +57,16 @@ strRepeat = (str, count) ->
   for i in [1..count]
     output += str
   output
+
+# ### writeAssets()
+
+# Takes care of other assets, supposedly...
+
+writeAssets = (project, options) ->
+  contents = getResource('script.js')
+  outFile = path.join(options.output, 'script.js')
+  console.warn "  > #{outFile}"
+  fs.writeFileSync(outFile, contents)
 
 # ### writeFiles()
 
