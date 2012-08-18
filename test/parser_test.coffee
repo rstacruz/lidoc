@@ -11,7 +11,7 @@ Vows
   .addBatch
     'Parsing the fixture':
       topic: ->
-        Lidoc.parse files: files, (project) =>
+        Lidoc.parse files: files, quiet: true, (project) =>
           @callback null, project
 
       'should have pages': (project) ->

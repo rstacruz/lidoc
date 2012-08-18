@@ -45,7 +45,7 @@ compileCSS = (css, callback) ->
 # Writes CSS files to the output path.
 
 writeCSS = (project, options) ->
-  console.warn "Writing assets:"
+  console.warn "Writing assets:"  unless options.quiet
 
   #- Fetch the default CSS file.
   css = if options.css?
@@ -58,7 +58,7 @@ writeCSS = (project, options) ->
 
   compileCSS css, (data) ->
     fs.writeFileSync(outFile, data)
-    console.warn "  > #{outFile}"
+    console.warn "  > #{outFile}"  unless options.quiet
 
 getFileDepth = (filepath) ->
   path = require 'path'
@@ -79,7 +79,7 @@ strRepeat = (str, count) ->
 writeAssets = (project, options) ->
   contents = getResource('script.js')
   outFile = path.join(options.output, 'script.js')
-  console.warn "  > #{outFile}"
+  console.warn "  > #{outFile}"  unless options.quiet
   fs.writeFileSync(outFile, contents)
 
 # ### writeFiles()
@@ -87,7 +87,7 @@ writeAssets = (project, options) ->
 # Writes HTML files to the output path.
 
 writeFiles = (project, options) ->
-  console.warn "Writing:"
+  console.warn "Writing:"  unless options.quiet
 
   tpl = template(getResource('default.html'))
 
@@ -108,7 +108,7 @@ writeFiles = (project, options) ->
       depth: depth
 
     mkdirp path.dirname(outFile)
-    console.warn "  > #{outFile}"
+    console.warn "  > #{outFile}"  unless options.quiet
     fs.writeFileSync outFile, output
 
 module.exports = {build}

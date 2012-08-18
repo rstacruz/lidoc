@@ -4,10 +4,11 @@ Lidoc = require "lib/lidoc"
 Vows
   .describe('Lidoc')
   .addBatch
-    'context':
+    'Lidoc':
       topic: ->
-        100
-      'should work': (number) ->
-        assert.equal number, 100
+        Lidoc
+      'should have methods': (number) ->
+        assert.isFunction Lidoc.parse
+        assert.isFunction Lidoc.build
 
   .export(module)

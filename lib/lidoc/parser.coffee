@@ -22,7 +22,7 @@ parse = (options, callback) ->
   i = 0
 
   # Parse each of the given files using `File.create()`.
-  console.warn "Parsing:"
+  console.warn "Parsing:"  unless options.quiet
   files.forEach (fname, ii) ->
 
     #- Reserve the slot so to preserve proper order.
@@ -35,7 +35,7 @@ parse = (options, callback) ->
     File.create fname, isIndex, (file) ->
       i += 1
       output.files[file.sourceFile] = file
-      console.warn "  < (#{i}/#{files.length}) #{file.sourceFile}"
+      console.warn "  < (#{i}/#{files.length}) #{file.sourceFile}"  unless options.quiet
 
       #- and when it's done...
       if i is files.length
