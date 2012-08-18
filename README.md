@@ -95,6 +95,7 @@ getDiscountedPrice: ->
 Todo
 ----
 
+ * Page tree
  * Linking of `{Foo}` references
  * Sorting of pages
  * JS searching

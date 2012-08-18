@@ -211,3 +211,58 @@ body #sidebar {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+/* Sidebar lists */
+.list ul, .list li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list {
+  font-size: 9pt;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  padding-top: 10px;
+}
+
+.list a {
+  font-family: sans-serif;
+  text-decoration: none;
+
+  display: block;
+  padding: 0 20px;
+}
+
+.list a:hover {
+  background: rgba(0, 30, 100, 0.04);
+}
+
+.list a:active {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Pages */
+.list li.page > a {
+  color: #36a;
+  font-size: 1.2em;
+
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+.list li.page > ul {
+  padding: 0 0 10px 0;
+}
+
+/* Function names */
+.list li.heading > a {
+  font-size: 0.9em;
+  color: #777;
+  padding-left: 30px;
+}
+
+/* Groups */
+.list li.heading.level-2 > a {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  padding-left: 20px;
+}
