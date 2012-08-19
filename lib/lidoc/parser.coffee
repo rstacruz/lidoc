@@ -9,12 +9,13 @@ path = require 'path'
 
 # ### parse()
 
-# Parses a project and returns a big JSON output of everything about it (see
-# later below for example).
+# Parses a project.
+#
+# Returns a big JSON structured output (see `Project` below).
 #
 # It takes an options hash with the option `files`.
 #
-#     parse(files: ['a.js','b.js', 'c.js'])
+#     parse files: ['a.js','b.js', 'c.js'], (project) ->
 #
 parse = (options, callback) ->
   files = options.files
@@ -45,45 +46,13 @@ parse = (options, callback) ->
         #- and invoke the `callback` function with the final output.
         callback output
 
-# It then returns something like:
-#
-#     pages: {  /*Pages*/
-#       "Helpers": { /*Page*/
-#         title: "Helpers"
-#         file: 'lib/parser.js.html',
-#         headings: [ { /*Heading*/ }, ... ]
-#         pages: { /*Pages*/ }
-#       },
-#       ...
-#     }
-#     files: {
-#       'lib/parser.js.html': { /*File*/
-#         htmlFile: 'lib/parser.js.html',
-#         sourceName: 'lib/parser.js.coffee',
-#         sections: [
-#           { /*Section*/
-#             codeText: '...',
-#             docsText: '...',
-#             codeHtml: '...',
-#             docsHtml: '...',
-#             headings: [
-#               { /*Heading*/
-#                 level: 3,
-#                 title: "Parsing items",
-#                 anchor: "parsing-items",
-#                 htmlFile: "lib/parser.js.html"
-#               },
-#               ...
-#             ]
-#         ]
-#       }
-#     }
-
 # ## Structures
 
 # ### Project
 
 # Holds indexes of `Page`s and `File`s.
+#
+# This is also the output of `parse()`.
 #
 #     {
 #       pages: {
@@ -102,6 +71,10 @@ class Project extends Struct
   constructor: ->
     @pages = {}
     @files = {}
+
+  getFileTree: ->
+    Filetree = require './filetree'
+    (new Filetree).buildFrom @files
 
 # ### Page
 
@@ -147,6 +120,7 @@ class Heading extends Struct
 #     {
 #       htmlFile: 'lib/parser.js.html',
 #       sourceName: 'lib/parser.js.coffee',
+#       extension: 'coffee',
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
 #     }
