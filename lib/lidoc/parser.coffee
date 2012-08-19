@@ -243,6 +243,7 @@ Page.createAll = (files) ->
           current = "#{heading.title} (#{fileID})"
 
         pages[current] = new Page
+          id: current
           title: heading.title
           file: fileID
           headings: []
