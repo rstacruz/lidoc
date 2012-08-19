@@ -20,7 +20,7 @@ path = require 'path'
 #
 parse = (options, callback) ->
   files = options.files
-  output = new Project
+  project = new Project
   i = 0
 
   # Parse each of the given files using `File.create()`.
@@ -28,7 +28,7 @@ parse = (options, callback) ->
   files.forEach (fname, ii) ->
 
     #- Reserve the slot so to preserve proper order.
-    output.files[fname] = null
+    project.files[fname] = null
 
     #- The first file will be the index file.
     isIndex = ii is 0
@@ -36,18 +36,31 @@ parse = (options, callback) ->
     #- Parse and highlight the file...
     File.create fname, isIndex, (file) ->
       i += 1
-      output.files[file.sourceFile] = file
+      project.files[file.sourceFile] = file
       console.warn "  < (#{i}/#{files.length}) #{file.sourceFile}"  unless options.quiet
 
       #- and when it's done...
       if i is files.length
         #- Generate a `pages` index...
-        output.pages = Page.createAll(output.files)
+        project.buildIndices()
 
-        #- and invoke the `callback` function with the final output.
-        callback output
+        #- Generate more stuff
+        #- and invoke the `callback` function with the final project.
+        callback project
 
 # ## Private API
+
+# ### Project::buildIndices()
+
+# Builds the `index` stuff for file trees and such.
+Project::buildIndices = ->
+  @pages = Page.createAll(@files)
+
+  @index.fileTree = do =>
+    Filetree = require './filetree'
+    (new Filetree).buildFrom @files
+
+  this
 
 # Okay, these are mostly private stuff.
 

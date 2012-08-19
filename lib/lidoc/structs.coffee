@@ -32,6 +32,10 @@ class Struct
 #         'index.html': { File },
 #         'lib/parser.html': { File },
 #         '...'
+#       },
+#       index: {
+#         fileTree: { Filetree },
+#         pageTree: { Pagetree }
 #       }
 #     }
 #
@@ -39,10 +43,8 @@ class Project extends Struct
   constructor: ->
     @pages = {}
     @files = {}
-
-  getFileTree: ->
-    Filetree = require './filetree'
-    (new Filetree).buildFrom @files
+    @index = {}
+    super
 
 # ## Page
 

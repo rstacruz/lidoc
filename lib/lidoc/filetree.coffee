@@ -10,13 +10,17 @@
 #         'app':
 #           name: 'app'
 #           paths:
-#             'file.js': {File}
-#         'README.md': {File}
+#             'file.js':
+#               name: 'file.js'
+#               file: {File}
+#         'README.md':
+#           name: 'file.js'
+#           file: {File}
 #
 #     # File (assets/javascripts/parser.html)
 #     tree.paths['assets'].paths['javascripts'].paths['parser.html']
 #
-# You can get this from `Project.getFileTree()`, or `fileTree` in the HTML
+# You can get this from `Project.index.fileTree`, or `fileTree` in the HTML
 # template.
 
 path = require 'path'
@@ -24,6 +28,7 @@ path = require 'path'
 class Filetree
   constructor: (options={}) ->
     @name = options.name ? ""
+    @file = options.file ? null
     @paths = {}
 
   # ### buildFrom()
@@ -67,7 +72,7 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = file
+      @paths[segments[0]] = new Filetree(name: segments[0], file: file.htmlFile)
 
     else
       @paths[segments[0]] ?= new Filetree(name: segments[0])

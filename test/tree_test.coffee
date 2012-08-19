@@ -13,7 +13,7 @@ Vows
     'tree':
       topic: ->
         Lidoc.parse files: files, quiet: true, (project) =>
-          @callback null, project.getFileTree()
+          @callback null, project.index.fileTree
 
       'should be the right type': (tree) ->
         assert.equal tree.constructor, require("lib/lidoc/filetree")
@@ -29,8 +29,8 @@ Vows
           assert.equal tree.paths['test'].paths['fixture'].name, 'fixture'
 
         './test/fixture/parser.html': (tree) ->
-          file = tree.paths['test'].paths['fixture'].paths['parser.html']
-          assert.equal file.sourceFile, 'test/fixture/parser.js'
+          node = tree.paths['test'].paths['fixture'].paths['parser.html']
+          assert.equal node.file, 'test/fixture/parser.html'
 
       'ensure sorted': (tree) ->
         folder = tree.paths['test'].paths['fixture']
