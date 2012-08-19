@@ -10,7 +10,6 @@ FILES := \
 	manual/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
-	test/*.js \
 	test/*.coffee
 
 docs: $(FILES)

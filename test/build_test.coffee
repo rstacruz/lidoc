@@ -1,9 +1,12 @@
 require 'test/env'
 fs = require 'fs'
 path = require 'path'
+os = require 'os'
+rimraf = require 'rimraf'
 
 files = [
   'test/fixture/README.md'
+  'test/fixture/actor.js'
 ]
 
 Vows
@@ -11,25 +14,26 @@ Vows
   .addBatch
     'Builder':
       topic: ->
-        @output = "/tmp/lidoc#{Math.random()}"
+        @output = path.join os.tmpDir(), "lidoc#{Math.random()}"
         options = files: files, quiet: true, output: @output
 
         Lidoc.parse options, (project) =>
           Lidoc.build project, options, =>
             @callback()
 
-      'should build':
-        'index.html': ->
-          fn = path.join(@output, 'index.html')
-          assert.nonEmptyFile fn
-        'script.js': ->
-          fn = path.join(@output, 'style.css')
-          assert.nonEmptyFile fn
-        'style.css': ->
-          fn = path.join(@output, 'style.css')
+      'should build files': ->
+        files = [
+          'index.html'
+          'test/fixture/actor.html'
+          'style.css'
+          'script.js'
+        ]
+        files.forEach (file) =>
+          fn = path.join(@output, file)
           assert.nonEmptyFile fn
 
       teardown: ->
-        fs.rmdir @output
+        rimraf @output, (err, result) ->
+          console.log 'rmdir', err, result
 
   .export(module)
