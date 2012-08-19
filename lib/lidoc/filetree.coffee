@@ -2,7 +2,7 @@
 
 # Represents a hierarchal index of a bunch of files.
 #
-#     tree = new Filetree(files)
+#     tree = new Lidoc.Filetree(files)
 #
 #     tree ==
 #       name: '.'

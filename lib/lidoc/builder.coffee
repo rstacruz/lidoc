@@ -20,6 +20,8 @@ mkdirp = require('mkdirp').sync
 #     project = Lidoc.parse(options);
 #     Lidoc.build(project, options);
 #
+# This is accessible via {Lidoc#build()}.
+#
 build = (project, options) ->
   #- Build the output directory.
   mkdirp options.output

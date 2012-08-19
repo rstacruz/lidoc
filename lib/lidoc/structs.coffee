@@ -1,5 +1,12 @@
 # # Lidoc.Structs
 
+# Structures. You can access these from {Lidoc} itself:
+#
+#     Lidoc = require('lidoc')
+#
+#     Lidoc.Page
+#     Lidoc.Project
+
 # ## Struct
 
 # Basic superclass of all structs.

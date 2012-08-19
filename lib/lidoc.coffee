@@ -33,3 +33,22 @@ module.exports =
 
   # The **Lidoc** version.
   version: pkg.version
+
+  # ## Classes
+
+  # ### Filetree
+  Filetree: require('./lidoc/filetree').Filetree
+
+  # ## Structures
+
+  # ### Page
+  # ### File
+  # ### Section
+  # ### Project
+  # ### Heading
+  # Structures. See {Structs} for more info on each.
+  Page: require('./lidoc/structs').Page
+  File: require('./lidoc/structs').File
+  Section: require('./lidoc/structs').Section
+  Project: require('./lidoc/structs').Project
+  Heading: require('./lidoc/structs').Heading
