@@ -19,6 +19,32 @@ Vows
       'should have files': (project) ->
         assert.isObject project.files
 
+      'Pages':
+        topic: (project) ->
+          project.pages['Hello']
+
+        '.title': (page) ->
+          assert.equal page.title, 'Hello'
+        '.headings': (page) ->
+          assert.equal page.headings.join(","), ""
+        '.show': (page) ->
+          console.log page
+
+      'File fields':
+        topic: (project) ->
+          project.files['test/fixture/README.md']
+
+        '.sourceFile': (file) ->
+          assert.equal file.sourceFile, 'test/fixture/README.md'
+        '.baseSourceFile': (file) ->
+          assert.equal file.baseSourceFile, 'README.md'
+        '.extension': (file) ->
+          assert.equal file.extension, 'md'
+        '.htmlFile': (file) ->
+          assert.equal file.htmlFile, 'index.html'
+        '.baseHtmlFile': (file) ->
+          assert.equal file.baseHtmlFile, 'index.html'
+
       'README':
         topic: (project) ->
           project.files['test/fixture/README.md']

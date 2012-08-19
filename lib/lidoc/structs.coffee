@@ -49,7 +49,7 @@ class Project extends Struct
 #
 #     {
 #       title: "Helpers",
-#       htmlFile: "lib/helpers.html",
+#       file: "lib/helpers.html",
 #       headings: [ Heading, Heading, ... ]
 #     }
 #
@@ -57,7 +57,7 @@ class Page extends Struct
   constructor: ->
     @id       = null
     @title    = null
-    @htmlFile = null
+    @file     = null
     @headings = []
     super
 
@@ -87,10 +87,13 @@ class Heading extends Struct
 #
 #     {
 #       htmlFile: 'lib/parser.js.html',
-#       sourceName: 'lib/parser.js.coffee',
+#       sourceFile: 'lib/parser.js.coffee',
+#
 #       baseHtmlFile: 'parser.js.html',
-#       baseSourceName: 'parser.js.coffee',
+#       baseSourceFile: 'parser.js.coffee',
+#
 #       extension: 'coffee',
+#
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
 #     }
@@ -105,9 +108,9 @@ class File extends Struct
   constructor: ->
     @id             = null
     @htmlFile       = null
-    @sourceName     = null
+    @sourceFile     = null
     @extension      = null
-    @baseSourceName = null
+    @baseSourceFile = null
     @baseHtmlFile   = null
     @sections       = []
     @headings       = []

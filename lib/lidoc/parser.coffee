@@ -230,7 +230,7 @@ parseCode = (source, code) ->
 #
 Page.createAll = (files) ->
   pages = {}
-  for fname, file of files
+  for fileID, file of files
 
     current = null
     file.headings.forEach (heading) ->
@@ -240,11 +240,11 @@ Page.createAll = (files) ->
         #- If there is already a page with the same title, append the filename
         #  in there.
         if pages[current]
-          current = "#{heading.title} (#{fname})"
+          current = "#{heading.title} (#{fileID})"
 
         pages[current] = new Page
           title: heading.title
-          htmlFile: fname
+          file: fileID
           headings: []
 
       else

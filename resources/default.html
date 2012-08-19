@@ -68,7 +68,7 @@
         <ul>
           <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
             <% var page = project.pages[i]; %>
-            <% var file = project.files[page.htmlFile]; %>
+            <% var file = project.files[page.file]; %>
             <li class='page'>
               <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
               <ul>
