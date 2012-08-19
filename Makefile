@@ -16,6 +16,9 @@ docs: $(FILES)
 	rm -rf $@
 	$(LIDOC) $(LIDOC_OPTS) $^ --output $@
 
+lidoc.json: $(FILES)
+	$(LIDOC) $(LIDOC_OPTS) $^ --index $@
+
 docs.debug: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index
 

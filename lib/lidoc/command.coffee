@@ -65,7 +65,10 @@ work = (argv) ->
       if options.index is true
         console.log out
       else
-        fs.writeFileSync(options.json, out)
+        console.warn "Writing index:"  unless options.quiet
+        fs.writeFile options.index, out, ->
+          console.warn "  > #{options.index}"  unless options.quiet
+          console.warn "Done."  unless options.quiet
 
     if options.output
       Lidoc.build output, options, (err, results) ->
