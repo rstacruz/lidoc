@@ -6,12 +6,12 @@ GITHUB_REPO ?= rstacruz/lidoc
 
 FILES := \
 	README.md \
-	TODO.md \
 	manual/*.md \
 	manual/**/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
-	test/*.coffee
+	test/*.coffee \
+	TODO.md \
 
 lidoc.json: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index $@
@@ -35,10 +35,15 @@ docs.deploy: docs
 	git push "git@github.com:$(GITHUB_REPO).git" master:gh-pages --force && \
 	rm -rf .git
 
+# Remove generated files so we can generate again.
+# (make clean docs)
+clean:
+	rm -rf lidoc.json docs
+
 test:
 	$(VOWS) test/*_test.* --dot-matrix
 
 test.spec:
 	$(VOWS) test/*_test.* --spec
 
-.PHONY: docs.commit docs.deploy test test.spec
+.PHONY: docs.commit docs.deploy test test.spec clean
