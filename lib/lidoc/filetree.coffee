@@ -1,7 +1,7 @@
 # # Lidoc.Filetree
 
-path = require 'path'
-
+# Represents a hierarchal index of a bunch of files.
+#
 #     tree = new Filetree(files)
 #
 #     tree ==
@@ -13,6 +13,14 @@ path = require 'path'
 #             'file.js': {File}
 #         'README.md': {File}
 #
+#     # File (assets/javascripts/parser.html)
+#     tree.paths['assets'].paths['javascripts'].paths['parser.html']
+#
+# You can get this from `Project.getFileTree()`, or `fileTree` in the HTML
+# template.
+
+path = require 'path'
+
 class Filetree
   constructor: (options={}) ->
     @name = options.name ? ""

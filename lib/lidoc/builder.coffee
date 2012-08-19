@@ -103,6 +103,7 @@ writeFiles = (project, options) ->
       file: file
       sourceUrl: getSourceUrl(file, options)
       project: project
+      fileTree: project.getFileTree()
       depth: depth
       options: options
 
