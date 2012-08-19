@@ -70,15 +70,6 @@ strRepeat = (str, count=1) ->
     output += str
   output
 
-# ### Struct
-
-# Structure.
-#
-class Struct
-  constructor: (source) ->
-    for key, value of source
-      @[key] = value
-
 module.exports =
-  {getResource, template, slugify, changeExtension, Struct, strRepeat,
+  {getResource, template, slugify, changeExtension, strRepeat,
   getFileDepth}
