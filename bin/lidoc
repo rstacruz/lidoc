@@ -1,2 +1,4 @@
 #!/usr/bin/env coffee
-require '../lib/lidoc/command'
+Command = require '../lib/lidoc/command'
+
+Command.work process.argv
