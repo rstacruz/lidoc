@@ -25,12 +25,13 @@ docs.commit: docs
 	git add docs --force
 	git commit -m "Update documentation." --author "Nobody <nobody@nadarei.co>"
 
+# Sends the documentation to gh-pages.
 docs.deploy: docs
-	cd docs
-	git init .
-	git add .
-	git commit -m "Update documentation."
-	git push "git@github.com:$(GITHUB_REPO).git" origin:gh-pages
+	cd docs && \
+	git init . && \
+	git add . && \
+	git commit -m "Update documentation."; \
+	git push "git@github.com:$(GITHUB_REPO).git" master:gh-pages --force && \
 	rm -rf .git
 
 test:
@@ -39,4 +40,4 @@ test:
 test.spec:
 	$(VOWS) test/*_test.* --spec
 
-.PHONY: docs.commit docs.deploy test
+.PHONY: docs.commit docs.deploy test test.spec
