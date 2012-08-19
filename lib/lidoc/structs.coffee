@@ -88,6 +88,8 @@ class Heading extends Struct
 #     {
 #       htmlFile: 'lib/parser.js.html',
 #       sourceName: 'lib/parser.js.coffee',
+#       baseHtmlFile: 'parser.js.html',
+#       baseSourceName: 'parser.js.coffee',
 #       extension: 'coffee',
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
@@ -101,11 +103,13 @@ class Heading extends Struct
 #
 class File extends Struct
   constructor: ->
-    @htmlFile   = null
-    @sourceName = null
-    @extension  = null
-    @sections   = []
-    @headings   = []
+    @htmlFile       = null
+    @sourceName     = null
+    @extension      = null
+    @baseSourceName = null
+    @baseHtmlFile   = null
+    @sections       = []
+    @headings       = []
     super
 
 # ## Section

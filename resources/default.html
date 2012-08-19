@@ -88,17 +88,37 @@
       </div>
 
       <div class='list files hidden'>
-        <ul>
-        <% for (var i in project.files) { if (project.files.hasOwnProperty(i)) { %>
-          <% var file = project.files[i]; %>
-          <% var isActive = (current.file.htmlFile === file.htmlFile) ? 'active' : ''; %>
-          <li class='file'>
-            <a href='<%= root + file.htmlFile %>#f' class='<%= isActive %>'>
-              <%= file.sourceFile %>
-            </a>
+        <% function tree(object, current, root, level) { %>
+          <li class='level-<%= level %>'>
+            <% if (object.paths) { %>
+              <% var isExpanded = current.file.htmlFile.indexOf(object.name) > -1; %>
+              <button class='item folder <%= isExpanded ? "expanded" : "" %>'>
+                <i></i>
+                <%= object.name %>
+              </button>
+              <ul class='<%= isExpanded ? "" : "hidden" %>'>
+                <% for (var i in object.paths) { if (object.paths.hasOwnProperty(i)) { %>
+                  <%= tree(object.paths[i], current, root, level + 1) %>
+                <% } } %>
+              </ul>
+            </li>
+            <% } else { %>
+              <% var file = object; %>
+              <% var isActive = (current.file.htmlFile === file.htmlFile) ? 'active' : ''; %>
+              <a href='<%= root + file.htmlFile %>#f' class='item file <%= isActive %>'>
+                <i></i>
+                <%= file.baseSourceFile %>
+              </a>
+            <% } %>
           </li>
+        <% } %>
+
+        <ul>
+        <% for (var i in fileTree.paths) { if (fileTree.paths.hasOwnProperty(i)) { %>
+          <%= tree(fileTree.paths[i], current, root, 1) %>
         <% } } %>
         </ul>
+
       </div>
     </div>
 

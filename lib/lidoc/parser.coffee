@@ -58,12 +58,15 @@ parse = (options, callback) ->
 #
 File.create = (source, isIndex=false, callback) ->
   code = fs.readFileSync(source).toString()
+  htmlFile = (if isIndex then 'index.html' else changeExtension(source, '.html'))
 
   # Parse the code into blocks to be sectionized using `parseCode`.
   file = new File
-    htmlFile: (if isIndex then 'index.html' else changeExtension(source, '.html'))
+    htmlFile: htmlFile
     sections: parseCode(source, code)
     sourceFile: source
+    baseHtmlFile: path.basename(htmlFile)
+    baseSourceFile: path.basename(source)
     extension: path.extname(source).substr(1)
     headings: []
 

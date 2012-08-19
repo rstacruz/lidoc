@@ -3,13 +3,16 @@ sidebar-width = 200px;
 
 /*--------------------- Layout and Typography ----------------------------*/
 body {
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
   font-size: 15px;
   line-height: 22px;
   color: #252519;
   margin: 0; padding: 0;
 }
+body, td, button, input, textarea {
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+}
 button {
+  font-family: sans-serif;
   padding: 0;
   margin: 0;
   border: 0;
@@ -370,27 +373,79 @@ header-bg() {
   padding-top: 10px;
 }
 
-.list a {
+.list a, .list button {
   font-family: sans-serif;
   text-decoration: none;
 
   display: block;
-  padding: 0 20px;
+  padding: 2px 20px;
+  line-height: 20px;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background: rgba(50, 100, 200, 0.04);
+  }
+  &.active {
+    background: #aaa;
+    background-image: linear-gradient(top, #aaa, #9a9a9a);
+    color: white;
+    text-shadow: 0 1px 0 rgba(black, 0.2);
+  }
+  &:active {
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
 
-.list a:hover {
-  background: rgba(50, 100, 200, 0.04);
+/* For files */
+.files.list {
+  button {
+    font-weight: bold;
+  }
+  /* Disclosure triangle */
+  button:before {
+    content: '';
+    display: block;
+    float: left;
+    width: 0;
+    height: 0;
+    border: solid 4px transparent;
+    border-left-color: #999;
+    margin-right: 5px;
+
+    position: relative;
+    top: 5px;
+    left: 2px;
+  }
+  button.expanded:before {
+    top: 7px;
+    left: 0;
+    border-top-color: #999;
+    border-left-color: transparent;
+  }
+  /* Spacing for files */
+  a:before {
+    content: '';
+    display: block;
+    float: left;
+    width: 14px;
+    height: 1px;
+  }
+  li.level-2 .item {
+    padding-left: 30px;
+  }
+  li.level-3 .item {
+    padding-left: 40px;
+  }
+  li.level-4 .item {
+    padding-left: 50px;
+  }
+  li.level-5 .item {
+    padding-left: 60px;
+  }
 }
 
-.list a.active {
-  background: #36a;
-  color: white;
-  text-shadow: 0 1px 0 rgba(black, 0.2);
-}
-
-.list a:active {
-  background: rgba(0, 0, 0, 0.2);
-}
 
 /* Pages */
 .list li.page > a {

@@ -13,10 +13,19 @@
     openSidebarTab(href);
   });
 
+  /* Load file list */
   $(function() {
     if (window.location.hash === '#f') {
       openSidebarTab('files');
     }
+  });
+
+  /* Toggle */
+  $(".files.list .folder").on('click', function() {
+    $(this).toggleClass('expanded');
+    var ul = $(this).closest('li').find('>ul');
+    console.log(ul);
+    ul.slideToggle(200);
   });
 
 })();
