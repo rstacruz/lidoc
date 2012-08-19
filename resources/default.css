@@ -372,7 +372,8 @@ header-bg() {
 
 .list {
   font-size: 9pt;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  -webkit-font-smoothing: antialiased;
   padding-top: 10px;
 
   /* List items */
