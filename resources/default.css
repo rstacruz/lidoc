@@ -520,8 +520,7 @@ header-bg() {
 
   /* Groups */
   &.level-2 > a {
-    text-transform: uppercase;
-    font-size: 0.8em;
+    color: #444;
     padding-left: 20px;
   }
 }
