@@ -32,6 +32,9 @@ docs.deploy: docs
 	git-update-ghpages $(GITHUB_REPO) -i docs --force
 
 test:
-	$(VOWS) test/**.coffee --spec
+	$(VOWS) test/*_test.* --dot-matrix
+
+test.spec:
+	$(VOWS) test/*_test.* --spec
 
 .PHONY: docs docs.commit docs.deploy docs.debug test

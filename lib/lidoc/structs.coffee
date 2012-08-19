@@ -34,13 +34,17 @@ class Struct
 #         ...
 #       },
 #       fileTree: { Filetree }
+#       pageTree: { Pagetree }
 #     }
+#
+# The keys of `pages` and `files` are their `id` fields.
 #
 class Project extends Struct
   constructor: ->
-    @pages = {}
-    @files = {}
+    @pages    = {}
+    @files    = {}
     @fileTree = {}
+    @pageTree = {}
     super
 
 # ## Page
@@ -48,10 +52,23 @@ class Project extends Struct
 # Extracted from `<h1>`s of files. Looks like this:
 #
 #     {
+#       id: "Helpers"
 #       title: "Helpers",
+#       segments: ["Helpers"]
 #       file: "lib/helpers.html",
 #       headings: [ Heading, Heading, ... ]
 #     }
+#
+# The `id` is usually the full name.
+#
+#     id: "Guides: Getting started"
+#     name: "Getting started"
+#     segments: ["Guides", "Getting started"]
+#
+# In the event of a clash, the `id` will include the filename.
+#
+#     id: "Lidoc (README.md)"
+#     name: "Lidoc"
 #
 class Page extends Struct
   constructor: ->
@@ -86,19 +103,21 @@ class Heading extends Struct
 # `sections`. Looks like this:
 #
 #     {
-#       id: 'lib/parser.js.html',
+#       id: 'lib/parser.coffee',
 #
-#       htmlFile: 'lib/parser.js.html',
-#       sourceFile: 'lib/parser.js.coffee',
+#       htmlFile: 'lib/parser.html',
+#       sourceFile: 'lib/parser.coffee',
 #
-#       baseHtmlFile: 'parser.js.html',
-#       baseSourceFile: 'parser.js.coffee',
+#       baseHtmlFile: 'parser.html',
+#       baseSourceFile: 'parser.coffee',
 #
 #       extension: 'coffee',
 #
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
 #     }
+#
+# The `id` field is the `sourceFile`.
 #
 # It's built with `File.create`:
 #

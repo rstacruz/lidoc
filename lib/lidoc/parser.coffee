@@ -62,6 +62,10 @@ Project::buildIndices = ->
     Filetree = require './filetree'
     (new Filetree).buildFrom @files
 
+  @pageTree = do =>
+    Pagetree = require './pagetree'
+    (new Pagetree).buildFrom @pages
+
   this
 
 # Okay, these are mostly private stuff.
@@ -242,9 +246,12 @@ Page.createAll = (files) ->
         if pages[current]
           current = "#{heading.title} (#{fileID})"
 
+        segments = heading.title.split(/\s*(?:\.|: |::)\s*/)
+
         pages[current] = new Page
           id: current
-          title: heading.title
+          title: segments[segments.length-1]
+          segments: segments
           file: fileID
           headings: []
 
