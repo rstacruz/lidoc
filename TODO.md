@@ -1,10 +1,9 @@
 To do
 =====
 
- * Fork me on Github
- * Custom HTML
- * Page hierarchy
+ * Page hierarchy displaying
  * JS searching
+ * TOC
 
 Later:
 
@@ -12,9 +11,12 @@ Later:
  * For files with no comments
  * Syntax highlighting of `<pre>`
  * Linking of `{Foo}` references
+ * Custom HTML
 
 Done
 
+ * Page hierarchy
+ * Fork me on Github
  * Expandable file list
  * Link to Github file
  * JS pages/files switch
