@@ -6,7 +6,6 @@ GITHUB_REPO ?= rstacruz/lidoc
 
 FILES := \
 	README.md \
-	manual/*.md \
 	manual/**/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
