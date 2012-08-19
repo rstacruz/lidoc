@@ -56,7 +56,7 @@ parse = (options, callback) ->
 Project::buildIndices = ->
   @pages = Page.createAll(@files)
 
-  @index.fileTree = do =>
+  @fileTree = do =>
     Filetree = require './filetree'
     (new Filetree).buildFrom @files
 

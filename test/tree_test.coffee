@@ -13,7 +13,7 @@ Vows
     'tree':
       topic: ->
         Lidoc.parse files: files, quiet: true, (project) =>
-          @callback null, project.index.fileTree
+          @callback null, project.fileTree
 
       'should be the right type': (tree) ->
         assert.equal tree.constructor, require("lib/lidoc/filetree")

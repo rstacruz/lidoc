@@ -33,17 +33,14 @@ class Struct
 #         'lib/parser.html': { File },
 #         '...'
 #       },
-#       index: {
-#         fileTree: { Filetree },
-#         pageTree: { Pagetree }
-#       }
+#       fileTree: { Filetree }
 #     }
 #
 class Project extends Struct
   constructor: ->
     @pages = {}
     @files = {}
-    @index = {}
+    @fileTree = {}
     super
 
 # ## Page
