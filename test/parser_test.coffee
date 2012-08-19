@@ -1,5 +1,4 @@
 require "test/env"
-Lidoc = require "lib/lidoc"
 
 files = [
   'test/fixture/README.md',

@@ -7,7 +7,8 @@
 # From here, you can do:
 #
 #     Lidoc.parse files: [...], (project) ->
-#       Lidoc.build(project, output: 'docs')
+#       Lidoc.build project, output: 'docs', ->
+#         console.log "Done!"
 #
 # See {Builder.build()} and {Parser.parse()} for more info.
 

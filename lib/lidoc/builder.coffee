@@ -4,6 +4,7 @@
 #
 fs = require 'fs'
 path = require 'path'
+async = require 'async'
 mkdirp = require('mkdirp').sync
 {template, getResource, getFileDepth, strRepeat} = require './helpers'
 
@@ -18,17 +19,21 @@ mkdirp = require('mkdirp').sync
 #     };
 #
 #     project = Lidoc.parse(options);
-#     Lidoc.build(project, options);
+#     Lidoc.build(project, options, callback);
 #
 # This is accessible via {Lidoc#build()}.
 #
-build = (project, options) ->
+build = (project, options, callback) ->
   #- Build the output directory.
   mkdirp options.output
 
-  writeCSS project, options
-  writeAssets project, options
-  writeFiles project, options
+  console.warn "Writing:"  unless options.quiet
+
+  async.parallel [
+    (cb) -> writeCSS project, options, cb
+    (cb) -> writeFiles project, options, cb
+    (cb) -> writeAssets project, options, cb
+  ], callback
 
 compileCSS = (css, callback) ->
   stylus = require 'stylus'
@@ -46,9 +51,7 @@ compileCSS = (css, callback) ->
 
 # Writes CSS files to the output path.
 
-writeCSS = (project, options) ->
-  console.warn "Writing assets:"  unless options.quiet
-
+writeCSS = (project, options, callback) ->
   #- Fetch the default CSS file.
   css = if options.css?
     fs.readFileSync(options.css, 'utf-8')
@@ -59,18 +62,21 @@ writeCSS = (project, options) ->
   outFile = path.join(options.output, 'style.css')
 
   compileCSS css, (data) ->
-    fs.writeFileSync(outFile, data)
-    console.warn "  > #{outFile}"  unless options.quiet
+    fs.writeFile outFile, data, ->
+      console.warn "  > #{outFile}"  unless options.quiet
+      callback null, true
 
 # ### writeAssets()
 
 # Takes care of other assets, supposedly...
 
-writeAssets = (project, options) ->
+writeAssets = (project, options, callback) ->
   contents = getResource('script.js')
   outFile = path.join(options.output, 'script.js')
-  console.warn "  > #{outFile}"  unless options.quiet
-  fs.writeFileSync(outFile, contents)
+
+  fs.writeFile outFile, contents, ->
+    console.warn "  > #{outFile}"  unless options.quiet
+    callback null, true
 
 getSourceUrl = (file, options) ->
   if options.github? and options.gitBranch?
@@ -82,10 +88,9 @@ getSourceUrl = (file, options) ->
 
 # Writes HTML files to the output path.
 
-writeFiles = (project, options) ->
-  console.warn "Writing:"  unless options.quiet
-
+writeFiles = (project, options, callback) ->
   tpl = template(getResource('default.html'))
+  calls = []
 
   #- Write each of the HTML files.
   for fname, file of project.files
@@ -109,8 +114,15 @@ writeFiles = (project, options) ->
       depth: depth
       options: options
 
-    mkdirp path.dirname(outFile)
-    console.warn "  > #{outFile}"  unless options.quiet
-    fs.writeFileSync outFile, output
+    #- Queue up the mkdir/writeFile calls.
+    calls.push do (outFile, output) ->
+      (callback) ->
+        mkdirp path.dirname(outFile)
+        fs.writeFile outFile, output, ->
+          console.warn "  > #{outFile}"  unless options.quiet
+          callback null, outFile
+
+  #- Invoke the queued up the write functions.
+  async.parallel calls, callback
 
 module.exports = {build}

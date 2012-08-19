@@ -1,9 +1,15 @@
 require 'test/env'
 
 Vows
-  .describe('Lidoc')
+  .describe('Lidoc builder')
   .addBatch
-    'Lidoc':
+    'Builder':
+      topic: ->
+        options = files: files, quiet: true
+
+        Lidoc.parse options, (project) =>
+          Lidoc.build project, options
+
       'should have version': ->
         assert.isString Lidoc.version
         assert Lidoc.version.match /^[0-9]+\.[0-9]+\.[0-9]+/

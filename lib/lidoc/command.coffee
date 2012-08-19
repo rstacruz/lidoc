@@ -68,6 +68,7 @@ work = (argv) ->
         fs.writeFileSync(options.json, out)
 
     if options.output
-      Lidoc.build(output, options)
+      Lidoc.build output, options, (err, results) ->
+        console.warn "Done."  unless options.quiet
 
 Command = module.exports = {work, getOptions}
