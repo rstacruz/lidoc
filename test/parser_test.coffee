@@ -19,7 +19,7 @@ Vows
       'should have files': (project) ->
         assert.isObject project.files
 
-      'Pages':
+      'Page attributes':
         topic: (project) ->
           project.pages['Hello']
 
@@ -27,10 +27,8 @@ Vows
           assert.equal page.title, 'Hello'
         '.headings': (page) ->
           assert.equal page.headings.join(","), ""
-        '.show': (page) ->
-          console.log page
 
-      'File fields':
+      'File attributes':
         topic: (project) ->
           project.files['test/fixture/README.md']
 

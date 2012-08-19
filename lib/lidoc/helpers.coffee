@@ -24,13 +24,14 @@ template = (str) ->
   new Function 'obj',
     'var p=[],print=function(){p.push.apply(p,arguments);};' +
     'with(obj){p.push(\'' +
-    str.replace(/[\r\t\n]/g, " ")
+    str.replace(/[\r\t]/g, " ")
        .replace(/'(?=[^<]*%>)/g,"\t")
        .split("'").join("\\'")
        .split("\t").join("'")
-       .replace(/<%=(.+?)%>/g, "',$1,'")
+       .replace(/<%=(.+?)%>\n?/g, "',$1,'")
        .split('<%').join("');")
-       .split('%>').join("p.push('") +
+       .split(/%>\n?/).join("p.push('")
+       .split("\n").join("\\n") +
        "');}return p.join('');"
 
 # ### slugify()
