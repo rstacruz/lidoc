@@ -12,12 +12,12 @@ FILES := \
 	lib/**/*.coffee \
 	test/*.coffee
 
-docs: $(FILES)
-	rm -rf $@
-	$(LIDOC) $(LIDOC_OPTS) $^ --output $@
-
 lidoc.json: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index $@
+
+docs: lidoc.json
+	rm -rf $@
+	$(LIDOC) $(LIDOC_OPTS) --import $^ --output $@
 
 docs.debug: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index
@@ -37,4 +37,4 @@ test:
 test.spec:
 	$(VOWS) test/*_test.* --spec
 
-.PHONY: docs docs.commit docs.deploy docs.debug test
+.PHONY: docs.commit docs.deploy docs.debug test
