@@ -3,7 +3,8 @@ Lidoc = require "lib/lidoc"
 
 files = [
   'test/fixture/README.md',
-  'test/fixture/parser.js'
+  'test/fixture/parser.js',
+  'test/fixture/actor.js'
 ]
 
 Vows
@@ -30,5 +31,14 @@ Vows
         './test/fixture/parser.html': (tree) ->
           file = tree.paths['test'].paths['fixture'].paths['parser.html']
           assert.equal file.sourceFile, 'test/fixture/parser.js'
+
+      'ensure sorted': (tree) ->
+        folder = tree.paths['test'].paths['fixture']
+
+        names = []
+        for name, file of folder.paths
+          names.push name
+
+        assert.equal names.join(","), ["actor.html","parser.html"]
 
   .export(module)

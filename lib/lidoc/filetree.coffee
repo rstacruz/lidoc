@@ -29,6 +29,32 @@ class Filetree
 
       @addFile segments, file
 
+    @sort()
+
+    this
+
+  # ### sort()
+
+  # Ensures that the paths are sorted.
+  sort: ->
+    newPaths = {}
+
+    #- Get all the names and sort them
+    names = []
+    for name, object of @paths
+      names.push name
+
+    names = names.sort()
+
+    #- Now put them back in, recursing in the process
+    names.forEach (name) =>
+      @paths[name].sort()  if typeof @paths[name].sort is 'function'
+      newPaths[name] = @paths[name]
+
+    #- And replace the old paths with the new
+    delete(@paths)
+    @paths = newPaths
+
     this
 
   addFile: (segments, file) ->
