@@ -246,13 +246,17 @@ Page.createAll = (files) ->
         if pages[current]
           current = "#{heading.title} (#{fileID})"
 
-        segments = heading.title.split(/\s*(?:\.|: |::)\s*/)
+        #- The root file should be the root page.
+        segments = if file.htmlFile is 'index.html'
+          []
+        else
+          heading.title.split(/\s*(?:\.|: |::)\s*/)
 
         pages[current] = new Page
-          id: current
-          title: segments[segments.length-1]
+          id:       current
+          title:    segments[segments.length-1] ? heading.title
           segments: segments
-          file: fileID
+          file:     fileID
           headings: []
 
       else

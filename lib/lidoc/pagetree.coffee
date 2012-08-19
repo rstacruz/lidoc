@@ -55,8 +55,9 @@ class Pagetree
       @paths[segments[0]].title = segments[0]
       @paths[segments[0]].addPage page, segments.slice(1), project
 
-    #- The README will be the root of all
-    else if file.htmlFile is 'index.html'
+    #- The first file will be the root of all.
+    #  (It's Parser's responsibility to set segments to 0)
+    else if segments.length is 0
       @setPage page
 
     #- If it's a child: add the page as a child.
