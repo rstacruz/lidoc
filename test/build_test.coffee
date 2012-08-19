@@ -1,20 +1,37 @@
 require 'test/env'
+fs = require 'fs'
+path = require 'path'
+
+assert.nonEmptyFile = (fname) ->
+  fs.readFile fname, (err, data) ->
+    assert.isNull err
+    assert data.length > 0
+
+files = [
+  'test/fixture/README.md'
+]
 
 Vows
   .describe('Lidoc builder')
   .addBatch
     'Builder':
       topic: ->
-        options = files: files, quiet: true
+        @output = "/tmp/lidoc#{Math.random()}"
+        options = files: files, quiet: true, output: @output
 
         Lidoc.parse options, (project) =>
-          Lidoc.build project, options
+          Lidoc.build project, options, =>
+            @callback()
 
-      'should have version': ->
-        assert.isString Lidoc.version
-        assert Lidoc.version.match /^[0-9]+\.[0-9]+\.[0-9]+/
-      'should have methods': ->
-        assert.isFunction Lidoc.parse
-        assert.isFunction Lidoc.build
+      'should build':
+        'index.html': ->
+          fn = path.join(@output, 'index.html')
+          assert.nonEmptyFile fn
+        'style.css': ->
+          fn = path.join(@output, 'style.css')
+          assert.nonEmptyFile fn
+
+      teardown: ->
+        fs.rmdir @output
 
   .export(module)
