@@ -8,6 +8,7 @@ FILES := \
 	README.md \
 	TODO.md \
 	manual/*.md \
+	manual/**/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
 	test/*.coffee
