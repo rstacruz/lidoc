@@ -90,7 +90,7 @@
       <div class='list files hidden'>
         <% function tree(object, level, current, root, files) { %>
           <li class='level-<%= level %>'>
-            <% if (object.paths) { %>
+            <% if (!object.file) { %>
               <% var isExpanded = current.file.htmlFile.indexOf(object.name) > -1; %>
               <button class='item folder <%= isExpanded ? "expanded" : "" %>'>
                 <i></i>
@@ -103,7 +103,7 @@
               </ul>
             </li>
             <% } else { %>
-              <% var file = files[object]; %>
+              <% var file = files[object.file]; %>
               <% var isActive = (current.file.htmlFile === file.htmlFile) ? 'active' : ''; %>
               <a href='<%= root + file.htmlFile %>#f' class='item file <%= isActive %>'>
                 <i></i>
