@@ -27,8 +27,6 @@ build = (project, options, callback) ->
   #- Build the output directory.
   mkdirp options.output
 
-  console.warn "Writing:"  unless options.quiet
-
   async.parallel [
     (cb) -> writeCSS project, options, cb
     (cb) -> writeFiles project, options, cb

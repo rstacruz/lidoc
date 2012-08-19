@@ -14,7 +14,7 @@ FILES := \
 
 docs: $(FILES)
 	rm -rf $@
-	$(LIDOC) $(LIDOC_OPTS) $^ --output $@
+	$(LIDOC) $(LIDOC_OPTS) $^ --output $@ --index index.json
 
 lidoc.json: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index $@

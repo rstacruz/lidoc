@@ -59,20 +59,19 @@ work = (argv) ->
     process.exit 15
 
   buildFromOutput = (output) ->
+    console.warn "Writing:"  unless options.quiet
+
     if options.index
       out = JSON.stringify(output, null, 2)
 
       if options.index is true
         console.log out
       else
-        console.warn "Writing index:"  unless options.quiet
         fs.writeFile options.index, out, ->
           console.warn "  > #{options.index}"  unless options.quiet
-          console.warn "Done."  unless options.quiet
 
     if options.output
       Lidoc.build output, options, (err, results) ->
-        console.warn "Done."  unless options.quiet
 
   #- Do the actual parsing. Either import it from a JSON index, or parse it
   #from the source tree
