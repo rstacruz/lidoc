@@ -72,7 +72,7 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = new Filetree(name: segments[0], file: file.sourceFile)
+      @paths[segments[0]] = new Filetree(name: segments[0], file: file.id)
 
     else
       @paths[segments[0]] ?= new Filetree(name: segments[0])

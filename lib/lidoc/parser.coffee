@@ -28,7 +28,8 @@ parse = (options, callback) ->
   files.forEach (fname, ii) ->
 
     #- Reserve the slot so to preserve proper order.
-    project.files[fname] = null
+    id = fname
+    project.files[id] = null
 
     #- The first file will be the index file.
     isIndex = ii is 0
@@ -36,7 +37,8 @@ parse = (options, callback) ->
     #- Parse and highlight the file...
     File.create fname, isIndex, (file) ->
       i += 1
-      project.files[file.sourceFile] = file
+      file.id = id
+      project.files[id] = file
       console.warn "  < (#{i}/#{files.length}) #{file.sourceFile}"  unless options.quiet
 
       #- and when it's done...

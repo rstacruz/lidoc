@@ -34,6 +34,5 @@ Vows
 
       teardown: ->
         rimraf @output, (err, result) ->
-          console.log 'rmdir', err, result
 
   .export(module)

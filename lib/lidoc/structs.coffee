@@ -24,14 +24,14 @@ class Struct
 #
 #     {
 #       pages: {
-#         'Parser': { Page },
-#         'Helpers': { Page },
+#         'App': { Page },
+#         'App: Builder': { Page },
 #         ...
 #       },
 #       files: {
-#         'index.html': { File },
-#         'lib/parser.html': { File },
-#         '...'
+#         'hi.html': { File },
+#         'hello.html': { File },
+#         ...
 #       },
 #       fileTree: { Filetree }
 #     }
@@ -55,6 +55,7 @@ class Project extends Struct
 #
 class Page extends Struct
   constructor: ->
+    @id       = null
     @title    = null
     @htmlFile = null
     @headings = []
@@ -102,6 +103,7 @@ class Heading extends Struct
 #
 class File extends Struct
   constructor: ->
+    @id             = null
     @htmlFile       = null
     @sourceName     = null
     @extension      = null
