@@ -3,6 +3,7 @@ fs = require 'fs'
 path = require 'path'
 os = require 'os'
 rimraf = require 'rimraf'
+JsDom = require 'jsdom'
 
 files = [
   'test/fixture/README.md'
@@ -37,16 +38,16 @@ Vows
         topic: ->
           fn = path.join(@output, 'test/fixture/parser.html')
           fs.readFile fn, (err, data) =>
-            @callback err, data.toString()
+            @callback err, JsDom.jsdom(data.toString(), null, features: QuerySelector: true)
 
-        'link to page and heading': (data) ->
-          assert data.indexOf('test/fixture/parser.html#parse') > -1
-        'link to home page': (data) ->
-          assert data.indexOf('../../index.html') > -1
-        'link to another file': (data) ->
-          assert data.indexOf('test/fixture/actor.html#f') > -1
-        'github source link': (data) ->
-          assert data.indexOf('github.com/abc/def/blob/master/test/fixture/parser.js') > -1
+        'link to page and heading': (document) ->
+          assert.equal document.querySelectorAll('[href$="test/fixture/parser.html#parse"]').length, 1
+        'link to home page': (document) ->
+          assert.equal document.querySelectorAll('[href$="../../index.html"]').length, 1
+        'link to another file': (document) ->
+          assert.equal document.querySelectorAll('[href*="test/fixture/actor.html"]').length, 1
+        'github source link': (document) ->
+          assert.equal document.querySelectorAll('[href="https://github.com/abc/def/blob/master/test/fixture/parser.js"]').length, 1
 
       teardown: ->
         rimraf @output, (err, result) ->
