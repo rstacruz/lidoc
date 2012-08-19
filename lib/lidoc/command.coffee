@@ -10,7 +10,7 @@ fs = require 'fs'
 # Bulid the command line parser using `commander`.
 options = require 'commander'
 options
-  .version(Lidoc.version)
+  .version("Lidoc version #{Lidoc.version}")
   .usage("<sourcefile ...> [options]")
   .option('-o, --output <path>', 'Write documentation output into this path')
   .option('-i, --index [file]', 'Write index into file (use stdout if no file)')
