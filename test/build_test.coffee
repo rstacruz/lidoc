@@ -2,11 +2,6 @@ require 'test/env'
 fs = require 'fs'
 path = require 'path'
 
-assert.nonEmptyFile = (fname) ->
-  fs.readFile fname, (err, data) ->
-    assert.isNull err
-    assert data.length > 0
-
 files = [
   'test/fixture/README.md'
 ]
@@ -26,6 +21,9 @@ Vows
       'should build':
         'index.html': ->
           fn = path.join(@output, 'index.html')
+          assert.nonEmptyFile fn
+        'script.js': ->
+          fn = path.join(@output, 'style.css')
           assert.nonEmptyFile fn
         'style.css': ->
           fn = path.join(@output, 'style.css')
