@@ -19,9 +19,6 @@ docs: lidoc.json
 	rm -rf $@
 	$(LIDOC) $(LIDOC_OPTS) --import $^ --output $@
 
-docs.debug: $(FILES)
-	$(LIDOC) $(LIDOC_OPTS) $^ --index
-
 # Commit the documentation to the repo under a different author.
 # This way, it will not pollute statistics like Github's graphs.
 docs.commit: docs
@@ -37,4 +34,4 @@ test:
 test.spec:
 	$(VOWS) test/*_test.* --spec
 
-.PHONY: docs.commit docs.deploy docs.debug test
+.PHONY: docs.commit docs.deploy test
