@@ -80,7 +80,7 @@
             <% var file = project.files[reference.page.file]; %>
 
             <!-- The page and its headings -->
-            <li class='page has-children level-0'>
+            <li class='page has-children level-0 current-page'>
               <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
               <ul>
                 <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
