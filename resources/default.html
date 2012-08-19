@@ -51,6 +51,15 @@
         <% } %>
       </tbody>
     </table>
+
+    <% if (options.github && current.file.htmlFile === 'index.html') { %>
+    <div class='fork-me-on-github'>
+      <a href='https://github.com/<%= options.github %>'>
+        <span>Fork me on Github</span>
+      </a>
+    </div>
+    <% } %>
+
   </div>
 
   <div id="sidebar">
@@ -123,6 +132,7 @@
     </div>
 
   </div>
+
   <script src='<%= root %>script.js'></script>
 </body>
 </html>

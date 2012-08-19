@@ -559,3 +559,19 @@ header-bg() {
   background: #999;
   box-shadow: inset 2px 2px 3px rgba(0, 0, 0, 0.2);
 }
+
+/* == Fork me on Github ==================================================== */
+
+.fork-me-on-github {
+  absolute: top 0 right 0;
+  display: block;
+
+  a {
+    display: block;
+    width: 149px;
+    padding-top: 149px;
+    height: 0;
+    overflow: hidden;
+    background-image: url(https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png);
+  }
+}
