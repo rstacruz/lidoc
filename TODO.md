@@ -15,6 +15,7 @@ Later:
 
 Done
 
+ * Expandable file list
  * Link to Github file
  * JS pages/files switch
  * Custom CSS

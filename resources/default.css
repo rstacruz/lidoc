@@ -8,8 +8,11 @@ body {
   color: #252519;
   margin: 0; padding: 0;
 }
-body, td, button, input, textarea {
+body, td {
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, FreeSerif, serif;
+}
+button, input, textarea {
+  font-family: sans-serif;
 }
 button {
   font-family: sans-serif;
