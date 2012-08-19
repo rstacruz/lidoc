@@ -26,7 +26,12 @@ docs.commit: docs
 	git commit -m "Update documentation." --author "Nobody <nobody@nadarei.co>"
 
 docs.deploy: docs
-	git-update-ghpages $(GITHUB_REPO) -i docs --force
+	cd docs
+	git init .
+	git add .
+	git commit -m "Update documentation."
+	git push "git@github.com:$(GITHUB_REPO).git" origin:gh-pages
+	rm -rf .git
 
 test:
 	$(VOWS) test/*_test.* --dot-matrix
