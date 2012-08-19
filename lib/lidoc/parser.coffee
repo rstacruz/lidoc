@@ -118,6 +118,14 @@ File::highlight = (callback) ->
   {spawn} = require 'child_process'
 
   language = getLanguage @sourceFile
+
+  #- FIXME: This is a temporary fix to bypass parsing for Markdown.
+  if @extension is 'md'
+    for section, i in @sections
+      section.docsHtml = showdown.makeHtml section.docsText
+    callback @sections
+    return
+
   pygments = spawn 'pygmentize', [
     '-l', language.name,
     '-f', 'html',
