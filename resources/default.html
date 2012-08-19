@@ -76,7 +76,7 @@
                   <% var heading = page.headings[j]; %>
                   <% if (heading.level === 1) { continue; } %>
                   <li class='heading level-<%= heading.level %>'>
-                    <a href="<%= root + file.htmlFile + '#' + heading.anchor %>">
+                    <a href="<%= root + heading.file + '#' + heading.anchor %>">
                       <%= heading.title %>
                     </a>
                   </li>

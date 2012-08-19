@@ -66,18 +66,18 @@ class Page extends Struct
 # A h1, h2 or h3 heading. Looks like:
 #
 #     {
-#       level: 2,
-#       title: "parse()',
+#       title: "parse()",
 #       anchor: "parse",
-#       htmlFile: "lib/parser.html"
+#       level: 2,
+#       file: "lib/parser.html"
 #     }
 #
 class Heading extends Struct
   constructor: ->
-    @level    = null
-    @title    = null
-    @anchor   = null
-    @htmlFile = null
+    @title  = null
+    @anchor = null
+    @level  = null
+    @file   = null
     super
 
 # ## File
