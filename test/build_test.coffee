@@ -9,6 +9,7 @@ files = [
   'test/fixture/README.md'
   'test/fixture/actor.js'
   'test/fixture/parser.js'
+  'test/fixture/no_comments.js'
 ]
 
 Vows
@@ -27,6 +28,8 @@ Vows
         files = [
           'index.html'
           'test/fixture/actor.html'
+          'test/fixture/parser.html'
+          'test/fixture/no_comments.html'
           'style.css'
           'script.js'
         ]

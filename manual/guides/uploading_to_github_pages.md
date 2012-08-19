@@ -7,7 +7,7 @@ pages like so.
 ### Editing the Makefile
 
 In your `Makefile`, ensure that you already have a directive for `docs` (See
-[Makefiles][makefiles.html]). Then let's define a new directive for
+[Makefiles](makefiles.html)). Then let's define a new directive for
 `docs.deploy` like so:
 
     # Makefile

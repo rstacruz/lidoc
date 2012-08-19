@@ -8,5 +8,5 @@ global.pending = -> "pending"
 
 assert.nonEmptyFile = (fname) ->
   fs.readFile fname, (err, data) ->
-    assert.isNull err
+    assert.isNull err, "File not found: #{fname}"
     assert data.length > 0

@@ -93,24 +93,25 @@ writeFiles = (project, options, callback) ->
   #- Write each of the HTML files.
   for fname, file of project.files
     outFile = path.join(options.output, file.htmlFile)
-    depth = getFileDepth(file.htmlFile)
+    depth   = getFileDepth(file.htmlFile)
+    root    = strRepeat('../', depth)
+    page    = project.pages[file.page]
 
     output = tpl
-      title: file.mainHeading?.title
-      sections: file.sections
-      #- Prefix for For relative paths.
-      root: strRepeat('../', depth)
-      #- URL path to CSS file.
-      css: strRepeat('../', depth) + 'style.css'
-      current:
-        file: file
-        page: {}
-      file: file
-      sourceUrl: getSourceUrl(file, options)
+      title: page?.title ? file.baseHtmlFile
+      root: root                              # Prefix for relative paths
+      css: "#{root}style.css"                 # URL path to CSS file
+      sourceUrl: getSourceUrl(file, options)  # Github path
       project: project
-      fileTree: project.fileTree
       depth: depth
       options: options
+      current:
+        file: file
+        page: page
+
+      sections: file.sections
+      file: file
+      fileTree: project.fileTree
 
     #- Queue up the mkdir/writeFile calls.
     calls.push do (outFile, output) ->
