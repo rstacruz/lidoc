@@ -74,26 +74,62 @@
 
     <div class='scroll-area'>
       <div class='list pages'>
-        <ul>
-          <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
-            <% var page = project.pages[i]; %>
-            <% var file = project.files[page.file]; %>
-            <li class='page'>
+        <% if (reference.page) { %>
+          <ul>
+            <% var page = reference.page; %>
+            <% var file = project.files[reference.page.file]; %>
+
+            <!-- The page and its headings -->
+            <li class='page has-children level-0'>
               <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
               <ul>
                 <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
                   <% var heading = page.headings[j]; %>
                   <% if (heading.level === 1) { continue; } %>
                   <li class='heading level-<%= heading.level %>'>
-                    <a href="<%= root + heading.file + '#' + heading.anchor %>">
+                    <a href="#<%= heading.anchor %>">
                       <%= heading.title %>
                     </a>
                   </li>
                 <% } %>
               </ul>
             </li>
-          <% } } %>
-        </ul>
+
+            <!-- Subpages of the ref -->
+            <% var paths = reference.pageTree.paths; %>
+
+            <% function showPath(paths, level, c) { %>
+              <% for (var i in paths) { if (paths.hasOwnProperty(i)) { %>
+                <% var path = paths[i]; %>
+                <% var page = c.project.pages[path.page]; %>
+                <% var file = page ? c.project.files[page.file] : null; %>
+                <% var hasChildren = true; %>
+
+                <li class='page <%= hasChildren ? "has-children" : "" %> level-<%= level+1 %>'>
+                  <!-- The subpage -->
+                  <% if (!page) { %>
+                    <span class='a'><%= path.title %></span>
+                  <% } else { %>
+                    <a href='<%= c.root + file.htmlFile %>'><%= path.title %></a>
+                  <% } %>
+
+                  <!-- Subpages of subpages -->
+                  <% if ((level === 0) && (hasChildren)) { %>
+                    <ul>
+                      <% showPath(path.paths, level + 1, c); %>
+                    </ul>
+                  <% } %>
+                </li>
+              <% } } %>
+            <% } %>
+
+            <% showPath(paths, 0, {project:project, root:root}); %>
+
+          </ul>
+        <% } else { %>
+        no page
+        <%= JSON.stringify(current.page) %>
+        <% } %>
       </div>
 
       <div class='list files hidden'>

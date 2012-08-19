@@ -82,6 +82,12 @@ getSourceUrl = (file, options) ->
   else
     null
 
+treeFind = (pageTree, page) ->
+  current = pageTree
+  page.segments.forEach (segment) ->
+    current = current?.paths?[segment]
+  current
+
 # ### writeFiles()
 
 # Writes HTML files to the output path.
@@ -98,13 +104,17 @@ writeFiles = (project, options, callback) ->
     page    = project.pages[file.page]
 
     output = tpl
-      title: page?.title ? file.baseHtmlFile
-      root: root                              # Prefix for relative paths
-      css: "#{root}style.css"                 # URL path to CSS file
-      sourceUrl: getSourceUrl(file, options)  # Github path
-      project: project
-      depth: depth
-      options: options
+      title:       page?.title ? file.baseHtmlFile
+      root:        root                         # Prefix for relative paths
+      css:         "#{root}style.css"           # URL path to CSS file
+      sourceUrl:   getSourceUrl(file, options)  # Github path
+      project:     project
+      depth:       depth
+      options:     options
+      reference:
+        page:        page   # Reference page
+        breadcrumbs: []     # Pages that leads to the reference page
+        pageTree:    if page? then treeFind(project.pageTree, page) else null
       current:
         file: file
         page: page

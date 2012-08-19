@@ -374,30 +374,35 @@ header-bg() {
   font-size: 9pt;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
   padding-top: 10px;
-}
 
-.list a, .list button {
-  font-family: sans-serif;
-  text-decoration: none;
+  /* List items */
+  a, span.a, button {
+    font-family: sans-serif;
+    text-decoration: none;
 
-  display: block;
-  padding: 2px 20px;
-  line-height: 20px;
-  box-sizing: border-box;
-  width: 100%;
-  text-align: left;
+    display: block;
+    padding: 2px 20px;
+    line-height: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
 
-  &:hover {
-    background: rgba(50, 100, 200, 0.04);
+    &.active {
+      background: #aaa;
+      background-image: linear-gradient(top, #aaa, #9a9a9a);
+      color: white;
+      text-shadow: 0 1px 0 rgba(black, 0.2);
+    }
   }
-  &.active {
-    background: #aaa;
-    background-image: linear-gradient(top, #aaa, #9a9a9a);
-    color: white;
-    text-shadow: 0 1px 0 rgba(black, 0.2);
-  }
-  &:active {
-    background: rgba(0, 0, 0, 0.2);
+
+  /* Clickable list items */
+  a, button {
+    &:hover {
+      background: rgba(50, 100, 200, 0.04);
+    }
+    &:active {
+      background: rgba(0, 0, 0, 0.2);
+    }
   }
 }
 
@@ -450,30 +455,58 @@ header-bg() {
 }
 
 
-/* Pages */
-.list li.page > a {
-  color: #36a;
-  font-size: 1.2em;
+/* ========================================================================== */
 
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-.list li.page > ul {
-  padding: 0 0 10px 0;
+/* List: Pages */
+
+.list li.page {
+  ul {
+    padding: 0 0 10px 0;
+  }
+
+  /* Everything else */
+  a, span.a {
+    color: #888;
+    font-size: 1em;
+
+    padding-top: 1px;
+    padding-bottom: 1px;
+  }
+
+  /* Headings */
+  &.level-0 >,
+  &.level-1 > {
+    a, span.a {
+      font-weight: bold;
+      color: #555;
+      font-size: 1.2em;
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
+  }
+
+  /* Top (current reference page) */
+  &.level-0 > {
+    a, span.a {
+      color: #36a;
+    }
+  }
 }
 
-/* Function names */
-.list li.heading > a {
-  font-size: 0.9em;
-  color: #777;
-  padding-left: 30px;
-}
+.list li.heading {
+  /* Function names */
+  > a {
+    font-size: 0.9em;
+    color: #777;
+    padding-left: 30px;
+  }
 
-/* Groups */
-.list li.heading.level-2 > a {
-  text-transform: uppercase;
-  font-size: 0.8em;
-  padding-left: 20px;
+  /* Groups */
+  &.level-2 > a {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    padding-left: 20px;
+  }
 }
 
 /* ============================================================================

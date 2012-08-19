@@ -252,6 +252,10 @@ Page.createAll = (files) ->
         else
           heading.title.split(/\s*(?:\.|: |::)\s*/)
 
+        #- Tell `File` about the page ID.
+        file.page = current
+
+        #- Instanciating time.
         pages[current] = new Page
           id:       current
           title:    segments[segments.length-1] ? heading.title

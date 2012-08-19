@@ -113,6 +113,8 @@ class Heading extends Struct
 #
 #       extension: 'coffee',
 #
+#       page: "Foobar",
+#
 #       sections: [ Section, ... ]
 #       headings: [ Heading, ... ]
 #     }
@@ -133,6 +135,7 @@ class File extends Struct
     @extension      = null
     @baseSourceFile = null
     @baseHtmlFile   = null
+    @page           = null  # Associated page ID
     @sections       = []
     @headings       = []
     super
