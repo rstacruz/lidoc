@@ -18,6 +18,7 @@ getOptions = ->
     .option('-o, --output <path>', 'Write documentation output into this path')
     .option('-i, --index [file]', 'Write index into file (use stdout if no file)')
     .option('-q, --quiet', 'Suppress messages')
+    .option('--import <file>', 'Use a given JSON file as an index instead of parsing')
     .option('--css <file>', 'Specify custom CSS file')
     .option('--github <user/repo>', 'Link files to this Github repository')
     .option('--git-branch <branch>', 'Branch of Git to link to [master]', 'master')
@@ -44,7 +45,7 @@ work = (argv) ->
   options.files = options.args
 
   #- Do some sanity checks.
-  if options.files.length is 0
+  if options.files.length is 0 and not options.import
     console.warn "No files to work on."
     console.warn "See `#{options.name} --help` for more information."
     process.exit 1
@@ -57,8 +58,7 @@ work = (argv) ->
     console.warn "See `#{options.name} --help` for more information."
     process.exit 15
 
-  #- Do the actual parsing.
-  Lidoc.parse options, (output) ->
+  buildFromOutput = (output) ->
     if options.index
       out = JSON.stringify(output, null, 2)
 
@@ -73,5 +73,13 @@ work = (argv) ->
     if options.output
       Lidoc.build output, options, (err, results) ->
         console.warn "Done."  unless options.quiet
+
+  #- Do the actual parsing. Either import it from a JSON index, or parse it
+  #from the source tree
+  if options.import?
+    fs.readFile options.import, (err, data) ->
+      buildFromOutput JSON.parse(data)
+  else
+    Lidoc.parse options, buildFromOutput
 
 Command = module.exports = {work, getOptions}
