@@ -86,6 +86,8 @@ class Heading extends Struct
 # `sections`. Looks like this:
 #
 #     {
+#       id: 'lib/parser.js.html',
+#
 #       htmlFile: 'lib/parser.js.html',
 #       sourceFile: 'lib/parser.js.coffee',
 #
