@@ -62,13 +62,13 @@ class Project extends Struct
 # The `id` is usually the full name.
 #
 #     id: "Guides: Getting started"
-#     name: "Getting started"
+#     title: "Getting started"
 #     segments: ["Guides", "Getting started"]
 #
 # In the event of a clash, the `id` will include the filename.
 #
 #     id: "Lidoc (README.md)"
-#     name: "Lidoc"
+#     title: "Lidoc"
 #
 class Page extends Struct
   constructor: ->

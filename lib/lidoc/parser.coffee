@@ -64,7 +64,7 @@ Project::buildIndices = ->
 
   @pageTree = do =>
     Pagetree = require './pagetree'
-    (new Pagetree).buildFrom @pages
+    (new Pagetree).buildFrom this
 
   this
 

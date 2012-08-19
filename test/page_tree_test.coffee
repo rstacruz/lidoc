@@ -1,6 +1,7 @@
 require 'test/env'
 
 files = [
+  'test/fixture/README.md'
   'test/fixture/tree-1.md'
   'test/fixture/tree-2.md'
   'test/fixture/tree-3.md'
@@ -9,7 +10,7 @@ files = [
 Vows
   .describe('Lidoc page tree')
   .addBatch
-    'Page tree':
+    "The project's":
       topic: ->
         Lidoc.parse files: files, quiet: true, (project) =>
           @callback null, project
@@ -32,23 +33,32 @@ Vows
         topic: (project) ->
           [ project, project.pageTree ]
 
-        'exists': ([project, tree]) ->
+        'should exist': ([project, tree]) ->
           assert.isObject project.pageTree
 
-        'stuff': ([project, tree]) ->
-          assert.equal tree.name, ''
+        "'s root page":
+          'should have a title': ([project, tree]) ->
+            assert.equal tree.title, 'Hello'
 
+          'should have the right source file': ([project, tree]) ->
+            page = project.pages[tree.page]
+            file = project.files[page.file]
+
+            assert.equal file.sourceFile, 'test/fixture/README.md'
+
+        "'s 1st-level page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Guides']
           assert.equal tree.paths['Guides'].page, 'Guides'
 
+        "'s 2nd-level page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Guides'].paths['Getting started']
           assert.equal tree.paths['Guides'].paths['Getting started'].page, 'Guides: Getting started'
 
-        'Inferred page': ([project, tree]) ->
+        "'s inferred page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Recipes']
           assert.isNull tree.paths['Recipes'].page
 
-        'Child of inferred page': ([project, tree]) ->
+        "'s inferred page's child should exist": ([project, tree]) ->
           assert.isObject tree.paths['Recipes'].paths['Updating Git']
           assert.isNull tree.paths['Recipes'].page
 

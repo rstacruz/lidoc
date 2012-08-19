@@ -27,36 +27,41 @@
 
 class Pagetree
   constructor: (options={}) ->
-    @id    = options.id ? ''
-    @name  = options.name ? ''
+    @id    = options.id ? null
+    @title = options.title ? null
     @page  = null
     @paths = {}
 
-  # ### buildFrom(pages)
-  # Builds a tree from a given project pages index `pages`.
-  buildFrom: (pages) ->
-    for i, page of pages
-      @addPage page, page.segments
+  # ### buildFrom(project)
+  # Builds a tree from a given project.
+  buildFrom: (project) ->
+    for i, page of project.pages
+      @addPage page, page.segments, project
 
     this
 
   # ### setPage
   # Absorbs properties of given page `page`.
   setPage: (page) ->
-    @name = page.name
-    @page = page.id
+    @title = page.title
+    @page  = page.id
 
-  addPage: (page, segments) ->
-    @paths[segments[0]] ?= new Pagetree(id: segments[0])
+  addPage: (page, segments, project) ->
+    file = project.files[page.file]
+
+    #- If it's a grandchild, make the intermediate parents first.
+    if segments.length > 1
+      @paths[segments[0]] ?= new Pagetree(id: segments[0])
+      @paths[segments[0]].title = segments[0]
+      @paths[segments[0]].addPage page, segments.slice(1), project
+
+    #- The README will be the root of all
+    else if file.htmlFile is 'index.html'
+      @setPage page
 
     #- If it's a child: add the page as a child.
-    if segments.length is 1
-      @paths[segments[0]].setPage page
-
-    #- Else, make the parent.
     else
-      @paths[segments[0]].name = segments[0]
-      @paths[segments[0]].addPage page, segments.slice(1)
-
+      @paths[segments[0]] ?= new Pagetree(id: segments[0])
+      @paths[segments[0]].setPage page
 
 module.exports = Pagetree
