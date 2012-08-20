@@ -15,9 +15,8 @@ Vows
 
           getNumber: -> 2
 
-          @property 'number', getter: @::getNumber
-          @property 'isbn',
-            getter: ->
+          @property 'number', get: @::getNumber
+          @property 'isbn', get: ->
               'a123'
 
           constructor: (options={}) ->
