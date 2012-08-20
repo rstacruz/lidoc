@@ -10,6 +10,7 @@ FILES := \
 	manual/**/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
+	lib/**/*.js \
 	test/*.coffee \
 	TODO.md \
 
@@ -44,6 +45,6 @@ test:
 	$(VOWS) test/*_test.* --dot-matrix
 
 test.spec:
-	$(VOWS) test/*_test.* --spec
+	$(VOWS) test/*_test.* -i --spec
 
 .PHONY: docs.commit docs.deploy test test.spec clean
