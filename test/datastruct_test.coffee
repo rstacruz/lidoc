@@ -11,6 +11,8 @@ Vows
           @property 'author', default: ''
           @property 'title', default: ''
 
+          @property 'sections', default: {}
+
           getNumber: -> 2
 
           @property 'number', getter: @::getNumber
@@ -60,5 +62,60 @@ Vows
 
         'should use given properties': (json) ->
           assert.equal json.title, 'World'
+
+      'defaults should not bleed': (klass) ->
+        inst1 = new klass
+        inst1.sections['a'] = 2
+
+        inst2 = new klass
+        assert.isEmpty inst2.sections
+
+      'recurse':
+        topic: ->
+          class Section
+            constructor: (@number, @book) ->
+              console.log arguments
+
+          class Book
+            datastruct this
+
+            @property 'sections', subtype: Section, default: []
+
+            constructor: (options) -> @set options
+
+          [Section, Book]
+
+        'arrays': ([Section, Book]) ->
+          book = new Book sections: [10, 20]
+
+          assert.equal book.sections[0].number, 10
+          assert.equal book.sections[1].number, 20
+
+          assert.equal book.sections[0].book, book
+
+        'objects': ([Section, Book]) ->
+          book = new Book sections: {a: 10, b: 20}
+
+          assert.equal book.sections['a'].number, 10
+          assert.equal book.sections['b'].number, 20
+
+          assert.equal book.sections['b'].book, book
+
+      'multi properties':
+        topic: ->
+          class Book
+            datastruct this
+
+            @property
+              'author':   default: ''
+              'sections': default: {}
+
+            constructor: (options={}) ->
+              @set options
+
+        'should work': (klass) ->
+          assert.equal klass.properties['author'].default, ''
+          assert.isObject klass.properties['sections'].default
+          assert.isEmpty klass.properties['sections'].default
 
   .export(module)
