@@ -111,6 +111,7 @@ writeFiles = (project, options, callback) ->
       project:     project
       depth:       depth
       options:     options
+      sections: file.sections
       reference:
         page:        page   # Reference page
         breadcrumbs: []     # Pages that leads to the reference page
@@ -118,10 +119,6 @@ writeFiles = (project, options, callback) ->
       current:
         file: file
         page: page
-
-      sections: file.sections
-      file: file
-      fileTree: project.fileTree
 
     #- Queue up the mkdir/writeFile calls.
     calls.push do (outFile, output) ->

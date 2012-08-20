@@ -159,8 +159,8 @@
         <% } %>
 
         <ul>
-        <% for (var i in fileTree.paths) { if (fileTree.paths.hasOwnProperty(i)) { %>
-          <%= tree(fileTree.paths[i], 1, current, root, project.files) %>
+        <% for (var i in project.fileTree.paths) { if (project.fileTree.paths.hasOwnProperty(i)) { %>
+          <%= tree(project.fileTree.paths[i], 1, current, root, project.files) %>
         <% } } %>
         </ul>
 
