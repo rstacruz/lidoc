@@ -36,7 +36,13 @@ class Pagetree
     'page':  default: null
     'paths': default: {}, subtype: Pagetree
 
-  constructor: (options={}, @parent) ->
+  constructor: (options={}, parent) ->
+    if parent?.project
+      @parent  = parent
+      @project = parent.project
+    else if parent?.files
+      @project = parent
+
     @set options
 
   # ### buildFrom(project)

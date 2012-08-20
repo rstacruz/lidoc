@@ -24,12 +24,24 @@
 # template.
 
 path = require 'path'
+datastruct = require '../datastruct'
 
 class Filetree
-  constructor: (options={}) ->
-    @name = options.name ? ""
-    @file = options.file ? null
-    @paths = {}
+  datastruct this
+
+  @property
+    'name':    default: ''
+    'file':    default: ''
+    'paths':   default: {}, subtype: Filetree
+
+  constructor: (options={}, parent) ->
+    if parent?.project
+      @parent  = parent
+      @project = parent.project
+    else if parent?.files
+      @project = parent
+
+    @set options
 
   # ### buildFrom()
 
