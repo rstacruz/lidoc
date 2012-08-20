@@ -10,7 +10,7 @@ FILES := \
 	manual/**/*.md \
 	lib/*.coffee \
 	lib/**/*.coffee \
-	lib/**/*.js \
+	lib/*.js \
 	test/*.coffee \
 	TODO.md \
 

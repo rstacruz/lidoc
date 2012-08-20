@@ -11,15 +11,6 @@ Filetree = require './filetree'
 Pagetree = require './pagetree'
 datastruct = require '../datastruct'
 
-# ## Struct
-
-# Basic superclass of all structs.
-#
-class Struct
-  constructor: (source) ->
-    for key, value of source
-      @[key] = value
-
 # ## Project
 
 # Holds indexes of `Page`s and `File`s.
@@ -52,7 +43,8 @@ class Project
     'fileTree': default: {}, subtype: Filetree
     'pageTree': default: {}, subtype: Pagetree
 
-  constructor: (options) -> @set options
+  constructor: (options) ->
+    @set options
 
 # ## Page
 
@@ -101,13 +93,18 @@ class Page
 #       file: "lib/parser.html"
 #     }
 #
-class Heading extends Struct
-  constructor: ->
-    @title  = null
-    @anchor = null
-    @level  = null
-    @file   = null
-    super
+class Heading
+  datastruct this
+
+  @property
+    'title':   default: null
+    'anchor':  default: null
+    'level':   default: null
+    'file':    default: null
+
+  constructor: (options, @parent) ->
+    @project = @parent?.project
+    @set options
 
 # ## File
 
@@ -139,18 +136,22 @@ class Heading extends Struct
 #       console.log file
 #       # `file` is a File object
 #
-class File extends Struct
-  constructor: ->
-    @id             = null
-    @htmlFile       = null
-    @sourceFile     = null
-    @extension      = null
-    @baseSourceFile = null
-    @baseHtmlFile   = null
-    @page           = null  # Associated page ID
-    @sections       = []
-    @headings       = []
-    super
+class File
+  datastruct this
+
+  @property
+    'id':             default: null
+    'htmlFile':       default: null
+    'sourceFile':     default: null
+    'extension':      default: null
+    'baseSourceFile': default: null
+    'baseHtmlFile':   default: null
+    'page':           default: null  # Associated page ID
+    'sections':       default: [], subtype: Section
+    'headings':       default: [], subtype: Heading
+
+  constructor: (options, @project) ->
+    @set options
 
 # ## Section
 
@@ -166,13 +167,18 @@ class File extends Struct
 #       anchor: 'Parsing-code'
 #     }
 #
-class Section extends Struct
-  constructor: ->
-    @docsText = null
-    @codeText = null
-    @docsHtml = null
-    @codeHtml = null
-    @anchor = null
-    super
+class Section
+  datastruct this
+
+  @property
+    'docsText': default: null
+    'codeText': default: null
+    'docsHtml': default: null
+    'codeHtml': default: null
+    'anchor':   default: null
+
+  constructor: (options, @file) ->
+    @project = @file?.project
+    @set options
 
 module.exports = {Section, File, Project, Page, Heading}
