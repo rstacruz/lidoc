@@ -1,4 +1,4 @@
-# # Lidoc.Structs
+# # Models
 
 # Structures. You can access these from {Lidoc} itself:
 #
@@ -11,42 +11,60 @@ Filetree = require './filetree'
 Pagetree = require './pagetree'
 datastruct = require '../datastruct'
 
-# ## Project
+# # Models: Heading
 
-# Holds indexes of `Page`s and `File`s.
-#
-# This is also the output of `parse()`.
+# A h1, h2 or h3 heading. Looks like:
 #
 #     {
-#       pages: {
-#         'App': { Page },
-#         'App: Builder': { Page },
-#         ...
-#       },
-#       files: {
-#         'hi.html': { File },
-#         'hello.html': { File },
-#         ...
-#       },
-#       fileTree: { Filetree }
-#       pageTree: { Pagetree }
+#       title: "parse()",
+#       anchor: "parse",
+#       level: 2,
+#       file: "lib/parser.html"
 #     }
 #
-# The keys of `pages` and `files` are their `id` fields.
-#
-class Project
+class Heading
   datastruct this
 
   @property
-    'pages':    default: {}, subtype: Page
-    'files':    default: {}, subtype: File
-    'fileTree': default: {}, type: Filetree
-    'pageTree': default: {}, type: Pagetree
+    'title':   default: null
+    'anchor':  default: null
+    'level':   default: null
+    'file':    default: null
 
-  constructor: (options) ->
+  constructor: (options, @parent) ->
+    @project = @parent?.project
     @set options
 
-# ## Page
+# # Models: Section
+
+# Represents a comment/code block pair.
+#
+#     {
+#       docsText: '# Parsing code ...'
+#       docsHtml: '<h3>Parsing code</h3> ...'
+#
+#       codeText: 'def parsingCode() ...'
+#       codeHtml: '...'
+#
+#       anchor: 'Parsing-code'
+#     }
+#
+class Section
+  datastruct this
+
+  @property
+    'docsText': default: null
+    'codeText': default: null
+    'docsHtml': default: null
+    'codeHtml': default: null
+    'anchor':   default: null
+    'headings': default: []
+
+  constructor: (options, @file) ->
+    @project = @file?.project
+    @set options
+
+# # Models: Page
 
 # Extracted from `<h1>`s of files. Looks like this:
 #
@@ -82,31 +100,7 @@ class Page
   constructor: (options, @project) ->
     @set options
 
-# ## Heading
-
-# A h1, h2 or h3 heading. Looks like:
-#
-#     {
-#       title: "parse()",
-#       anchor: "parse",
-#       level: 2,
-#       file: "lib/parser.html"
-#     }
-#
-class Heading
-  datastruct this
-
-  @property
-    'title':   default: null
-    'anchor':  default: null
-    'level':   default: null
-    'file':    default: null
-
-  constructor: (options, @parent) ->
-    @project = @parent?.project
-    @set options
-
-# ## File
+# # Models: File
 
 # Represents a source file and it's generated HTML file. Stores code/docs in
 # `sections`. Looks like this:
@@ -153,33 +147,39 @@ class File
   constructor: (options, @project) ->
     @set options
 
-# ## Section
+# # Models: Project
 
-# Represents a comment/code block pair.
+# Holds indexes of `Page`s and `File`s.
+#
+# This is also the output of `parse()`.
 #
 #     {
-#       docsText: '# Parsing code ...'
-#       docsHtml: '<h3>Parsing code</h3> ...'
-#
-#       codeText: 'def parsingCode() ...'
-#       codeHtml: '...'
-#
-#       anchor: 'Parsing-code'
+#       pages: {
+#         'App': { Page },
+#         'App: Builder': { Page },
+#         ...
+#       },
+#       files: {
+#         'hi.html': { File },
+#         'hello.html': { File },
+#         ...
+#       },
+#       fileTree: { Filetree }
+#       pageTree: { Pagetree }
 #     }
 #
-class Section
+# The keys of `pages` and `files` are their `id` fields.
+#
+class Project
   datastruct this
 
   @property
-    'docsText': default: null
-    'codeText': default: null
-    'docsHtml': default: null
-    'codeHtml': default: null
-    'anchor':   default: null
-    'headings': default: []
+    'pages':    default: {}, subtype: Page
+    'files':    default: {}, subtype: File
+    'fileTree': default: {}, type: Filetree
+    'pageTree': default: {}, type: Pagetree
 
-  constructor: (options, @file) ->
-    @project = @file?.project
+  constructor: (options) ->
     @set options
 
 module.exports = {Section, File, Project, Page, Heading}
