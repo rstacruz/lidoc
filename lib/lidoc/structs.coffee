@@ -7,6 +7,10 @@
 #     Lidoc.Page
 #     Lidoc.Project
 
+Filetree = require './filetree'
+Pagetree = require './pagetree'
+datastruct = require '../datastruct'
+
 # ## Struct
 
 # Basic superclass of all structs.
@@ -39,13 +43,16 @@ class Struct
 #
 # The keys of `pages` and `files` are their `id` fields.
 #
-class Project extends Struct
-  constructor: ->
-    @pages    = {}
-    @files    = {}
-    @fileTree = {}
-    @pageTree = {}
-    super
+class Project
+  datastruct this
+
+  @property
+    'pages':    default: {}, subtype: Page
+    'files':    default: {}, subtype: File
+    'fileTree': default: {}, subtype: Filetree
+    'pageTree': default: {}, subtype: Pagetree
+
+  constructor: (options) -> @set options
 
 # ## Page
 
@@ -70,13 +77,18 @@ class Project extends Struct
 #     id: "Lidoc (README.md)"
 #     title: "Lidoc"
 #
-class Page extends Struct
-  constructor: ->
-    @id       = null
-    @title    = null
-    @file     = null
-    @headings = []
-    super
+class Page
+  datastruct this
+
+  @property
+    'id':       default: null
+    'title':    default: null
+    'file':     default: null
+    'segments': default: []
+    'headings': default: [], subtype: Heading
+
+  constructor: (options, @project) ->
+    @set options
 
 # ## Heading
 

@@ -74,7 +74,6 @@ Vows
         topic: ->
           class Section
             constructor: (@number, @book) ->
-              console.log arguments
 
           class Book
             datastruct this
