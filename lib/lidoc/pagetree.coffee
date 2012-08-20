@@ -1,5 +1,7 @@
 # # Lidoc: Pagetree
 
+datastruct = require '../datastruct'
+
 # An index for pages.
 #
 # Accessed via `project.pageTree`. See {Project}.
@@ -26,11 +28,16 @@
 #     project.pageTree.paths['Guides'].paths['Getting started']
 
 class Pagetree
-  constructor: (options={}) ->
-    @id    = options.id ? null
-    @title = options.title ? null
-    @page  = null
-    @paths = {}
+  datastruct this
+
+  @property
+    'id':    default: null
+    'title': default: null
+    'page':  default: null
+    'paths': default: {}, subtype: Pagetree
+
+  constructor: (options={}, @parent) ->
+    @set options
 
   # ### buildFrom(project)
   # Builds a tree from a given project.

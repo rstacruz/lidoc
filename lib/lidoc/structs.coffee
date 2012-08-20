@@ -40,8 +40,8 @@ class Project
   @property
     'pages':    default: {}, subtype: Page
     'files':    default: {}, subtype: File
-    'fileTree': default: {}, subtype: Filetree
-    'pageTree': default: {}, subtype: Pagetree
+    'fileTree': default: {}, type: Filetree
+    'pageTree': default: {}, type: Pagetree
 
   constructor: (options) ->
     @set options
@@ -176,6 +176,7 @@ class Section
     'docsHtml': default: null
     'codeHtml': default: null
     'anchor':   default: null
+    'headings': default: []
 
   constructor: (options, @file) ->
     @project = @file?.project

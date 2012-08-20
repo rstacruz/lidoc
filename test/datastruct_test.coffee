@@ -69,6 +69,24 @@ Vows
         inst2 = new klass
         assert.isEmpty inst2.sections
 
+      'type':
+        topic: ->
+          class Section
+            constructor: (@number, @book) ->
+
+          class Book
+            datastruct this
+            @property 'section', type: Section
+            constructor: (options) -> @set options
+
+          [Section, Book]
+
+        'yes': ([Section, Book]) ->
+          book = new Book section: 2
+          assert.equal book.section.constructor, Section
+          assert.equal book.section.number, 2
+          assert.equal book.section.book, book
+
       'recurse':
         topic: ->
           class Section
