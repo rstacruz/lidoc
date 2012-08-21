@@ -54,13 +54,26 @@ class PageNode
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
+  # ### file
+  # Returns the associated `File`.
+  @property 'file', hidden: true, get: ->
+    @page?.file
+
   # ### breadcrumbs
   # Returns an array of `PageNode`s, starting from the root, to this one.
   @property 'breadcrumbs', hidden: true, get: ->
     if @parent
       @parent.breadcrumbs.concat [this]
     else
-      []
+      [this]
+
+  # ### ancestors
+  # Returns an array of `PageNode`s, starting from the root, to this node's
+  # parent.
+  @property 'ancestors', hidden: true, get: ->
+    crumbs = @breadcrumbs
+    crumbs.pop()
+    crumbs
 
   # ### buildFrom(project)
   # Builds a tree from a given project.

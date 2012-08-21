@@ -75,12 +75,30 @@
     <div class='scroll-area'>
       <div class='list pages'>
         <% if (reference.page) { %>
-          <ul>
+          <% var node = reference.page.node; %>
+
+          <% if (node.ancestors.length > 0) { %>
+            <% var ancestors = node.ancestors; %>
+            <ul class='breadcrumbs'>
+              <% for (var j=0, len=ancestors.length; j<len; ++j) { %>
+                <% var _node = ancestors[j]; %>
+
+                <li class='page back'>
+                <% if (_node.page) { %>
+                  <a href='<%= root + _node.file.htmlFile %>'><%= _node.title %></a>
+                <% } else { %>
+                  <span class='a'><%= _node.title %></span>
+                <% } %>
+              <% } %>
+            </ul>
+          <% } %>
+
+          <ul class='current-page'>
             <% var page = reference.page; %>
             <% var file = page.file; %>
 
             <!-- The page and its headings -->
-            <li class='page has-children level-0 current-page'>
+            <li class='page has-children level-0'>
               <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
               <ul>
                 <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
@@ -94,6 +112,9 @@
                 <% } %>
               </ul>
             </li>
+          </ul>
+
+          <ul class='reference'>
 
             <!-- Subpages of the ref -->
             <% var paths = reference.pageTree.paths; %>

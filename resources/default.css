@@ -465,14 +465,39 @@ header-bg() {
 /* List: Pages */
 
 .list.pages {
-  li.current-page {
+  ul.breadcrumbs,
+  ul.current-page {
     border-bottom: solid 1px #ddd;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+    padding-bottom: 10px;
     margin-bottom: 10px;
 
-    > a {
-      active-bg();
+    ul {
+      padding-bottom: 0;
     }
+  }
+
+  ul.current-page > li > a {
+    active-bg();
+  }
+}
+
+/* Crumbs */
+.list ul.breadcrumbs {
+  a, span.a {
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &:before {
+      content: '\25c0';
+      font-size: 0.8em;
+      margin-right: 8px;
+      color: #aaa;
+    }
+  }
+  a:hover {
+    color: #555;
   }
 }
 

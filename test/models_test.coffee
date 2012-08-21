@@ -29,7 +29,7 @@ Vows
         '.page': ([project, file]) ->
           assert.equal file.page, project.pages['Guides: Getting started']
 
-      'A page':
+      'Page':
         '1':
           topic: (project) ->
             project.pages['Guides: Getting started']
@@ -57,7 +57,7 @@ Vows
           '.parentPage': ([page, parent]) ->
             assert.equal page.parentPage, parent
 
-      'A pagetree node':
+      'PageNode':
         topic: (project) ->
           page = project.pages['Guides: Getting started']
           [project, page, page.node]
@@ -71,10 +71,19 @@ Vows
         '.breadcrumbs': ([project, page, node]) ->
           crumbs = node.breadcrumbs
 
-          assert.equal crumbs[0], project.pages['Guides'].node
-          assert.equal crumbs[1], node
+          assert.equal crumbs[0], project.pageTree
+          assert.equal crumbs[1], project.pages['Guides'].node
+          assert.equal crumbs[2], node
+          assert.equal crumbs.length, 3
 
-      'A filetree node': ->
+        '.ancestors': ([project, page, node]) ->
+          list = node.ancestors
+
+          assert.equal list[0], project.pageTree
+          assert.equal list[1], project.pages['Guides'].node
+          assert.equal list.length, 2
+
+      'FileNode': ->
         topic: (project) ->
           file = project.files['test/fixture/guides/getting_started.md']
           [project, file, file.node]
