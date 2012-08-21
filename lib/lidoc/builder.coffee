@@ -101,6 +101,8 @@ writeFiles = (project, options, callback) ->
     outFile = path.join(options.output, file.htmlFile)
     depth   = getFileDepth(file.htmlFile)
     root    = strRepeat('../', depth)
+
+    #- A file may or may not have a page (say if it has no H1).
     page    = file.page
 
     output = tpl
@@ -111,11 +113,8 @@ writeFiles = (project, options, callback) ->
       project:     project
       depth:       depth
       options:     options
-      sections: file.sections
-      reference:
-        page:        page   # Reference page
-        breadcrumbs: []     # Pages that leads to the reference page
-        pageTree:    if page? then treeFind(project.pageTree, page) else null
+      sections:    file.sections
+      reference:   page?.node.reference
       current:
         file: file
         page: page

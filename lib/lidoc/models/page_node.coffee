@@ -75,6 +75,27 @@ class PageNode
     crumbs.pop()
     crumbs
 
+  # ### hasChildren
+  # Returns true if it has children.
+  @property 'hasChildren', hidden: true, get: ->
+    Object.keys(@paths).length isnt 0
+
+  # ### root
+  # Returns the root node.
+  @property 'root', hidden: true, get: ->
+    @project.pageTree
+
+  # ### reference
+  # Go through each of the breadcrumbs and find one with children.
+  @property 'reference', hidden: true, get: ->
+    crumbs = @breadcrumbs
+    output = @root
+
+    for i in [0..crumbs.length-1]
+      output = crumbs[i]  if crumbs[i].hasChildren
+
+    output
+
   # ### buildFrom(project)
   # Builds a tree from a given project.
   buildFrom: (@project) ->

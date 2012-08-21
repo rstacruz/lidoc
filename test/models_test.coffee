@@ -83,6 +83,17 @@ Vows
           assert.equal list[1], project.pages['Guides'].node
           assert.equal list.length, 2
 
+      'PageNode.hasChildren':
+        'true': (project) ->
+          node = project.pages['Guides: Getting started'].node
+          assert.isFalse node.hasChildren
+
+      'PageNode.reference':
+          '1': (project) ->
+            node = project.pages['Guides: Getting started'].node
+            ref = node.reference
+            assert.equal ref.title, 'Guides'
+
       'FileNode': ->
         topic: (project) ->
           file = project.files['test/fixture/guides/getting_started.md']

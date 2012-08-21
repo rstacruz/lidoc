@@ -516,8 +516,7 @@ header-bg() {
   }
 
   /* Headings */
-  &.level-0 >,
-  &.level-1 > {
+  &.has-children > {
     a, span.a {
       font-weight: bold;
       color: #555;
@@ -530,6 +529,8 @@ header-bg() {
   /* Top (current reference page) */
   &.level-0 > {
     a, span.a {
+      font-weight: bold;
+      font-size: 1.2em;
       color: #36a;
     }
   }
