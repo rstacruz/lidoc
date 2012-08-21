@@ -79,8 +79,8 @@
           <% var node = reference; %>
 
           <!-- Breadcrumbs -->
-          <% if (node.ancestors.length > 0) { %>
-            <% var ancestors = node.ancestors; %>
+          <% if (current.page.node.ancestors.length > 0) { %>
+            <% var ancestors = current.page.node.ancestors; %>
             <ul class='breadcrumbs'>
               <% for (var j=0, len=ancestors.length; j<len; ++j) { %>
                 <% var _node = ancestors[j]; %>
