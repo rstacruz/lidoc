@@ -1,8 +1,14 @@
 sidebar-width = 200px;
+royal-blue = #36a;
+
 @import 'nib';
 
 active-bg() {
   background-image: linear-gradient(top, rgba(50,100,200,0.06), rgba(50,100,200,0.09));
+  box-shadow: inset 0 1px 0 rgba(50, 100, 200, 0.05), inset 0 -1px 0 rgba(50, 100, 200, 0.05);
+}
+darker-active-bg() {
+  background-image: linear-gradient(top, rgba(50,100,200,0.09), rgba(50,100,200,0.20));
   box-shadow: inset 0 1px 0 rgba(50, 100, 200, 0.05), inset 0 -1px 0 rgba(50, 100, 200, 0.05);
 }
 
@@ -487,14 +493,21 @@ shadowed-section() {
   ul {
     padding-bottom: 0;
   }
+  a, span.a {
+    &.active {
+      darker-active-bg();
+      color: royal-blue;
+    }
+  }
 }
+
 .list ul.current-page {
   /* Top (current reference page) */
   > li > {
     a, span.a {
       font-weight: bold;
       font-size: 1.2em;
-      color: #36a;
+      color: royal-blue;
     }
   }
 }
