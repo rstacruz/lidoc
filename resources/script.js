@@ -12,7 +12,7 @@
       $(options.on).each(function() {
         if (stop) return;
         var min = $(this).position().top;
-        var isVisible = (min < $this.height() * 0.40); // && max >= y);
+        var isVisible = (min < $this.height() * (options.threshold || 0.20)); // && max >= y);
         if (isVisible) {
           current = this;
         } else {
@@ -70,9 +70,14 @@
    $("#area").scrollspy({
      on: 'tr.heading',
      alwaysOn: true,
+     threshold: 0.20,
      onChange: function(current) {
        var id = $(current).attr('id');
        $(".current-page a").removeClass('active');
+
+       $("tr").removeClass('active');
+       $(current).addClass('active');
+
        if ($(current).find('h1').length > 0) {
          $(".current-page a[href='#']").addClass('active');
        } else {

@@ -493,12 +493,6 @@ shadowed-section() {
   ul {
     padding-bottom: 0;
   }
-  a, span.a {
-    &.active {
-      darker-active-bg();
-      color: royal-blue;
-    }
-  }
 }
 
 .list ul.current-page {
@@ -509,6 +503,13 @@ shadowed-section() {
       font-size: 1.2em;
       color: royal-blue;
       margin-bottom: 5px;
+    }
+  }
+  /* Scrollspy active */
+  a, span.a {
+    &.active {
+      darker-active-bg();
+      color: royal-blue;
     }
   }
 }
@@ -675,3 +676,16 @@ shadowed-section() {
     background-image: url(https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png);
   }
 }
+
+
+/* ========================================================================== */
+
+h2, h3, h4, h5, h6 {
+  transition: color 300ms linear, text-shadow 300ms linear;
+
+  tr.active & {
+    color: royal-blue;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.04);
+  }
+}
+
