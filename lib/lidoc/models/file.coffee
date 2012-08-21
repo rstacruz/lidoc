@@ -52,4 +52,16 @@ class File
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
+  # ### node
+  # Returns the associated `Filetree` node.
+  @property 'node', hidden: true, get: ->
+    node = @project.fileTree
+    @segments.forEach (segment) -> node = node?.paths[segment]
+    node
+
+  # ### parentNode
+  # Returns the parent file node.
+  @property 'parentNode', hidden: true, get: ->
+    @node.parent
+
 module.exports = File

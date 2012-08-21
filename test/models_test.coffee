@@ -68,4 +68,9 @@ Vows
         '.page': ([project, page, node]) ->
           assert.equal node.page, page
 
+      'A filetree node': ->
+        topic: (project) ->
+          file = project.files['test/fixture/guides/getting_started.md']
+          [project, file, file.node]
+
   .export(module)

@@ -38,10 +38,15 @@ class Filetree
     if parent?.constructor is Filetree
       @parent  = parent
       @project = parent.project
-    else if parent?.files
+    else if parent?.files # Project
       @project = parent
 
     @set options
+
+  # ### file
+  # Returns the associated `File`.
+  @property 'file', hidden: true, get: ->
+    @project.files[@fileID]
 
   # ### buildFrom()
 
@@ -84,10 +89,10 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = new Filetree(name: segments[0], fileID: file.id)
+      @paths[segments[0]] = new Filetree(name: segments[0], fileID: file.id, this)
 
     else
-      @paths[segments[0]] ?= new Filetree(name: segments[0])
+      @paths[segments[0]] ?= new Filetree(name: segments[0], this)
       @paths[segments[0]].addFile segments.slice(1), file
 
     this
