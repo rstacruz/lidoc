@@ -45,9 +45,9 @@ class Pagetree
 
     @set options
 
-  # ### getPage
-  # Returns the `Page`
-  @property 'getPage', hidden: true, get: ->
+  # ### page
+  # Returns the `Page` instance associated with the node.
+  @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
   # ### buildFrom(project)

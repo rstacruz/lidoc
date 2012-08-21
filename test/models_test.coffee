@@ -61,7 +61,7 @@ Vows
         '.project': ([project, page, node]) ->
           assert.equal node.project, project
 
-        '.getPage': ([project, page, node]) ->
-          assert.equal node.getPage, page
+        '.page': ([project, page, node]) ->
+          assert.equal node.page, page
 
   .export(module)

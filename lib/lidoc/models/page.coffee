@@ -49,7 +49,7 @@ class Page
   # ### parentPage
   # Returns the parent page.
   @property 'parentPage', hidden: true, get: ->
-    @parentNode.getPage
+    @parentNode.page
 
   constructor: (options, @project) ->
     @set options
