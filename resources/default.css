@@ -683,11 +683,7 @@ shadowed-section() {
 /* ========================================================================== */
 
 h2, h3, h4, h5, h6 {
-  transition: color 300ms linear, text-shadow 300ms linear;
-
   tr.active & {
-    color: royal-blue;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.04);
     position: relative;
 
     &:after {
@@ -695,7 +691,7 @@ h2, h3, h4, h5, h6 {
       display: inline-block;
       float: right;
       margin-left: 10px;
-      color: #bbb;
+      color: #ddd;
 
       font-size: 18pt;
       line-height: 1em;
