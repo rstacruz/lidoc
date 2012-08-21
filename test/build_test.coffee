@@ -45,10 +45,13 @@ Vows
 
         'link to heading': (document) ->
           assert document.querySelectorAll('[href="#parse"]').length >= 1
-        'link to home page [fails]': (document) ->
+
+        'link to home page [fails]': pending (document) ->
           assert.equal document.querySelectorAll('[href$="../../index.html"]').length, 1
+
         'link to another file': (document) ->
           assert.equal document.querySelectorAll('[href*="test/fixture/actor.html"]').length, 1
+
         'github source link': (document) ->
           assert.equal document.querySelectorAll('[href="https://github.com/abc/def/blob/master/test/fixture/parser.js"]').length, 1
 

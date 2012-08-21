@@ -29,7 +29,7 @@ Vows
 
         './test/fixture/parser.html': (tree) ->
           node = tree.paths['test'].paths['fixture'].paths['parser.html']
-          assert.equal node.file, 'test/fixture/parser.js'
+          assert.equal node.fileID, 'test/fixture/parser.js'
 
       'ensure sorted': (tree) ->
         folder = tree.paths['test'].paths['fixture']

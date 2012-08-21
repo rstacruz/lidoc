@@ -52,5 +52,4 @@ class File
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
-
 module.exports = File

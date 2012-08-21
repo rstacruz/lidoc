@@ -12,10 +12,10 @@
 #           paths:
 #             'file.js':
 #               name: 'file.js'
-#               file: {File}
+#               fileID: 'app/file.js'
 #         'README.md':
-#           name: 'file.js'
-#           file: {File}
+#           name: 'README.md'
+#           fileID: 'README.md'
 #
 #     # File (assets/javascripts/parser.html)
 #     tree.paths['assets'].paths['javascripts'].paths['parser.html']
@@ -31,7 +31,7 @@ class Filetree
 
   @property
     'name':    default: ''
-    'file':    default: ''
+    'fileID':  default: ''
     'paths':   default: {}, subtype: Filetree
 
   constructor: (options={}, parent) ->
@@ -84,7 +84,7 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = new Filetree(name: segments[0], file: file.id)
+      @paths[segments[0]] = new Filetree(name: segments[0], fileID: file.id)
 
     else
       @paths[segments[0]] ?= new Filetree(name: segments[0])
