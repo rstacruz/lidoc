@@ -46,7 +46,7 @@ Vows
         'link to heading': (document) ->
           assert document.querySelectorAll('[href="#parse"]').length >= 1
 
-        'link to home page [fails]': pending (document) ->
+        'link to home page': (document) ->
           assert.equal document.querySelectorAll('[href$="../../index.html"]').length, 1
 
         'link to another file': (document) ->
