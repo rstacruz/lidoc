@@ -11,13 +11,13 @@
     <div class='file-header'>
       <% if (sourceUrl) { %>
         <a href="<%= sourceUrl %>">
-          <strong><%= current.file.sourceFile %></strong>
+          <strong title='<%= current.file.sourceFile %>'><%= current.file.baseSourceFile %></strong>
           <small>View source</small>
         </a>
       <% } else { %>
         <button>
           <small>File:</small>
-          <strong><%= current.file.sourceFile %></strong>
+          <strong title='<%= current.file.sourceFile %>'><%= current.file.baseSourceFile %></strong>
         </button>
       <% } %>
     </div>
