@@ -687,7 +687,7 @@ h2, h3, h4, h5, h6 {
     position: relative;
 
     &:after {
-      content: '\2023';
+      content: '\203a';
       display: inline-block;
       float: right;
       margin-left: 10px;
