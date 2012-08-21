@@ -14,6 +14,13 @@ and just about anything that supports comments.
 Heavily inspired by [jashkenas/docco](https://github.com/jashkenas/docco), which
 this project actually takes code from.
 
+Installation
+------------
+
+Install [NodeJS](http://nodejs.org) in your preferred manner. Then:
+
+    $ npm install -g lidoc
+
 Usage
 -----
 
