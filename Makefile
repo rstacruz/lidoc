@@ -9,7 +9,8 @@ FILES := \
 	manual/*.md \
 	manual/**/*.md \
 	lib/*.coffee \
-	lib/**/*.coffee \
+	lib/lidoc/*.coffee \
+	lib/lidoc/models/*.coffee \
 	lib/*.js \
 	test/*.coffee \
 	TODO.md \
