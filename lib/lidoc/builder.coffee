@@ -101,7 +101,7 @@ writeFiles = (project, options, callback) ->
     outFile = path.join(options.output, file.htmlFile)
     depth   = getFileDepth(file.htmlFile)
     root    = strRepeat('../', depth)
-    page    = project.pages[file.page]
+    page    = file.page
 
     output = tpl
       title:       page?.title ? file.baseHtmlFile

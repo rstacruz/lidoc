@@ -101,7 +101,7 @@
             <% function showPath(paths, level, c) { %>
               <% for (var i in paths) { if (paths.hasOwnProperty(i)) { %>
                 <% var path = paths[i]; %>
-                <% var page = path.getPage; %>
+                <% var page = path.page; %>
                 <% var file = page ? c.project.files[page.file] : null; %>
                 <% var hasChildren = true; %>
 

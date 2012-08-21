@@ -261,7 +261,7 @@ Page.createAll = (project) ->
           heading.title.split(/\s*(?:\.|: |::)\s*/)
 
         #- Tell `File` about the page ID.
-        file.page = current
+        file.pageID = current
 
         #- Instanciating time.
         pages[current] = new Page

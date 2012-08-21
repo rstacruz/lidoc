@@ -42,11 +42,15 @@ class File
     'extension':      default: null
     'baseSourceFile': default: null
     'baseHtmlFile':   default: null
-    'page':           default: null  # Associated page ID
+    'pageID':         default: null  # Associated page ID
     'sections':       default: [], subtype: Section
     'headings':       default: [], subtype: Heading
 
   constructor: (options, @project) ->
     @set options
+
+  @property 'page', hidden: true, get: ->
+    @project.pages[@pageID]
+
 
 module.exports = File
