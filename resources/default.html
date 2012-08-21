@@ -102,17 +102,19 @@
 
             <li class='page level-0'>
               <a href='#'><%= page.title %></a>
-              <ul>
-                <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
-                  <% var heading = page.headings[j]; %>
-                  <% if (heading.level === 1) { continue; } %>
-                  <li class='heading level-<%= heading.level %>'>
-                    <a href="#<%= heading.anchor %>">
-                      <%= heading.title %>
-                    </a>
-                  </li>
-                <% } %>
-              </ul>
+              <% if (page.headings.length > 0) { %>
+                <ul>
+                  <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
+                    <% var heading = page.headings[j]; %>
+                    <% if (heading.level === 1) { continue; } %>
+                    <li class='heading level-<%= heading.level %>'>
+                      <a href="#<%= heading.anchor %>">
+                        <%= heading.title %>
+                      </a>
+                    </li>
+                  <% } %>
+                </ul>
+              <% } %>
             </li>
           </ul>
 

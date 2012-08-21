@@ -502,8 +502,10 @@ shadowed-section() {
       font-weight: bold;
       font-size: 1.2em;
       color: royal-blue;
-      margin-bottom: 5px;
     }
+  }
+  > li > ul {
+    margin-top: 5px;
   }
   /* Scrollspy active */
   a, span.a {
