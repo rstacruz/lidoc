@@ -12,20 +12,34 @@ datastruct = require '../../datastruct'
 
 # ### Example
 
-#     project.pageTree ==
-#       name: ''
-#       page: null
-#       paths:
-#         'Getting started':
-#           name: 'Getting started'
-#           page: 'getting_started.html'
+#     project.pageTree == {
+#       title: '',
+#       page: null,
+#       paths: {
+#         'Getting started': {
+#           name: 'Getting started',
+#           page: 'getting_started.html' } } }
 
 # ### Using the PageNode
 
-# Getting a file:
+# Getting a pagenode:
 #
-#     fileID = project.pageTree.paths['Guides'].file
-#     file = project.file[fileID]
+#     // The `pageTree` itself is a node
+#     node = project.pageTree
+#
+#     // Or you can traverse along like so
+#     node = project.pageTree.paths['Guides']
+#
+# Using it:
+#
+#     node.title   //=> "Getting started"
+#     node.paths   //=> { ... }
+#
+# Getting a page:
+#
+#     page = project.pageTree.paths['Guides'].page
+#
+#     page.sourceFile  //=> "guides.md"
 #
 # Traversing:
 #
