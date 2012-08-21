@@ -283,7 +283,7 @@ Page.createAll = (project) ->
 # Sets `headings` and `anchor` for the section. The assumption is that this is
 # being done after the sections were pygmentized.
 #
-Section::buildHeadings = (fileID, i) ->
+Section::buildHeadings = (htmlFile, i) ->
   @headings = []
 
   m = @docsHtml.match /<h[1-6]>.*?<\/h[1-6]>/ig
@@ -294,10 +294,10 @@ Section::buildHeadings = (fileID, i) ->
       level = parseInt(mm[1])
       if level <= 3
         @headings.push new Heading
-          level: level
-          title: mm[2]
-          anchor: slugify(mm[2])
-          file: fileID
+          level:    level
+          title:    mm[2]
+          anchor:   slugify(mm[2])
+          htmlFile: htmlFile
 
   else
     @anchor = "section-#{i}"

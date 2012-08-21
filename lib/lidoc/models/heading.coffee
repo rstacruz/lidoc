@@ -19,7 +19,7 @@ class Heading
     'title':   default: null
     'anchor':  default: null
     'level':   default: null
-    'file':    default: null
+    'fileID':  default: null
 
   constructor: (options, @parent) ->
     @project = @parent?.project

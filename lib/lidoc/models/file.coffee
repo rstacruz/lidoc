@@ -49,6 +49,8 @@ class File
   constructor: (options, @project) ->
     @set options
 
+  # ### page
+  # Returns the main `Page` associated with the file.
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
