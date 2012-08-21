@@ -464,26 +464,25 @@ header-bg() {
 
 /* List: Pages */
 
-.list.pages {
-  ul.breadcrumbs,
-  ul.current-page {
-    border-bottom: solid 1px #ddd;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+/* Section: The current page */
+.list ul.current-page {
+  background: rgba(255, 255, 255, 0.7);
+  padding-top: 10px;
+  margin-top: -10px;
 
-    ul {
-      padding-bottom: 0;
-    }
-  }
+  border-bottom: solid 1px #ddd;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  padding-bottom: 0;
+  margin-bottom: 10px;
 
-  ul.current-page > li > a {
-    active-bg();
+  ul {
+    padding-bottom: 0;
   }
 }
 
-/* Crumbs */
+/* Section: breadcrumbs */
 .list ul.breadcrumbs {
+  margin-bottom: 10px;
   a, span.a {
     font-weight: bold;
     padding-top: 5px;

@@ -135,14 +135,15 @@
                 <% var page = path.page; %>
                 <% var file = page ? page.file : null; %>
                 <% var hasChildren = path.hasChildren; %>
+                <% var activeClass = (c.current.page === page) ? 'active' : ''; %>
 
                 <li class='page <%= hasChildren ? "has-children" : "" %> level-<%= level+1 %>'>
 
                   <% /*--- The subpage ---*/ %>
                   <% if (!page) { %>
-                    <span class='a'><%= path.title %></span>
+                    <span class='a <%= activeClass %>'><%= path.title %></span>
                   <% } else { %>
-                    <a href='<%= c.root + file.htmlFile %>'><%= path.title %></a>
+                    <a href='<%= c.root + file.htmlFile %>' class='<%= activeClass %>'><%= path.title %></a>
                   <% } %>
 
                   <% /*--- Subpages of subpages ---*/ %>
@@ -154,7 +155,7 @@
                 </li>
               <% } } %>
             <% } %>
-            <% showPath(reference, 0, {project:project, root:root}); %>
+            <% showPath(reference, 0, {project:project, root:root, current:current}); %>
 
           </ul>
         <% } %>
