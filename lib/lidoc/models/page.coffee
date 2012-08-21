@@ -34,6 +34,11 @@ class Page
     'segments': default: []
     'headings': default: [], subtype: Heading
 
+  # ### node
+  # Returns the Pagetree node.
+  @property 'node', hidden: true, get: ->
+    @project
+
   constructor: (options, @project) ->
     @set options
 

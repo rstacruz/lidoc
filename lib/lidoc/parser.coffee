@@ -40,7 +40,7 @@ parse = (options, callback) ->
     isIndex = ii is 0
 
     #- Parse and highlight the file...
-    File.create fname, isIndex, (file) ->
+    File.create fname, isIndex, project, (file) ->
       i += 1
       file.id = id
       project.files[id] = file
@@ -61,7 +61,7 @@ parse = (options, callback) ->
 
 # Builds the `index` stuff for file trees and such.
 Project::buildIndices = ->
-  @pages = Page.createAll(@files)
+  @pages = Page.createAll(this)
 
   @fileTree = do =>
     Filetree = require './models/filetree'
@@ -80,7 +80,7 @@ Project::buildIndices = ->
 # Parses a given filename `source`.
 # When it's done, invokes `callback` with a new `File` instance.
 #
-File.create = (source, isIndex=false, callback) ->
+File.create = (source, isIndex=false, project, callback) ->
   code = fs.readFileSync(source).toString()
   htmlFile = (if isIndex then 'index.html' else changeExtension(source, '.html'))
 
@@ -93,6 +93,7 @@ File.create = (source, isIndex=false, callback) ->
     baseSourceFile: path.basename(source)
     extension: path.extname(source).substr(1)
     headings: []
+  , project
 
   file.highlight ->
     #- Inject headings into each section.
@@ -237,7 +238,9 @@ parseCode = (source, code) ->
 # Returns an key/value object of `Page` instances, with keys being the Page
 # titles.
 #
-Page.createAll = (files) ->
+Page.createAll = (project) ->
+  files = project.files
+
   pages = {}
   for fileID, file of files
 
@@ -267,6 +270,7 @@ Page.createAll = (files) ->
           segments: segments
           file:     fileID
           headings: []
+        , project
 
       else
         if pages[current]?
