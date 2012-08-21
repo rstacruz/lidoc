@@ -12,8 +12,8 @@ File     = require './models/file'
 Project  = require './models/project'
 Page     = require './models/page'
 Heading  = require './models/heading'
-Pagetree = require './models/pagetree'
-Filetree = require './models/filetree'
+PageNode = require './models/page_node'
+FileNode = require './models/file_node'
 
 # ### parse()
 
@@ -66,10 +66,10 @@ Project::buildIndices = ->
   @pages = Page.createAll(this)
 
   @fileTree = do =>
-    (new Filetree).buildFrom this
+    (new FileNode).buildFrom this
 
   @pageTree = do =>
-    (new Pagetree).buildFrom this
+    (new PageNode).buildFrom this
 
   this
 

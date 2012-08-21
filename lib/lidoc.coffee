@@ -37,8 +37,8 @@ module.exports =
 
   # ## Classes
 
-  Filetree: require('./lidoc/models/filetree')
-  Pagetree: require('./lidoc/models/pagetree')
+  FileNode: require('./lidoc/models/file_node')
+  PageNode: require('./lidoc/models/page_node')
   Page: require('./lidoc/models/page')
   File: require('./lidoc/models/file')
   Section: require('./lidoc/models/section')

@@ -1,8 +1,11 @@
-# # Models: Filetree
+# # Models: FileNode
 
 # Represents a hierarchal index of a bunch of files.
 #
-#     tree = new Lidoc.Filetree(files)
+# Each node represents either a true file or a folder.  This means that each
+# FileNode may or may not have a Page associated wiht it.
+#
+#     tree = new Lidoc.FileNode(files)
 #
 #     tree ==
 #       name: '.'
@@ -26,16 +29,16 @@
 path = require 'path'
 datastruct = require '../../datastruct'
 
-class Filetree
+class FileNode
   datastruct this
 
   @property
     'name':    default: ''
     'fileID':  default: ''
-    'paths':   default: {}, subtype: Filetree
+    'paths':   default: {}, subtype: FileNode
 
   constructor: (options={}, parent) ->
-    if parent?.constructor is Filetree
+    if parent?.constructor is FileNode
       @parent  = parent
       @project = parent.project
     else if parent?.files # Project
@@ -89,12 +92,12 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = new Filetree(name: segments[0], fileID: file.id, this)
+      @paths[segments[0]] = new FileNode(name: segments[0], fileID: file.id, this)
 
     else
-      @paths[segments[0]] ?= new Filetree(name: segments[0], this)
+      @paths[segments[0]] ?= new FileNode(name: segments[0], this)
       @paths[segments[0]].addFile segments.slice(1), file
 
     this
 
-module.exports = Filetree
+module.exports = FileNode

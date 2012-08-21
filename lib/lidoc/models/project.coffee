@@ -23,8 +23,8 @@
 
 Page = require './page'
 File = require './file'
-Filetree = require './filetree'
-Pagetree = require './pagetree'
+FileNode = require './file_node'
+PageNode = require './page_node'
 
 datastruct = require '../../datastruct'
 
@@ -34,8 +34,8 @@ class Project
   @property
     'pages':    default: {}, subtype: Page
     'files':    default: {}, subtype: File
-    'fileTree': default: {}, type: Filetree
-    'pageTree': default: {}, type: Pagetree
+    'fileTree': default: {}, type: FileNode
+    'pageTree': default: {}, type: PageNode
 
   constructor: (options) ->
     @set options

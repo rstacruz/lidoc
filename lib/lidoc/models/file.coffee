@@ -55,7 +55,7 @@ class File
     @project.pages[@pageID]
 
   # ### node
-  # Returns the associated `Filetree` node.
+  # Returns the associated `FileNode` node.
   @property 'node', hidden: true, get: ->
     node = @project.fileTree
     @segments.forEach (segment) -> node = node?.paths[segment]

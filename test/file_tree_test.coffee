@@ -15,7 +15,7 @@ Vows
           @callback null, project.fileTree
 
       'should be the right type': (tree) ->
-        assert.equal tree.constructor, Lidoc.Filetree
+        assert.equal tree.constructor, Lidoc.FileNode
 
       'paths':
         './': (tree) ->
