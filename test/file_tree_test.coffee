@@ -1,5 +1,4 @@
 require "test/env"
-Lidoc = require "lib/lidoc"
 
 files = [
   'test/fixture/README.md',
@@ -16,7 +15,7 @@ Vows
           @callback null, project.fileTree
 
       'should be the right type': (tree) ->
-        assert.equal tree.constructor, require("lib/lidoc/filetree")
+        assert.equal tree.constructor, Lidoc.Filetree
 
       'paths':
         './': (tree) ->

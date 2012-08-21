@@ -6,7 +6,11 @@ fs = require 'fs'
 path = require 'path'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
-{Section, File, Project, Page, Heading} = require './structs'
+Section = require './models/section'
+File = require './models/file'
+Project = require './models/project'
+Page = require './models/page'
+Heading = require './models/heading'
 
 # ### parse()
 
@@ -59,11 +63,11 @@ Project::buildIndices = ->
   @pages = Page.createAll(@files)
 
   @fileTree = do =>
-    Filetree = require './filetree'
+    Filetree = require './models/filetree'
     (new Filetree).buildFrom @files
 
   @pageTree = do =>
-    Pagetree = require './pagetree'
+    Pagetree = require './models/pagetree'
     (new Pagetree).buildFrom this
 
   this

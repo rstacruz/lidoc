@@ -1,4 +1,4 @@
-# # Lidoc.Filetree
+# # Models: Filetree
 
 # Represents a hierarchal index of a bunch of files.
 #
@@ -24,7 +24,7 @@
 # template.
 
 path = require 'path'
-datastruct = require '../datastruct'
+datastruct = require '../../datastruct'
 
 class Filetree
   datastruct this

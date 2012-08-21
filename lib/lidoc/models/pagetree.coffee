@@ -1,6 +1,6 @@
-# # Lidoc: Pagetree
+# # Models: Pagetree
 
-datastruct = require '../datastruct'
+datastruct = require '../../datastruct'
 
 # An index for pages.
 #
