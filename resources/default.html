@@ -78,6 +78,23 @@
         <% if (reference) { %>
           <% var node = reference; %>
 
+          <!-- Breadcrumbs -->
+          <% if (node.ancestors.length > 0) { %>
+            <% var ancestors = node.ancestors; %>
+            <ul class='breadcrumbs'>
+              <% for (var j=0, len=ancestors.length; j<len; ++j) { %>
+                <% var _node = ancestors[j]; %>
+
+                <li class='page back'>
+                <% if (_node.page) { %>
+                  <a href='<%= root + _node.file.htmlFile %>'><%= _node.title %></a>
+                <% } else { %>
+                  <span class='a'><%= _node.title %></span>
+                <% } %>
+              <% } %>
+            </ul>
+          <% } %>
+
           <!-- The page and its headings -->
           <ul class='current-page'>
             <% var page = current.page; %>
@@ -99,28 +116,11 @@
             </li>
           </ul>
 
-          <!-- Breadcrumbs -->
-          <% if (node.ancestors.length > 0) { %>
-            <% var ancestors = node.ancestors; %>
-            <ul class='breadcrumbs'>
-              <% for (var j=0, len=ancestors.length; j<len; ++j) { %>
-                <% var _node = ancestors[j]; %>
-
-                <li class='page back'>
-                <% if (_node.page) { %>
-                  <a href='<%= root + _node.file.htmlFile %>'><%= _node.title %></a>
-                <% } else { %>
-                  <span class='a'><%= _node.title %></span>
-                <% } %>
-              <% } %>
-            </ul>
-          <% } %>
-
           <ul class='reference'>
 
             <!-- The reference page -->
             <% if ((!current.page) || (reference != current.page.node)) { %>
-              <li class='page level-0'>
+              <li class='page has-children level-0'>
                 <% if (!reference.page) { %>
                   <span class='a'><%= reference.title %></span>
                 <% } else { %>

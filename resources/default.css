@@ -460,29 +460,47 @@ header-bg() {
 }
 
 
-/* ========================================================================== */
+/* == Page lists ============================================================ */
 
-/* List: Pages */
+/* Yay */
+.list > ul {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &:first-child {
+    margin-top: -10px;
+  }
+}
+
+shadowed-section() {
+  border-bottom: solid 1px #ddd;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  padding-bottom: 10px;
+}
 
 /* Section: The current page */
 .list.multipage ul.current-page {
   background: rgba(255, 255, 255, 0.7);
-  padding-top: 10px;
-  margin-top: -10px;
 
-  border-bottom: solid 1px #ddd;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
-  padding-bottom: 0;
-  margin-bottom: 10px;
+  shadowed-section();
 
   ul {
     padding-bottom: 0;
+  }
+  /* Top (current reference page) */
+  > li > {
+    a, span.a {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #36a;
+    }
   }
 }
 
 /* Section: breadcrumbs */
 .list ul.breadcrumbs {
-  margin-bottom: 10px;
+  shadowed-section()
+
   a, span.a {
     font-weight: bold;
     padding-top: 5px;
@@ -509,9 +527,10 @@ header-bg() {
   a, span.a {
     color: #888;
     font-size: 1em;
+    line-height: 1.3;
 
-    padding-top: 1px;
-    padding-bottom: 1px;
+    padding-top: 3px;
+    padding-bottom: 3px;
   }
 
   /* Headings */
@@ -520,17 +539,8 @@ header-bg() {
       font-weight: bold;
       color: #555;
       font-size: 1.2em;
-      padding-top: 2px;
-      padding-bottom: 2px;
-    }
-  }
-
-  /* Top (current reference page) */
-  &.level-0 > {
-    a, span.a {
-      font-weight: bold;
-      font-size: 1.2em;
-      color: #36a;
+      padding-top: 4px;
+      padding-bottom: 4px;
     }
   }
 }
