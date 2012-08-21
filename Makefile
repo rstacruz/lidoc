@@ -5,7 +5,7 @@ LIDOC_OPTS  ?= --github $(GITHUB_REPO) --git-branch master
 GITHUB_REPO ?= rstacruz/lidoc
 
 FILES := \
-	README.md \
+	INTRO.md \
 	manual/*.md \
 	manual/**/*.md \
 	lib/*.coffee \
