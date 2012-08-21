@@ -4,7 +4,6 @@
 path = require 'path'
 
 # ### languages
-
 # A dict object of languages.
 languages =
   ".coffee":  {name: "coffee-script", symbol: "#"}
@@ -48,7 +47,6 @@ for ext, l of languages
   l.dividerHtml = ///\n*<span\sclass="c1?">#{l.symbol}DIVIDER<\/span>\n*///
 
 # ### getLanguage()
-
 # Get the current language we're documenting, based on the extension of the
 # filename `source`.
 #

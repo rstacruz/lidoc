@@ -1,12 +1,10 @@
 # # Lidoc.Helpers
-
 # Hello.
 
 fs = require 'fs'
 path = require 'path'
 
 # ### getResource()
-
 # Read resource file `name` and return its content.
 #
 #     getResource('languages.json')
@@ -16,7 +14,6 @@ getResource = (name) ->
   fs.readFileSync(fullPath).toString()
 
 # ### template()
-
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
 #
@@ -35,7 +32,6 @@ template = (str) ->
        "');}return p.join('');"
 
 # ### slugify()
-
 # Takes a given string `str` and normalizes it to be an alpha-numeric string.
 #
 #     slugify("50% off")  #=> "50-off"
@@ -44,7 +40,6 @@ slugify = (str, space='-') ->
   str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/g, space)
 
 # ### changeExtension()
-
 # Replaces the extension of `filename` to `ext`.
 #
 #     changeExtension("parser.js", ".html")
@@ -61,7 +56,6 @@ getFileDepth = (filepath) ->
   if m? then m.length else 0
 
 # ### strRepeat()
-
 # Repeats a given string `str` up to `count` times.
 
 strRepeat = (str, count=1) ->

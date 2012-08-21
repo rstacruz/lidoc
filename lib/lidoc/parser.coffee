@@ -1,5 +1,4 @@
 # # Lidoc.Parser
-
 # Handles parsing of documents and outputs them into a general-purpose JSON.
 
 fs = require 'fs'
@@ -16,7 +15,6 @@ PageNode = require './models/page_node'
 FileNode = require './models/file_node'
 
 # ### parse()
-
 # Parses a project.
 #
 # Returns a big JSON structured output (see `Project` under {Structs}).
@@ -60,7 +58,6 @@ parse = (options, callback) ->
 # ## Private API
 
 # ### Project::buildIndices()
-
 # Builds the `index` stuff for file trees and such.
 Project::buildIndices = ->
   @pages = Page.createAll(this)
@@ -76,7 +73,6 @@ Project::buildIndices = ->
 # Okay, these are mostly private stuff.
 
 # ### File.create()
-
 # Parses a given filename `source`.
 # When it's done, invokes `callback` with a new `File` instance.
 #
@@ -110,7 +106,6 @@ File.create = (source, isIndex=false, project, callback) ->
     callback file
 
 # ### File::highlight()
-
 # Adds to HTML fields to it `docsHtml` and `codeHtml` to all sections.
 #
 # Highlights a single chunk of CoffeeScript code, using **Pygments** over stdio,
@@ -173,7 +168,6 @@ File::highlight = (callback) ->
     pygments.stdin.end()
 
 # ### File::addHeadings()
-
 # Takes a `sections` array of **section** objects and adds *heading* and
 # *anchor* so that they look like:
 #
@@ -194,7 +188,6 @@ File::addHeadings = ->
     section.buildHeadings @htmlFile, i
 
 # ### parseCode()
-
 # Given a string of source code `code` with filename `source`, parse out each
 # comment and the code that follows it, and create an individual **section**
 # for it.  Sections take the form:
@@ -222,7 +215,7 @@ parseCode = (source, code) ->
       commentText = line.replace(language.commentMatcher, '') + '\n'
 
       # Headings always save on its own
-      if commentText.match(/^#{2,3} /)
+      if commentText.match(/^#{1,4} /)
         save docsText, codeText  if docsText or codeText
         docsText = codeText = ''
         hasCode = yes
@@ -241,7 +234,6 @@ parseCode = (source, code) ->
   sections
 
 # ### Page.createAll()
-
 # Collects the `<h1>` headings in the given files and returns a list of them.
 #
 # `files` a key/value object of many `File` instances.
@@ -290,7 +282,6 @@ Page.createAll = (project) ->
   pages
 
 # ### Section::buildHeadings()
-
 # Sets `headings` and `anchor` for the section. The assumption is that this is
 # being done after the sections were pygmentized.
 #
