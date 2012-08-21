@@ -686,6 +686,18 @@ h2, h3, h4, h5, h6 {
   tr.active & {
     color: royal-blue;
     text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.04);
+    position: relative;
+
+    &:after {
+      content: '\2023';
+      display: inline-block;
+      float: right;
+      margin-left: 10px;
+      color: #bbb;
+
+      font-size: 18pt;
+      line-height: 1em;
+    }
   }
 }
 
