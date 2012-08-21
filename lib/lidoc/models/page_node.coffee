@@ -63,6 +63,8 @@ class PageNode
 
     @set options
 
+  # ## Properties
+
   # ### page
   # Returns the `Page` instance associated with the node.
   @property 'page', hidden: true, get: ->
@@ -109,6 +111,8 @@ class PageNode
       output = crumbs[i]  if crumbs[i].hasChildren
 
     output
+
+  # ## Methods
 
   # ### buildFrom(project)
   # Builds a tree from a given project.

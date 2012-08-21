@@ -6,7 +6,23 @@ path = require 'path'
 # ### languages
 
 # A dict object of languages.
-languages = JSON.parse getResource 'languages.json'
+languages =
+  ".coffee":  {name: "coffee-script", symbol: "#"}
+  ".rb":      {name: "ruby", symbol: "#"}
+  ".py":      {name: "python", symbol: "#"}
+  ".feature": {name: "gherkin", symbol: "#"}
+  ".yaml":    {name: "yaml", symbol: "#"}
+  ".tex":     {name: "tex", symbol: "%"}
+  ".latex":   {name: "tex", symbol: "%"}
+  ".js":      {name: "javascript", symbol: "//"}
+  ".c":       {name: "c", symbol: "//"}
+  ".h":       {name: "c", symbol: "//"}
+  ".cpp":     {name: "cpp", symbol: "//"}
+  ".php":     {name: "php", symbol: "//"}
+  ".hs":      {name: "haskell", symbol: "--"}
+  ".erl":     {name: "erlang", symbol: "%"}
+  ".hrl":     {name: "erlang", symbol: "%"}
+  ".md":      {name: "markdown", symbol: "", "textOnly": true}
 
 # Build out the appropriate matchers and delimiters for each language.
 for ext, l of languages
@@ -16,7 +32,7 @@ for ext, l of languages
   l.commentFilter = /(^#![/]|^\s*#\{)/
 
   #- Does the line begin with a comment?
-  if l.symbol is ""
+  if l.textOnly
     l.commentMatcher = ///^///
     l.commentFilter = /^$/
   else

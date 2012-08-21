@@ -487,6 +487,8 @@ shadowed-section() {
   ul {
     padding-bottom: 0;
   }
+}
+.list ul.current-page {
   /* Top (current reference page) */
   > li > {
     a, span.a {

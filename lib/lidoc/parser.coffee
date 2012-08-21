@@ -218,14 +218,25 @@ parseCode = (source, code) ->
       codeText: codeText
 
   for line in lines
-    if line.match(language.commentMatcher) and not line.match(language.commentFilter)
-      if hasCode
+    if line.match(language.commentMatcher) and not line.match(language.commentFilter) # isComment and not ignored comment
+      commentText = line.replace(language.commentMatcher, '') + '\n'
+
+      # Headings always save on its own
+      if commentText.match(/^#{2,3} /)
+        save docsText, codeText  if docsText or codeText
+        docsText = codeText = ''
+        hasCode = yes
+
+      else if hasCode
         save docsText, codeText
         hasCode = docsText = codeText = ''
-      docsText += line.replace(language.commentMatcher, '') + '\n'
+
+      docsText += commentText
+
     else
       hasCode = yes
       codeText += line + '\n'
+
   save docsText, codeText
   sections
 
