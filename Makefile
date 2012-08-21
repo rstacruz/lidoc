@@ -14,6 +14,7 @@ FILES := \
 	lib/*.js \
 	test/*.coffee \
 	TODO.md \
+	HISTORY.md
 
 lidoc.json: $(FILES)
 	$(LIDOC) $(LIDOC_OPTS) $^ --index $@
