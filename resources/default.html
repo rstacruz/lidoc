@@ -73,7 +73,8 @@
     </div>
 
     <div class='scroll-area'>
-      <div class='list pages'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages <%= project.pageTree.hasChildren ? 'multipage' : '' %>'>
         <% if (reference) { %>
           <% var node = reference; %>
 
