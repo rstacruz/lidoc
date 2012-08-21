@@ -6,13 +6,15 @@
     $this.on('scroll', onscroll);
     function onscroll() {
       var y = $this.scrollTop();
+      var percent = y / ($this[0].scrollHeight - $this.height());
+      percent = Math.pow(percent, 3) * 0.9 + 0.1;
       var current = null;
       var stop = false;
 
       $(options.on).each(function() {
         if (stop) return;
         var min = $(this).position().top;
-        var isVisible = (min < $this.height() * (options.threshold || 0.20)); // && max >= y);
+        var isVisible = (min < $this.height() * percent);
         if (isVisible) {
           current = this;
         } else {
@@ -70,7 +72,6 @@
    $("#area").scrollspy({
      on: 'tr.heading',
      alwaysOn: true,
-     threshold: 0.20,
      onChange: function(current) {
        var id = $(current).attr('id');
        $(".current-page a").removeClass('active');
