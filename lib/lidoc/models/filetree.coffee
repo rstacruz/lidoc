@@ -35,7 +35,7 @@ class Filetree
     'paths':   default: {}, subtype: Filetree
 
   constructor: (options={}, parent) ->
-    if parent?.project
+    if parent?.constructor is Filetree
       @parent  = parent
       @project = parent.project
     else if parent?.files
@@ -47,8 +47,8 @@ class Filetree
 
   # Takes `files` from a {Project} and builds a filetree from it.
   #
-  buildFrom: (files) ->
-    for i, file of files
+  buildFrom: (@project) ->
+    for i, file of @project.files
       name = file.htmlFile
       segments = name.split(path.sep)
 

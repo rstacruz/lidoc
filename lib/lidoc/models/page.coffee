@@ -37,7 +37,19 @@ class Page
   # ### node
   # Returns the Pagetree node.
   @property 'node', hidden: true, get: ->
-    @project
+    node = @project.pageTree
+    @segments.forEach (segment) -> node = node?.paths[segment]
+    node
+
+  # ### parentNode
+  # Returns the parent node.
+  @property 'parentNode', hidden: true, get: ->
+    @node.parent
+
+  # ### parentPage
+  # Returns the parent page.
+  @property 'parentPage', hidden: true, get: ->
+    @parentNode.getPage
 
   constructor: (options, @project) ->
     @set options

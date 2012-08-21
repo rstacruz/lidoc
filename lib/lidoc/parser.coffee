@@ -7,11 +7,13 @@ path = require 'path'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
 
-Section = require './models/section'
-File    = require './models/file'
-Project = require './models/project'
-Page    = require './models/page'
-Heading = require './models/heading'
+Section  = require './models/section'
+File     = require './models/file'
+Project  = require './models/project'
+Page     = require './models/page'
+Heading  = require './models/heading'
+Pagetree = require './models/pagetree'
+Filetree = require './models/filetree'
 
 # ### parse()
 
@@ -64,11 +66,9 @@ Project::buildIndices = ->
   @pages = Page.createAll(this)
 
   @fileTree = do =>
-    Filetree = require './models/filetree'
-    (new Filetree).buildFrom @files
+    (new Filetree).buildFrom this
 
   @pageTree = do =>
-    Pagetree = require './models/pagetree'
     (new Pagetree).buildFrom this
 
   this

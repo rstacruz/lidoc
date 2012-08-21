@@ -26,15 +26,42 @@ Vows
           assert.equal file.project.constructor, Lidoc.Project
 
       'A page':
+        '1':
+          topic: (project) ->
+            project.pages['Guides: Getting started']
+
+          'should be the right type': (page) ->
+            assert.equal page.constructor, Lidoc.Page
+
+          'should have a project': (page) ->
+            assert.equal page.project.constructor, Lidoc.Project
+
+          '.node': (page) ->
+            node = page.node
+            assert.equal node.title, page.title
+
+        'parenting':
+          topic: (project) ->
+            page   = project.pages['Guides: Getting started']
+            parent = project.pages['Guides']
+
+            [page, parent]
+
+          '.parentNode': ([page, parent]) ->
+            assert.equal page.parentNode, parent.node
+
+          '.parentPage': ([page, parent]) ->
+            assert.equal page.parentPage, parent
+
+      'A pagetree node':
         topic: (project) ->
-          project.pages['Guides: Getting started']
+          page = project.pages['Guides: Getting started']
+          [project, page, page.node]
 
-        'should be the right type': (page) ->
-          assert.equal page.constructor, Lidoc.Page
+        '.project': ([project, page, node]) ->
+          assert.equal node.project, project
 
-        'should have a project': (page) ->
-          assert.equal page.project.constructor, Lidoc.Project
-
-
+        '.getPage': ([project, page, node]) ->
+          assert.equal node.getPage, page
 
   .export(module)

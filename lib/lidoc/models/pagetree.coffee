@@ -31,23 +31,28 @@ class Pagetree
   datastruct this
 
   @property
-    'id':    default: null
-    'title': default: null
-    'page':  default: null
-    'paths': default: {}, subtype: Pagetree
+    'id':     default: null
+    'title':  default: null
+    'page':   default: null
+    'paths':  default: {}, subtype: Pagetree
 
   constructor: (options={}, parent) ->
-    if parent?.project
+    if parent?.constructor is Pagetree
       @parent  = parent
       @project = parent.project
-    else if parent?.files
+    else if parent?.files # Project
       @project = parent
 
     @set options
 
+  # ### getPage
+  # Returns the `Page`
+  @property 'getPage', hidden: true, get: ->
+    @project.pages[@page]
+
   # ### buildFrom(project)
   # Builds a tree from a given project.
-  buildFrom: (project) ->
+  buildFrom: (@project) ->
     for i, page of project.pages
       @addPage page, page.segments, project
 
@@ -64,7 +69,7 @@ class Pagetree
 
     #- If it's a grandchild, make the intermediate parents first.
     if segments.length > 1
-      @paths[segments[0]] ?= new Pagetree(id: segments[0])
+      @paths[segments[0]] ?= new Pagetree(id: segments[0], this)
       @paths[segments[0]].title = segments[0]
       @paths[segments[0]].addPage page, segments.slice(1), project
 
@@ -75,7 +80,7 @@ class Pagetree
 
     #- If it's a child: add the page as a child.
     else
-      @paths[segments[0]] ?= new Pagetree(id: segments[0])
+      @paths[segments[0]] ?= new Pagetree(id: segments[0], this)
       @paths[segments[0]].setPage page
 
 module.exports = Pagetree
