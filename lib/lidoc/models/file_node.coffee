@@ -51,6 +51,14 @@ class FileNode
   @property 'file', hidden: true, get: ->
     @project.files[@fileID]
 
+  # ### breadcrumbs
+  # Returns an array of `FileNode`s, starting from the root, to this one.
+  @property 'breadcrumbs', hidden: true, get: ->
+    if @parent
+      @parent.breadcrumbs.concat [this]
+    else
+      []
+
   # ### buildFrom()
 
   # Takes `files` from a {Project} and builds a filetree from it.

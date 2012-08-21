@@ -68,6 +68,12 @@ Vows
         '.page': ([project, page, node]) ->
           assert.equal node.page, page
 
+        '.breadcrumbs': ([project, page, node]) ->
+          crumbs = node.breadcrumbs
+
+          assert.equal crumbs[0], project.pages['Guides'].node
+          assert.equal crumbs[1], node
+
       'A filetree node': ->
         topic: (project) ->
           file = project.files['test/fixture/guides/getting_started.md']
