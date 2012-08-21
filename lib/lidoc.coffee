@@ -37,19 +37,10 @@ module.exports =
 
   # ## Classes
 
-  # ### Filetree
-  Filetree: require('./lidoc/filetree').Filetree
-
-  # ## Structures
-
-  # ### Page
-  # ### File
-  # ### Section
-  # ### Project
-  # ### Heading
-  # Structures. See {Structs} for more info on each.
-  Page: require('./lidoc/structs').Page
-  File: require('./lidoc/structs').File
-  Section: require('./lidoc/structs').Section
-  Project: require('./lidoc/structs').Project
-  Heading: require('./lidoc/structs').Heading
+  FileNode: require('./lidoc/models/file_node')
+  PageNode: require('./lidoc/models/page_node')
+  Page: require('./lidoc/models/page')
+  File: require('./lidoc/models/file')
+  Section: require('./lidoc/models/section')
+  Project: require('./lidoc/models/project')
+  Heading: require('./lidoc/models/heading')

@@ -82,6 +82,12 @@ getSourceUrl = (file, options) ->
   else
     null
 
+treeFind = (pageTree, page) ->
+  current = pageTree
+  page.segments.forEach (segment) ->
+    current = current?.paths?[segment]
+  current
+
 # ### writeFiles()
 
 # Writes HTML files to the output path.
@@ -95,23 +101,23 @@ writeFiles = (project, options, callback) ->
     outFile = path.join(options.output, file.htmlFile)
     depth   = getFileDepth(file.htmlFile)
     root    = strRepeat('../', depth)
-    page    = project.pages[file.page]
+
+    #- A file may or may not have a page (say if it has no H1).
+    page    = file.page
 
     output = tpl
-      title: page?.title ? file.baseHtmlFile
-      root: root                              # Prefix for relative paths
-      css: "#{root}style.css"                 # URL path to CSS file
-      sourceUrl: getSourceUrl(file, options)  # Github path
-      project: project
-      depth: depth
-      options: options
+      title:       page?.title ? file.baseHtmlFile
+      root:        root                         # Prefix for relative paths
+      css:         "#{root}style.css"           # URL path to CSS file
+      sourceUrl:   getSourceUrl(file, options)  # Github path
+      project:     project
+      depth:       depth
+      options:     options
+      sections:    file.sections
+      reference:   page?.node.reference
       current:
         file: file
         page: page
-
-      sections: file.sections
-      file: file
-      fileTree: project.fileTree
 
     #- Queue up the mkdir/writeFile calls.
     calls.push do (outFile, output) ->

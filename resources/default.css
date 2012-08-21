@@ -1,6 +1,11 @@
 sidebar-width = 200px;
 @import 'nib';
 
+active-bg() {
+  background-image: linear-gradient(top, rgba(50,100,200,0.06), rgba(50,100,200,0.09));
+  box-shadow: inset 0 1px 0 rgba(50, 100, 200, 0.05), inset 0 -1px 0 rgba(50, 100, 200, 0.05);
+}
+
 /*--------------------- Layout and Typography ----------------------------*/
 body {
   font-size: 15px;
@@ -372,34 +377,39 @@ header-bg() {
 
 .list {
   font-size: 9pt;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  -webkit-font-smoothing: antialiased;
   padding-top: 10px;
+
+  /* Clickable list items */
+  a, button {
+    &:hover {
+      background: rgba(50, 100, 200, 0.04);
+    }
+    &:active {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  /* List items */
+  a, span.a, button {
+    font-family: sans-serif;
+    text-decoration: none;
+
+    display: block;
+    padding: 2px 20px;
+    line-height: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+
+    &.active {
+      active-bg();
+    }
+  }
 }
 
-.list a, .list button {
-  font-family: sans-serif;
-  text-decoration: none;
-
-  display: block;
-  padding: 2px 20px;
-  line-height: 20px;
-  box-sizing: border-box;
-  width: 100%;
-  text-align: left;
-
-  &:hover {
-    background: rgba(50, 100, 200, 0.04);
-  }
-  &.active {
-    background: #aaa;
-    background-image: linear-gradient(top, #aaa, #9a9a9a);
-    color: white;
-    text-shadow: 0 1px 0 rgba(black, 0.2);
-  }
-  &:active {
-    background: rgba(0, 0, 0, 0.2);
-  }
-}
+/* ========================================================================== */
 
 /* For files */
 .files.list {
@@ -450,30 +460,104 @@ header-bg() {
 }
 
 
-/* Pages */
-.list li.page > a {
-  color: #36a;
-  font-size: 1.2em;
+/* == Page lists ============================================================ */
 
-  padding-top: 2px;
-  padding-bottom: 2px;
-}
-.list li.page > ul {
-  padding: 0 0 10px 0;
-}
+/* Yay */
+.list > ul {
+  padding-top: 10px;
+  padding-bottom: 10px;
 
-/* Function names */
-.list li.heading > a {
-  font-size: 0.9em;
-  color: #777;
-  padding-left: 30px;
+  &:first-child {
+    margin-top: -10px;
+  }
 }
 
-/* Groups */
-.list li.heading.level-2 > a {
-  text-transform: uppercase;
-  font-size: 0.8em;
-  padding-left: 20px;
+shadowed-section() {
+  border-bottom: solid 1px #ddd;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
+  padding-bottom: 10px;
+}
+
+/* Section: The current page */
+.list.multipage ul.current-page {
+  background: rgba(255, 255, 255, 0.7);
+
+  shadowed-section();
+
+  ul {
+    padding-bottom: 0;
+  }
+  /* Top (current reference page) */
+  > li > {
+    a, span.a {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #36a;
+    }
+  }
+}
+
+/* Section: breadcrumbs */
+.list ul.breadcrumbs {
+  shadowed-section()
+
+  a, span.a {
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    &:before {
+      content: '\25c0';
+      font-size: 0.8em;
+      margin-right: 8px;
+      color: #aaa;
+    }
+  }
+  a:hover {
+    color: #555;
+  }
+}
+
+.list li.page {
+  ul {
+    padding: 0 0 10px 0;
+  }
+
+  /* Everything else */
+  a, span.a {
+    color: #888;
+    font-size: 1em;
+    line-height: 1.3;
+
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+
+  /* Headings */
+  &.has-children > {
+    a, span.a {
+      font-weight: bold;
+      color: #555;
+      font-size: 1.2em;
+      padding-top: 4px;
+      padding-bottom: 4px;
+    }
+  }
+}
+
+.list li.heading {
+  /* Function names */
+  > a {
+    font-size: 0.9em;
+    color: #777;
+    padding-left: 30px;
+  }
+
+  /* Groups */
+  &.level-2 > a {
+    color: #444;
+    padding-left: 20px;
+  }
 }
 
 /* ============================================================================

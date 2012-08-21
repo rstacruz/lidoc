@@ -73,47 +73,113 @@
     </div>
 
     <div class='scroll-area'>
-      <div class='list pages'>
-        <ul>
-          <% for (var i in project.pages) { if (project.pages.hasOwnProperty(i)) { %>
-            <% var page = project.pages[i]; %>
-            <% var file = project.files[page.file]; %>
-            <li class='page'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages <%= project.pageTree.hasChildren ? 'multipage' : '' %>'>
+        <% if (reference) { %>
+          <% var node = reference; %>
+
+          <!-- Breadcrumbs -->
+          <% if (node.ancestors.length > 0) { %>
+            <% var ancestors = node.ancestors; %>
+            <ul class='breadcrumbs'>
+              <% for (var j=0, len=ancestors.length; j<len; ++j) { %>
+                <% var _node = ancestors[j]; %>
+
+                <li class='page back'>
+                <% if (_node.page) { %>
+                  <a href='<%= root + _node.file.htmlFile %>'><%= _node.title %></a>
+                <% } else { %>
+                  <span class='a'><%= _node.title %></span>
+                <% } %>
+              <% } %>
+            </ul>
+          <% } %>
+
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+            <% var page = current.page; %>
+            <% var file = page.file; %>
+
+            <li class='page level-0'>
               <a href='<%= root + file.htmlFile %>'><%= page.title %></a>
               <ul>
                 <% for (var j=0, len=page.headings.length; j<len; ++j) { %>
                   <% var heading = page.headings[j]; %>
                   <% if (heading.level === 1) { continue; } %>
                   <li class='heading level-<%= heading.level %>'>
-                    <a href="<%= root + heading.file + '#' + heading.anchor %>">
+                    <a href="#<%= heading.anchor %>">
                       <%= heading.title %>
                     </a>
                   </li>
                 <% } %>
               </ul>
             </li>
-          <% } } %>
-        </ul>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+            <% if ((!current.page) || (reference != current.page.node)) { %>
+              <li class='page has-children level-0'>
+                <% if (!reference.page) { %>
+                  <span class='a'><%= reference.title %></span>
+                <% } else { %>
+                  <a href='<%= root + reference.page.file.htmlFile %>'><%= reference.title %></a>
+                <% } %>
+              </li>
+            <% } %>
+
+            <!-- Subpages of the ref -->
+            <% function showPath(node, level, c) { %>
+              <% for (var i in node.paths) { if (node.paths.hasOwnProperty(i)) { %>
+                <% var path = node.paths[i]; %>
+                <% var page = path.page; %>
+                <% var file = page ? page.file : null; %>
+                <% var hasChildren = path.hasChildren; %>
+                <% var activeClass = (c.current.page === page) ? 'active' : ''; %>
+
+                <li class='page <%= hasChildren ? "has-children" : "" %> level-<%= level+1 %>'>
+
+                  <% /*--- The subpage ---*/ %>
+                  <% if (!page) { %>
+                    <span class='a <%= activeClass %>'><%= path.title %></span>
+                  <% } else { %>
+                    <a href='<%= c.root + file.htmlFile %>' class='<%= activeClass %>'><%= path.title %></a>
+                  <% } %>
+
+                  <% /*--- Subpages of subpages ---*/ %>
+                  <% if ((level <= 1) && (hasChildren)) { %>
+                    <ul>
+                      <% showPath(path, level + 1, c); %>
+                    </ul>
+                  <% } %>
+                </li>
+              <% } } %>
+            <% } %>
+            <% showPath(reference, 0, {project:project, root:root, current:current}); %>
+
+          </ul>
+        <% } %>
       </div>
 
       <div class='list files hidden'>
-        <% function tree(object, level, current, root, files) { %>
+        <% function tree(node, level, current, root, files) { %>
           <li class='level-<%= level %>'>
-            <% if (!object.file) { %>
-              <% var isExpanded = current.file.htmlFile.indexOf(object.name) > -1; %>
+            <% var file = node.file; %>
+            <% if (!file) { %>
+              <% var isExpanded = current.file.htmlFile.indexOf(node.name) > -1; %>
               <button class='item folder <%= isExpanded ? "expanded" : "" %>'>
                 <i></i>
-                <%= object.name %>
+                <%= node.name %>
               </button>
               <ul class='<%= isExpanded ? "" : "hidden" %>'>
-                <% for (var i in object.paths) { if (object.paths.hasOwnProperty(i)) { %>
-                  <%= tree(object.paths[i], level + 1, current, root, files) %>
+                <% for (var i in node.paths) { if (node.paths.hasOwnProperty(i)) { %>
+                  <%= tree(node.paths[i], level + 1, current, root, files) %>
                 <% } } %>
               </ul>
             </li>
             <% } else { %>
-              <% var file = files[object.file]; %>
-              <% var isActive = (current.file.htmlFile === file.htmlFile) ? 'active' : ''; %>
+              <% var isActive = (current.file === file) ? 'active' : ''; %>
               <a href='<%= root + file.htmlFile %>#f' class='item file <%= isActive %>'>
                 <i></i>
                 <%= file.baseSourceFile %>
@@ -123,8 +189,8 @@
         <% } %>
 
         <ul>
-        <% for (var i in fileTree.paths) { if (fileTree.paths.hasOwnProperty(i)) { %>
-          <%= tree(fileTree.paths[i], 1, current, root, project.files) %>
+        <% for (var i in project.fileTree.paths) { if (project.fileTree.paths.hasOwnProperty(i)) { %>
+          <%= tree(project.fileTree.paths[i], 1, current, root, project.files) %>
         <% } } %>
         </ul>
 

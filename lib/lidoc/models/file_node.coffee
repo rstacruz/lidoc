@@ -1,8 +1,11 @@
-# # Lidoc.Filetree
+# # Models: FileNode
 
 # Represents a hierarchal index of a bunch of files.
 #
-#     tree = new Lidoc.Filetree(files)
+# Each node represents either a true file or a folder.  This means that each
+# FileNode may or may not have a Page associated wiht it.
+#
+#     tree = new Lidoc.FileNode(files)
 #
 #     tree ==
 #       name: '.'
@@ -12,10 +15,10 @@
 #           paths:
 #             'file.js':
 #               name: 'file.js'
-#               file: {File}
+#               fileID: 'app/file.js'
 #         'README.md':
-#           name: 'file.js'
-#           file: {File}
+#           name: 'README.md'
+#           fileID: 'README.md'
 #
 #     # File (assets/javascripts/parser.html)
 #     tree.paths['assets'].paths['javascripts'].paths['parser.html']
@@ -24,19 +27,44 @@
 # template.
 
 path = require 'path'
+datastruct = require '../../datastruct'
 
-class Filetree
-  constructor: (options={}) ->
-    @name = options.name ? ""
-    @file = options.file ? null
-    @paths = {}
+class FileNode
+  datastruct this
+
+  @property
+    'name':    default: ''
+    'fileID':  default: ''
+    'paths':   default: {}, subtype: FileNode
+
+  constructor: (options={}, parent) ->
+    if parent?.constructor is FileNode
+      @parent  = parent
+      @project = parent.project
+    else if parent?.files # Project
+      @project = parent
+
+    @set options
+
+  # ### file
+  # Returns the associated `File`.
+  @property 'file', hidden: true, get: ->
+    @project.files[@fileID]
+
+  # ### breadcrumbs
+  # Returns an array of `FileNode`s, starting from the root, to this one.
+  @property 'breadcrumbs', hidden: true, get: ->
+    if @parent
+      @parent.breadcrumbs.concat [this]
+    else
+      []
 
   # ### buildFrom()
 
   # Takes `files` from a {Project} and builds a filetree from it.
   #
-  buildFrom: (files) ->
-    for i, file of files
+  buildFrom: (@project) ->
+    for i, file of @project.files
       name = file.htmlFile
       segments = name.split(path.sep)
 
@@ -72,12 +100,12 @@ class Filetree
 
   addFile: (segments, file) ->
     if segments.length is 1
-      @paths[segments[0]] = new Filetree(name: segments[0], file: file.id)
+      @paths[segments[0]] = new FileNode(name: segments[0], fileID: file.id, this)
 
     else
-      @paths[segments[0]] ?= new Filetree(name: segments[0])
+      @paths[segments[0]] ?= new FileNode(name: segments[0], this)
       @paths[segments[0]].addFile segments.slice(1), file
 
     this
 
-module.exports = Filetree
+module.exports = FileNode

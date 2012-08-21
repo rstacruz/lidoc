@@ -3,6 +3,7 @@
 # Lidoc command line tool.
 
 Lidoc = require '../lidoc'
+Project = Lidoc.Project
 fs = require 'fs'
 
 # ### getOptions()
@@ -77,7 +78,7 @@ work = (argv) ->
   #from the source tree
   if options.import?
     fs.readFile options.import, (err, data) ->
-      buildFromOutput JSON.parse(data)
+      buildFromOutput new Project(JSON.parse(data))
   else
     Lidoc.parse options, buildFromOutput
 
