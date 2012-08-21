@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Languages</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/lidoc/languages.coffee">
+          <strong title='lib/lidoc/languages.coffee'>languages.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Lidoc-Languages" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Lidoc-Languages">&#182;</a>
+              </div>
+              <h1>Lidoc.Languages</h1>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="p">{</span><span class="nx">getResource</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;./helpers&#39;</span>
+<span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;path&#39;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="languages" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#languages">&#182;</a>
+              </div>
+              <h3>languages</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-2" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>A dict object of languages.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">languages</span> <span class="o">=</span>
+  <span class="s2">&quot;.coffee&quot;</span><span class="o">:</span>  <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;coffee-script&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;#&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.rb&quot;</span><span class="o">:</span>      <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;ruby&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;#&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.py&quot;</span><span class="o">:</span>      <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;#&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.feature&quot;</span><span class="o">:</span> <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;gherkin&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;#&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.yaml&quot;</span><span class="o">:</span>    <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;yaml&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;#&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.tex&quot;</span><span class="o">:</span>     <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;tex&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.latex&quot;</span><span class="o">:</span>   <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;tex&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.js&quot;</span><span class="o">:</span>      <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;//&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.c&quot;</span><span class="o">:</span>       <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;//&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.h&quot;</span><span class="o">:</span>       <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;//&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.cpp&quot;</span><span class="o">:</span>     <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;cpp&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;//&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.php&quot;</span><span class="o">:</span>     <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;//&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.hs&quot;</span><span class="o">:</span>      <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;haskell&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;--&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.erl&quot;</span><span class="o">:</span>     <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;erlang&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.hrl&quot;</span><span class="o">:</span>     <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;erlang&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;%&quot;</span><span class="p">}</span>
+  <span class="s2">&quot;.md&quot;</span><span class="o">:</span>      <span class="p">{</span><span class="nv">name: </span><span class="s2">&quot;markdown&quot;</span><span class="p">,</span> <span class="nv">symbol: </span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;textOnly&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Build out the appropriate matchers and delimiters for each language.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="k">for</span> <span class="nx">ext</span><span class="p">,</span> <span class="nx">l</span> <span class="k">of</span> <span class="nx">languages</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-4" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <ul>
+<li>Ignore <a href="http://en.wikipedia.org/wiki/Shebang_(Unix)">hashbangs</a>
+and interpolations...</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">l</span><span class="p">.</span><span class="nx">commentFilter</span> <span class="o">=</span> <span class="sr">/(^#![/]|^\s*#\{)/</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-5" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <ul>
+<li>Does the line begin with a comment?</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">textOnly</span>
+    <span class="nx">l</span><span class="p">.</span><span class="nx">commentMatcher</span> <span class="o">=</span> <span class="err">///^///</span>
+    <span class="nx">l</span><span class="p">.</span><span class="nx">commentFilter</span> <span class="o">=</span> <span class="sr">/^$/</span>
+  <span class="k">else</span>
+    <span class="nx">l</span><span class="p">.</span><span class="nx">commentMatcher</span> <span class="o">=</span> <span class="err">///^\s*#{l.symbol}\s?///</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-6" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <ul>
+<li>The dividing token we feed into Pygments, to delimit the boundaries between
+sections.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">l</span><span class="p">.</span><span class="nx">dividerText</span> <span class="o">=</span> <span class="s2">&quot;\n#{l.symbol}DIVIDER\n&quot;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <ul>
+<li>The mirror of <code>dividerText</code> that we expect Pygments to return. We can split
+on this to recover the original sections.
+Note: the class is "c" for Python and "c1" for the other languages</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">l</span><span class="p">.</span><span class="nx">dividerHtml</span> <span class="o">=</span> <span class="err">///\n*&lt;span\sclass=&quot;c1?&quot;&gt;#{l.symbol}DIVIDER&lt;\/span&gt;\n*///</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="getLanguage" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#getLanguage">&#182;</a>
+              </div>
+              <h3>getLanguage()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-9" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Get the current language we're documenting, based on the extension of the
+filename <code>source</code>.</p>
+
+<pre><code>getLanguage(".py")
+#=&gt; {name: "Python", commentMatcher: "..", commentFilter: "...", }
+</code></pre>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">getLanguage</span> <span class="o">=</span> <span class="p">(</span><span class="nx">source</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">languages</span><span class="p">[</span><span class="nx">path</span><span class="p">.</span><span class="nx">extname</span><span class="p">(</span><span class="nx">source</span><span class="p">)]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-10" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>...</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span><span class="nx">languages</span><span class="p">,</span> <span class="nx">getLanguage</span><span class="p">}</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <a href='../../lib/lidoc.html'>Lidoc</a>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>Languages</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#languages">
+                        languages                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#getLanguage">
+                        getLanguage()                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <a href='../../lib/lidoc.html'>Lidoc</a>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/builder.html' class=''>Builder</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/command.html' class=''>Command</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/helpers.html' class=''>Helpers</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/languages.html' class='active'>Languages</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/parser.html' class=''>Parser</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lidoc              </button>
+              <ul class=''>
+                          <li class='level-3'>
+                                                    <a href='../../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/languages.html#f' class='item file active'>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder '>
+                <i></i>
+                models              </button>
+              <ul class='hidden'>
+                          <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../../script.js'></script>
+</body>
+</html>

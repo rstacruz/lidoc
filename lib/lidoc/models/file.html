@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/lidoc/models/file.coffee">
+          <strong title='lib/lidoc/models/file.coffee'>file.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Models-File" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Models-File">&#182;</a>
+              </div>
+              <h1>Models: File</h1>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Represents a source file and it's generated HTML file. Stores code/docs in
+<code>sections</code>. Looks like this:</p>
+
+<pre><code>{
+  id: 'lib/parser.coffee',
+
+  htmlFile: 'lib/parser.html',
+  sourceFile: 'lib/parser.coffee',
+
+  baseHtmlFile: 'parser.html',
+  baseSourceFile: 'parser.coffee',
+
+  extension: 'coffee',
+
+  page: "Foobar",
+
+  sections: [ Section, ... ]
+  headings: [ Heading, ... ]
+}
+</code></pre>
+
+<p>The <code>id</code> field is the <code>sourceFile</code>.</p>
+
+<p>It's built with <code>File.create</code>:</p>
+
+<pre><code>File.create 'lib/parser.js.coffee', false, (file) -&gt;
+  console.log file
+  # `file` is a File object
+</code></pre>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">datastruct</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;../../datastruct&#39;</span>
+<span class="nx">Section</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;./section&#39;</span>
+<span class="nx">Heading</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;./heading&#39;</span>
+
+<span class="nx">class</span> <span class="nx">File</span>
+  <span class="nx">datastruct</span> <span class="k">this</span>
+
+  <span class="err">@</span><span class="nx">property</span>
+    <span class="s1">&#39;id&#39;</span><span class="o">:</span>             <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;htmlFile&#39;</span><span class="o">:</span>       <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;sourceFile&#39;</span><span class="o">:</span>     <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;extension&#39;</span><span class="o">:</span>      <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;baseSourceFile&#39;</span><span class="o">:</span> <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;baseHtmlFile&#39;</span><span class="o">:</span>   <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;pageID&#39;</span><span class="o">:</span>         <span class="nv">default: </span><span class="kc">null</span>  <span class="c1"># Associated page ID</span>
+    <span class="s1">&#39;sections&#39;</span><span class="o">:</span>       <span class="nv">default: </span><span class="p">[],</span> <span class="nv">subtype: </span><span class="nx">Section</span>
+    <span class="s1">&#39;headings&#39;</span><span class="o">:</span>       <span class="nv">default: </span><span class="p">[],</span> <span class="nv">subtype: </span><span class="nx">Heading</span>
+
+  <span class="nv">constructor: </span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="err">@</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">set</span> <span class="nx">options</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="page" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#page">&#182;</a>
+              </div>
+              <h3>page</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Returns the main <code>Page</code> associated with the file.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="err">@</span><span class="nx">pageID</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="node" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#node">&#182;</a>
+              </div>
+              <h3>node</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-5" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Returns the associated <code>FileNode</code> node.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;node&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="nx">node</span> <span class="o">=</span> <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">fileTree</span>
+    <span class="err">@</span><span class="nx">segments</span><span class="p">.</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">segment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">node</span> <span class="o">=</span> <span class="nx">node</span><span class="o">?</span><span class="p">.</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segment</span><span class="p">]</span>
+    <span class="nx">node</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="parentNode" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#parentNode">&#182;</a>
+              </div>
+              <h3>parentNode</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Returns the parent file node.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;parentNode&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">node</span><span class="p">.</span><span class="nx">parent</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">File</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../../../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <span class='a'>Models</span>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>File</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#page">
+                        page                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#node">
+                        node                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#parentNode">
+                        parentNode                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <span class='a'>Models</span>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file.html' class='active'>File</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file_node.html' class=''>FileNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/heading.html' class=''>Heading</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page.html' class=''>Page</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page_node.html' class=''>PageNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/project.html' class=''>Project</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/section.html' class=''>Section</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../../../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../../../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lidoc              </button>
+              <ul class=''>
+                          <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                models              </button>
+              <ul class=''>
+                          <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file.html#f' class='item file active'>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../../../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../../../script.js'></script>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PageNode</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/lidoc/models/page_node.coffee">
+          <strong title='lib/lidoc/models/page_node.coffee'>page_node.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Models-PageNode" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Models-PageNode">&#182;</a>
+              </div>
+              <h1>Models: PageNode</h1>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">datastruct</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;../../datastruct&#39;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>An index for pages.</p>
+
+<p>Each node represents either a true page or an inferred page (a folder, if you
+will). This means that each PageNode may or may not have a Page associated
+wiht it.</p>
+
+<p>Accessed via <code>project.pageTree</code>. See {Project}.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Example" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Example">&#182;</a>
+              </div>
+              <h3>Example</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <pre><code>project.pageTree == {
+  title: '',
+  page: null,
+  paths: {
+    'Getting started': {
+      name: 'Getting started',
+      page: 'getting_started.html' } } }
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Using-the-PageNode" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Using-the-PageNode">&#182;</a>
+              </div>
+              <h3>Using the PageNode</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-5" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Getting a pagenode:</p>
+
+<pre><code>// The `pageTree` itself is a node
+node = project.pageTree
+
+// Or you can traverse along like so
+node = project.pageTree.paths['Guides']
+</code></pre>
+
+<p>Using it:</p>
+
+<pre><code>node.title   //=&gt; "Getting started"
+node.paths   //=&gt; { ... }
+</code></pre>
+
+<p>Getting a page:</p>
+
+<pre><code>page = project.pageTree.paths['Guides'].page
+
+page.sourceFile  //=&gt; "guides.md"
+</code></pre>
+
+<p>Traversing:</p>
+
+<pre><code>project.pageTree.paths['Guides'].paths['Getting started']
+</code></pre>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">class</span> <span class="nx">PageNode</span>
+  <span class="nx">datastruct</span> <span class="k">this</span>
+
+  <span class="err">@</span><span class="nx">property</span>
+    <span class="s1">&#39;id&#39;</span><span class="o">:</span>       <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;title&#39;</span><span class="o">:</span>    <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;pageID&#39;</span><span class="o">:</span>   <span class="nv">default: </span><span class="kc">null</span>
+    <span class="s1">&#39;paths&#39;</span><span class="o">:</span>    <span class="nv">default: </span><span class="p">{},</span> <span class="nv">subtype: </span><span class="nx">PageNode</span>
+
+  <span class="nv">constructor: </span><span class="p">(</span><span class="nx">options</span><span class="o">=</span><span class="p">{},</span> <span class="nx">parent</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">parent</span><span class="o">?</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">is</span> <span class="nx">PageNode</span>
+      <span class="err">@</span><span class="nx">parent</span>  <span class="o">=</span> <span class="nx">parent</span>
+      <span class="err">@</span><span class="nx">project</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">project</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">parent</span><span class="o">?</span><span class="p">.</span><span class="nx">files</span> <span class="c1"># Project</span>
+      <span class="err">@</span><span class="nx">project</span> <span class="o">=</span> <span class="nx">parent</span>
+
+    <span class="err">@</span><span class="nx">set</span> <span class="nx">options</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="Properties" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Properties">&#182;</a>
+              </div>
+              <h2>Properties</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="page" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#page">&#182;</a>
+              </div>
+              <h3>page</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-8" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Returns the <code>Page</code> instance associated with the node.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;page&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="err">@</span><span class="nx">pageID</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="file" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#file">&#182;</a>
+              </div>
+              <h3>file</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-10" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Returns the associated <code>File</code>.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">page</span><span class="o">?</span><span class="p">.</span><span class="nx">file</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="breadcrumbs" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#breadcrumbs">&#182;</a>
+              </div>
+              <h3>breadcrumbs</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-12" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Returns an array of <code>PageNode</code>s, starting from the root, to this one.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;breadcrumbs&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="err">@</span><span class="nx">parent</span>
+      <span class="err">@</span><span class="nx">parent</span><span class="p">.</span><span class="nx">breadcrumbs</span><span class="p">.</span><span class="nx">concat</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span>
+    <span class="k">else</span>
+      <span class="p">[</span><span class="k">this</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="ancestors" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#ancestors">&#182;</a>
+              </div>
+              <h3>ancestors</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-14" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Returns an array of <code>PageNode</code>s, starting from the root, to this node's
+parent.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;ancestors&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="nx">crumbs</span> <span class="o">=</span> <span class="err">@</span><span class="nx">breadcrumbs</span>
+    <span class="nx">crumbs</span><span class="p">.</span><span class="nx">pop</span><span class="p">()</span>
+    <span class="nx">crumbs</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="hasChildren" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#hasChildren">&#182;</a>
+              </div>
+              <h3>hasChildren</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-16" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Returns true if it has children.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;hasChildren&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="nb">Object</span><span class="p">.</span><span class="nx">keys</span><span class="p">(</span><span class="err">@</span><span class="nx">paths</span><span class="p">).</span><span class="nx">length</span> <span class="o">isnt</span> <span class="mi">0</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="root" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#root">&#182;</a>
+              </div>
+              <h3>root</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-18" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Returns the root node.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">pageTree</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="reference" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#reference">&#182;</a>
+              </div>
+              <h3>reference</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-20" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Go through each of the breadcrumbs and find one with children.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;reference&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="nx">crumbs</span> <span class="o">=</span> <span class="err">@</span><span class="nx">breadcrumbs</span>
+    <span class="nx">output</span> <span class="o">=</span> <span class="err">@</span><span class="nx">root</span>
+
+    <span class="k">for</span> <span class="nx">i</span> <span class="k">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">..</span><span class="nx">crumbs</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+      <span class="nx">output</span> <span class="o">=</span> <span class="nx">crumbs</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>  <span class="k">if</span> <span class="nx">crumbs</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">hasChildren</span>
+
+    <span class="nx">output</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="Methods" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Methods">&#182;</a>
+              </div>
+              <h2>Methods</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="buildFrom-project" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#buildFrom-project">&#182;</a>
+              </div>
+              <h3>buildFrom(project)</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-23" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>Builds a tree from a given project.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nv">buildFrom: </span><span class="p">(</span><span class="err">@</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">page</span> <span class="k">of</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span>
+      <span class="err">@</span><span class="nx">addPage</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">page</span><span class="p">.</span><span class="nx">segments</span><span class="p">,</span> <span class="nx">project</span>
+
+    <span class="k">this</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="setPage" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#setPage">&#182;</a>
+              </div>
+              <h3>setPage</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-25" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>Absorbs properties of given page <code>page</code>.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nv">setPage: </span><span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">title</span>   <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">title</span>
+    <span class="err">@</span><span class="nx">pageID</span>  <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">id</span>
+
+  <span class="nv">addPage: </span><span class="p">(</span><span class="nx">page</span><span class="p">,</span> <span class="nx">segments</span><span class="p">,</span> <span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">file</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="nx">page</span><span class="p">.</span><span class="nx">file</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-26" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <ul>
+<li>If it's a grandchild, make the intermediate parents first.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">if</span> <span class="nx">segments</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">PageNode</span><span class="p">(</span><span class="nv">id: </span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="nx">addPage</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">segments</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nx">project</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-27" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <ul>
+<li>The first file will be the root of all.
+(It's Parser's responsibility to set segments to 0)</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">else</span> <span class="k">if</span> <span class="nx">segments</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">0</span>
+      <span class="err">@</span><span class="nx">setPage</span> <span class="nx">page</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-28" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <ul>
+<li>If it's a child: add the page as a child.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">else</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">PageNode</span><span class="p">(</span><span class="nv">id: </span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="nx">setPage</span> <span class="nx">page</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">PageNode</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../../../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <span class='a'>Models</span>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>PageNode</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#Example">
+                        Example                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#Using-the-PageNode">
+                        Using the PageNode                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#Properties">
+                        Properties                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#page">
+                        page                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#file">
+                        file                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#breadcrumbs">
+                        breadcrumbs                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#ancestors">
+                        ancestors                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#hasChildren">
+                        hasChildren                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#root">
+                        root                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#reference">
+                        reference                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#Methods">
+                        Methods                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#buildFrom-project">
+                        buildFrom(project)                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#setPage">
+                        setPage                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <span class='a'>Models</span>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file.html' class=''>File</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file_node.html' class=''>FileNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/heading.html' class=''>Heading</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page.html' class=''>Page</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page_node.html' class='active'>PageNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/project.html' class=''>Project</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/section.html' class=''>Section</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../../../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../../../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lidoc              </button>
+              <ul class=''>
+                          <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                models              </button>
+              <ul class=''>
+                          <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page_node.html#f' class='item file active'>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../../../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../../../script.js'></script>
+</body>
+</html>

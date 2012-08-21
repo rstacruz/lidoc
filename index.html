@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to Lidoc</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/INTRO.md">
+          <strong title='INTRO.md'>INTRO.md</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-md">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Welcome-to-Lidoc" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Welcome-to-Lidoc">&#182;</a>
+              </div>
+              <h1>Welcome to Lidoc</h1>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p><strong>Lidoc</strong> generates literate programming documentation from your code
+painlessly.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-2" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>It takes any code project, parses its inline comments, and and generates
+documentation in the form of a gorgeous-looking, standalone HTML package like
+this one.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Lidoc is code-agnostic; it doesn't care about your code at all, just the
+comments.  As a result, it supports Python, PHP, Ruby, CoffeeScript, JavaScript,
+and just about anything that supports comments.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-4" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Heavily inspired by <a href="https://github.com/jashkenas/docco">jashkenas/docco</a>, which
+this project actually takes code from.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Installation" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Installation">&#182;</a>
+              </div>
+              <h2>Installation</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-6" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Install <a href="http://nodejs.org">NodeJS</a> in your preferred manner. Then:</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <pre><code>$ npm install -g lidoc
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Usage" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Usage">&#182;</a>
+              </div>
+              <h2>Usage</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-9" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Build documentation like so:</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-10" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <pre><code>$ lidoc **/*.js --output docs
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-11" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Or you can view the documentation index as a JSON file like so:</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-12" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <pre><code>$ lidoc **/*.js --index
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Acknowledgements" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Acknowledgements">&#182;</a>
+              </div>
+              <h2>Acknowledgements</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-14" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>© 2012, Rico Sta. Cruz. Released under the <a href="http://www.opensource.org/licenses/mit-license.php">MIT 
+License</a>.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-15" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p><strong>Lidoc</strong> is authored and maintained by <a href="http://ricostacruz.com">Rico Sta. Cruz</a>
+with help from its <a href="http://github.com/rstacruz/lidoc/contributors">contributors</a>.
+It is sponsored by my startup, <a href="http://nadarei.co">Nadarei, Inc</a>.</p>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-16" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <ul>
+<li><a href="http://ricostacruz.com">My website</a> (ricostacruz.com)</li>
+<li><a href="http://nadarei.co">Nadarei, Inc.</a> (nadarei.co)</li>
+<li><a href="http://github.com/rstacruz">Github</a> (@rstacruz)</li>
+<li><a href="http://twitter.com/rstacruz">Twitter</a> (@rstacruz)</li>
+</ul>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+              </tbody>
+    </table>
+
+        <div class='fork-me-on-github'>
+      <a href='https://github.com/rstacruz/lidoc'>
+        <span>Fork me on Github</span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>Welcome to Lidoc</a>
+                              <ul>
+                                                                              <li class='heading level-2'>
+                      <a href="#Installation">
+                        Installation                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#Usage">
+                        Usage                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#Acknowledgements">
+                        Acknowledgements                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page has-children level-1'>
+
+                                                        <span class='a '>Documentation</span>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='manual/command_line.html' class=''>Command line</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='manual/lidoc_standard.html' class=''>Lidoc standard</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                                                                                              
+                <li class='page has-children level-1'>
+
+                                                        <span class='a '>Guides</span>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='manual/guides/github_integration.html' class=''>Github integration</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='manual/guides/makefiles.html' class=''>Makefiles</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='manual/guides/uploading_to_github_pages.html' class=''>Uploading to Github pages</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='manual/guides/working_with_git.html' class=''>Working with Git</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                                                                                              
+                <li class='page has-children level-1'>
+
+                                                        <a href='lib/lidoc.html' class=''>Lidoc</a>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/builder.html' class=''>Builder</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/command.html' class=''>Command</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/helpers.html' class=''>Helpers</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/languages.html' class=''>Languages</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/parser.html' class=''>Parser</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                                                                                              
+                <li class='page has-children level-1'>
+
+                                                        <span class='a '>Models</span>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/file.html' class=''>File</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/file_node.html' class=''>FileNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/heading.html' class=''>Heading</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/page.html' class=''>Page</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/page_node.html' class=''>PageNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/project.html' class=''>Project</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='lib/lidoc/models/section.html' class=''>Section</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                                                                                              
+                <li class='page has-children level-1'>
+
+                                                        <span class='a '>Utilities</span>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='lib/datastruct.html' class=''>Datastruct</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                                                                                              
+                <li class='page has-children level-1'>
+
+                                                        <span class='a '>About</span>
+                  
+                                                        <ul>
+                                                                                                                    
+                <li class='page  level-2'>
+
+                                                        <a href='TODO.html' class=''>To do</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-2'>
+
+                                                        <a href='HISTORY.html' class=''>History</a>
+                  
+                                                    </li>
+                                              </ul>
+                                  </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='index.html#f' class='item file active'>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                lib              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                lidoc              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder '>
+                <i></i>
+                models              </button>
+              <ul class='hidden'>
+                          <li class='level-4'>
+                                                    <a href='lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='script.js'></script>
+</body>
+</html>

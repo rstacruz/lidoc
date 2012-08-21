@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Datastruct</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/datastruct.js">
+          <strong title='lib/datastruct.js'>datastruct.js</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-js">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Utilities-Datastruct" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Utilities-Datastruct">&#182;</a>
+              </div>
+              <h1>Utilities: Datastruct</h1>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Cool stuff.</p>
+
+<pre><code>datastruct = require('lidoc/datastruct');
+
+function File(options) {
+  this.set(options);
+}
+
+datastruct(File)
+  .property('name', { default: null })
+  .property('name', { type: ClassName })
+</code></pre>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="s2">&quot;use strict&quot;</span><span class="p">;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="CoffeeScript-usage" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#CoffeeScript-usage">&#182;</a>
+              </div>
+              <h3>CoffeeScript usage</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <pre><code># CoffeeScript
+class File
+  datastruct this
+
+  @property 'name', default: null
+  @property 'name', type: ClassName
+  @property 'pages', subtype: ClassName
+  @property 'page', get: -&gt; ...
+
+  constructor: (options) -&gt;
+    @set options
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="Creating-getters-setters" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Creating-getters-setters">&#182;</a>
+              </div>
+              <h3>Creating getters/setters</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-5" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <pre><code>.property('name', {
+  get: function() {
+    return "Hello";
+  }
+});
+</code></pre>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="datastruct" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#datastruct">&#182;</a>
+              </div>
+              <h3>datastruct()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Applies the mixin to the given class <code>klass</code>.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="kd">function</span> <span class="nx">datastruct</span><span class="p">(</span><span class="nx">klass</span><span class="p">)</span> <span class="p">{</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="properties" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#properties">&#182;</a>
+              </div>
+              <h3>properties</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-9" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Key/value list of properties and their respective options.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span> <span class="o">=</span> <span class="p">{};</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="property-name-options" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#property-name-options">&#182;</a>
+              </div>
+              <h3>property(name, options)</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-11" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Makes a property. Creates sets/gets if needed.</p>
+
+<ul>
+<li><code>default</code>: The default value.</li>
+<li><code>type</code>: Class to coerce to.</li>
+<li><code>subtype</code>: Class to coerce to.</li>
+<li><code>get</code>: Name of get function.</li>
+<li><code>hidden</code>: If true, doesn't show up in JSON.</li>
+</ul>
+
+<p>Also handles the case where you pass more than one property as <code>property({ ...
+})</code>. [1]</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">klass</span><span class="p">.</span><span class="nx">property</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">((</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">name</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">))</span> <span class="p">{</span> <span class="cm">/* [1] */</span>
+      <span class="kd">var</span> <span class="nx">props</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">props</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">props</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">props</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+          <span class="nx">klass</span><span class="p">.</span><span class="nx">property</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+
+      <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="nx">options</span> <span class="o">||</span> <span class="p">(</span><span class="nx">options</span> <span class="o">=</span> <span class="p">{});</span>
+    <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="nx">options</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">((</span><span class="nx">options</span><span class="p">.</span><span class="nx">get</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">set</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">klass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="p">{</span>
+        <span class="nx">get</span><span class="o">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">get</span><span class="p">,</span>
+        <span class="nx">set</span><span class="o">:</span> <span class="nx">options</span><span class="p">.</span><span class="nx">set</span>
+      <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+  <span class="p">};</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="set" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#set">&#182;</a>
+              </div>
+              <h3>set()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-13" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Yeah.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">klass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">set</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">source</span><span class="p">)</span> <span class="p">{</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-14" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <ul>
+<li>If invoked with an object like <code>set({ key: value, ... })</code>, iterate
+through the object and delegate to <code>set(key, value)</code>.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">source</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+      <span class="nx">source</span> <span class="o">||</span> <span class="p">(</span><span class="nx">source</span> <span class="o">=</span> <span class="p">{});</span>
+
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+
+          <span class="k">if</span> <span class="p">(</span><span class="nx">source</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">source</span><span class="p">[</span><span class="nx">prop</span><span class="p">]);</span>
+          <span class="p">}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-15" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <ul>
+<li>If there's a default value, and the property hasn't been set...</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>          <span class="k">else</span> <span class="k">if</span> <span class="p">((</span><span class="k">typeof</span> <span class="nx">options</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span>
+            <span class="p">(</span><span class="k">typeof</span> <span class="k">this</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">===</span> <span class="s1">&#39;undefined&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">options</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]));</span>
+          <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-16" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <ul>
+<li>Handle <code>set(key, value)</code>.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+      <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+      <span class="kd">var</span> <span class="nx">propOptions</span> <span class="o">=</span> <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+
+      <span class="k">if</span> <span class="p">(</span><span class="nx">propOptions</span><span class="p">)</span> <span class="p">{</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-17" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <ul>
+<li>Coerce</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>        <span class="k">if</span> <span class="p">((</span><span class="nx">propOptions</span><span class="p">.</span><span class="nx">type</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">!==</span> <span class="nx">propOptions</span><span class="p">.</span><span class="nx">type</span><span class="p">))</span> <span class="p">{</span>
+          <span class="nx">value</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">propOptions</span><span class="p">.</span><span class="nx">type</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">propOptions</span><span class="p">.</span><span class="nx">subtype</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">value</span> <span class="o">=</span> <span class="nx">coerceObjectOrArray</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">propOptions</span><span class="p">.</span><span class="nx">subtype</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">this</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+  <span class="p">};</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="toJSON" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#toJSON">&#182;</a>
+              </div>
+              <h3>toJSON()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-19" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Implement this so that <code>JSON.stringify</code> will not catch private properties.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">klass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toJSON</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">object</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="nx">klass</span><span class="p">.</span><span class="nx">properties</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">options</span><span class="p">.</span><span class="nx">hidden</span><span class="p">)</span> <span class="p">{</span>
+          <span class="nx">object</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nx">object</span><span class="p">;</span>
+  <span class="p">};</span>
+
+  <span class="k">return</span> <span class="nx">klass</span><span class="p">;</span>
+<span class="p">};</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="Private-helpers" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Private-helpers">&#182;</a>
+              </div>
+              <h2>Private helpers</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="coerceObjectOrArray" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#coerceObjectOrArray">&#182;</a>
+              </div>
+              <h3>coerceObjectOrArray()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-22" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Casts the values of <code>object</code> into given type <code>type</code>.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="kd">function</span> <span class="nx">coerceObjectOrArray</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">type</span><span class="p">,</span> <span class="nx">self</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">object</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">re</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nx">len</span><span class="o">=</span><span class="nx">object</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">len</span><span class="p">;</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">re</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">type</span><span class="p">(</span><span class="nx">object</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">self</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">re</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">object</span><span class="p">;</span> <span class="c1">// Probably null</span>
+  <span class="p">}</span>
+
+  <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">object</span> <span class="o">===</span> <span class="s1">&#39;object&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">re</span> <span class="o">=</span> <span class="p">{};</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">key</span> <span class="k">in</span> <span class="nx">object</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">object</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">object</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+
+        <span class="nx">re</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">type</span><span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">self</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">re</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="clone" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#clone">&#182;</a>
+              </div>
+              <h2>clone()</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-24" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>Creates a shallow clone of the object <code>obj</code>. Taken from underscore.js.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="kd">function</span> <span class="nx">clone</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">((</span><span class="o">!</span><span class="nx">obj</span><span class="p">)</span> <span class="o">||</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">obj</span> <span class="o">!==</span> <span class="s1">&#39;object&#39;</span><span class="p">))</span> <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+  <span class="k">return</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">===</span> <span class="nb">Array</span><span class="p">)</span> <span class="o">?</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">slice</span><span class="p">()</span> <span class="o">:</span> <span class="nx">extend</span><span class="p">({},</span> <span class="nx">obj</span><span class="p">);</span>
+<span class="p">}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="extend" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#extend">&#182;</a>
+              </div>
+              <h2>extend()</h2>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-26" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>Extenda given object <code>obj</code> with properties from <code>source</code>. Taken from
+underscore.js.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="kd">function</span> <span class="nx">extend</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">source</span><span class="p">.</span><span class="nx">hasOwnProperty</span><span class="p">(</span><span class="nx">prop</span><span class="p">))</span> <span class="p">{</span>
+      <span class="nx">obj</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">source</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">obj</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">module</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">datastruct</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">})();</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <span class='a'>Utilities</span>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>Datastruct</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#CoffeeScript-usage">
+                        CoffeeScript usage                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#Creating-getters-setters">
+                        Creating getters/setters                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#datastruct">
+                        datastruct()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#properties">
+                        properties                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#property-name-options">
+                        property(name, options)                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#set">
+                        set()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#toJSON">
+                        toJSON()                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#Private-helpers">
+                        Private helpers                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#coerceObjectOrArray">
+                        coerceObjectOrArray()                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#clone">
+                        clone()                      </a>
+                    </li>
+                                                                              <li class='heading level-2'>
+                      <a href="#extend">
+                        extend()                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <span class='a'>Utilities</span>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../lib/datastruct.html' class='active'>Datastruct</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../lib/datastruct.html#f' class='item file active'>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                lidoc              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder '>
+                <i></i>
+                models              </button>
+              <ul class='hidden'>
+                          <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../script.js'></script>
+</body>
+</html>

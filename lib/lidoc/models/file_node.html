@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FileNode</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/lidoc/models/file_node.coffee">
+          <strong title='lib/lidoc/models/file_node.coffee'>file_node.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Models-FileNode" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Models-FileNode">&#182;</a>
+              </div>
+              <h1>Models: FileNode</h1>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Represents a hierarchal index of a bunch of files.</p>
+
+<p>Each node represents either a true file or a folder.  This means that each
+FileNode may or may not have a Page associated wiht it.</p>
+
+<pre><code>tree = new Lidoc.FileNode(files)
+
+tree ==
+  name: '.'
+  paths:
+    'app':
+      name: 'app'
+      paths:
+        'file.js':
+          name: 'file.js'
+          fileID: 'app/file.js'
+    'README.md':
+      name: 'README.md'
+      fileID: 'README.md'
+
+# File (assets/javascripts/parser.html)
+tree.paths['assets'].paths['javascripts'].paths['parser.html']
+</code></pre>
+
+<p>You can get this from <code>Project.index.fileTree</code>, or <code>fileTree</code> in the HTML
+template.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;path&#39;</span>
+<span class="nx">datastruct</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;../../datastruct&#39;</span>
+
+<span class="nx">class</span> <span class="nx">FileNode</span>
+  <span class="nx">datastruct</span> <span class="k">this</span>
+
+  <span class="err">@</span><span class="nx">property</span>
+    <span class="s1">&#39;name&#39;</span><span class="o">:</span>    <span class="nv">default: </span><span class="s1">&#39;&#39;</span>
+    <span class="s1">&#39;fileID&#39;</span><span class="o">:</span>  <span class="nv">default: </span><span class="s1">&#39;&#39;</span>
+    <span class="s1">&#39;paths&#39;</span><span class="o">:</span>   <span class="nv">default: </span><span class="p">{},</span> <span class="nv">subtype: </span><span class="nx">FileNode</span>
+
+  <span class="nv">constructor: </span><span class="p">(</span><span class="nx">options</span><span class="o">=</span><span class="p">{},</span> <span class="nx">parent</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">parent</span><span class="o">?</span><span class="p">.</span><span class="nx">constructor</span> <span class="o">is</span> <span class="nx">FileNode</span>
+      <span class="err">@</span><span class="nx">parent</span>  <span class="o">=</span> <span class="nx">parent</span>
+      <span class="err">@</span><span class="nx">project</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">project</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">parent</span><span class="o">?</span><span class="p">.</span><span class="nx">files</span> <span class="c1"># Project</span>
+      <span class="err">@</span><span class="nx">project</span> <span class="o">=</span> <span class="nx">parent</span>
+
+    <span class="err">@</span><span class="nx">set</span> <span class="nx">options</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="file" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#file">&#182;</a>
+              </div>
+              <h3>file</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Returns the associated <code>File</code>.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="err">@</span><span class="nx">fileID</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="breadcrumbs" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#breadcrumbs">&#182;</a>
+              </div>
+              <h3>breadcrumbs</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-5" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Returns an array of <code>FileNode</code>s, starting from the root, to this one.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="err">@</span><span class="nx">property</span> <span class="s1">&#39;breadcrumbs&#39;</span><span class="p">,</span> <span class="nv">hidden: </span><span class="kc">true</span><span class="p">,</span> <span class="nv">get: </span><span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="err">@</span><span class="nx">parent</span>
+      <span class="err">@</span><span class="nx">parent</span><span class="p">.</span><span class="nx">breadcrumbs</span><span class="p">.</span><span class="nx">concat</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span>
+    <span class="k">else</span>
+      <span class="p">[]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="buildFrom" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#buildFrom">&#182;</a>
+              </div>
+              <h3>buildFrom()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Takes <code>files</code> from a {Project} and builds a filetree from it.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nv">buildFrom: </span><span class="p">(</span><span class="err">@</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">file</span> <span class="k">of</span> <span class="err">@</span><span class="nx">project</span><span class="p">.</span><span class="nx">files</span>
+      <span class="nx">name</span> <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">htmlFile</span>
+      <span class="nx">segments</span> <span class="o">=</span> <span class="nx">name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">sep</span><span class="p">)</span>
+
+      <span class="err">@</span><span class="nx">addFile</span> <span class="nx">segments</span><span class="p">,</span> <span class="nx">file</span>
+
+    <span class="err">@</span><span class="nx">sort</span><span class="p">()</span>
+
+    <span class="k">this</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="sort" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#sort">&#182;</a>
+              </div>
+              <h3>sort()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-9" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Ensures that the paths are sorted.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nv">sort: </span><span class="o">-&gt;</span>
+    <span class="nx">newPaths</span> <span class="o">=</span> <span class="p">{}</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-10" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <ul>
+<li>Get all the names and sort them</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="nx">names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">object</span> <span class="k">of</span> <span class="err">@</span><span class="nx">paths</span>
+      <span class="nx">names</span><span class="p">.</span><span class="nx">push</span> <span class="nx">name</span>
+
+    <span class="nx">names</span> <span class="o">=</span> <span class="nx">names</span><span class="p">.</span><span class="nx">sort</span><span class="p">()</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-11" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <ul>
+<li>Now put them back in, recursing in the process</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="nx">names</span><span class="p">.</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">name</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">sort</span><span class="p">()</span>  <span class="k">if</span> <span class="k">typeof</span> <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">name</span><span class="p">].</span><span class="nx">sort</span> <span class="o">is</span> <span class="s1">&#39;function&#39;</span>
+      <span class="nx">newPaths</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-12" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <ul>
+<li>And replace the old paths with the new</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="k">delete</span><span class="p">(</span><span class="err">@</span><span class="nx">paths</span><span class="p">)</span>
+    <span class="err">@</span><span class="nx">paths</span> <span class="o">=</span> <span class="nx">newPaths</span>
+
+    <span class="k">this</span>
+
+  <span class="nv">addFile: </span><span class="p">(</span><span class="nx">segments</span><span class="p">,</span> <span class="nx">file</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">segments</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="mi">1</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FileNode</span><span class="p">(</span><span class="nv">name: </span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nv">fileID: </span><span class="nx">file</span><span class="p">.</span><span class="nx">id</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+
+    <span class="k">else</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">?=</span> <span class="k">new</span> <span class="nx">FileNode</span><span class="p">(</span><span class="nv">name: </span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="k">this</span><span class="p">)</span>
+      <span class="err">@</span><span class="nx">paths</span><span class="p">[</span><span class="nx">segments</span><span class="p">[</span><span class="mi">0</span><span class="p">]].</span><span class="nx">addFile</span> <span class="nx">segments</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="nx">file</span>
+
+    <span class="k">this</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">FileNode</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../../../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <span class='a'>Models</span>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>FileNode</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#file">
+                        file                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#breadcrumbs">
+                        breadcrumbs                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#buildFrom">
+                        buildFrom()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#sort">
+                        sort()                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <span class='a'>Models</span>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file.html' class=''>File</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/file_node.html' class='active'>FileNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/heading.html' class=''>Heading</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page.html' class=''>Page</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/page_node.html' class=''>PageNode</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/project.html' class=''>Project</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../../lib/lidoc/models/section.html' class=''>Section</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../../../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../../../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lidoc              </button>
+              <ul class=''>
+                          <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                models              </button>
+              <ul class=''>
+                          <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/file_node.html#f' class='item file active'>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../../../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../../../script.js'></script>
+</body>
+</html>

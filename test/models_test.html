@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>models_test.html</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/test/models_test.coffee">
+          <strong title='test/models_test.coffee'>models_test.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="section-0" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-0">&#182;</a>
+              </div>
+                          </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">require</span> <span class="s1">&#39;test/env&#39;</span>
+
+<span class="nx">files</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="s1">&#39;test/fixture/README.md&#39;</span>
+  <span class="s1">&#39;test/fixture/guides.md&#39;</span>
+  <span class="s1">&#39;test/fixture/guides/getting_started.md&#39;</span>
+  <span class="s1">&#39;test/fixture/recipes/using_git.md&#39;</span>
+<span class="p">]</span>
+
+<span class="nx">Vows</span>
+  <span class="p">.</span><span class="nx">describe</span><span class="p">(</span><span class="s1">&#39;Lidoc models&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addBatch</span>
+    <span class="s1">&#39;Lidoc models&#39;</span><span class="o">:</span>
+      <span class="nv">topic: </span><span class="o">-&gt;</span>
+        <span class="nx">Lidoc</span><span class="p">.</span><span class="nx">parse</span> <span class="nv">files: </span><span class="nx">files</span><span class="p">,</span> <span class="nv">quiet: </span><span class="kc">true</span><span class="p">,</span> <span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">=&gt;</span>
+          <span class="err">@</span><span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">project</span>
+
+      <span class="s1">&#39;A file&#39;</span><span class="o">:</span>
+        <span class="nv">topic: </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+          <span class="nx">file</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="s1">&#39;test/fixture/guides/getting_started.md&#39;</span><span class="p">]</span>
+          <span class="p">[</span><span class="nx">project</span><span class="p">,</span> <span class="nx">file</span><span class="p">]</span>
+
+        <span class="s1">&#39;should be the right type&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">file</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">file</span><span class="p">.</span><span class="nx">constructor</span><span class="p">,</span> <span class="nx">Lidoc</span><span class="p">.</span><span class="nx">File</span>
+
+        <span class="s1">&#39;.project&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">file</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">file</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">constructor</span><span class="p">,</span> <span class="nx">Lidoc</span><span class="p">.</span><span class="nx">Project</span>
+
+        <span class="s1">&#39;.page&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">file</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">file</span><span class="p">.</span><span class="nx">page</span><span class="p">,</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">]</span>
+
+      <span class="s1">&#39;Page&#39;</span><span class="o">:</span>
+        <span class="s1">&#39;1&#39;</span><span class="o">:</span>
+          <span class="nv">topic: </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">]</span>
+
+          <span class="s1">&#39;should be the right type&#39;</span><span class="o">:</span> <span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">page</span><span class="p">.</span><span class="nx">constructor</span><span class="p">,</span> <span class="nx">Lidoc</span><span class="p">.</span><span class="nx">Page</span>
+
+          <span class="s1">&#39;should have a project&#39;</span><span class="o">:</span> <span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">page</span><span class="p">.</span><span class="nx">project</span><span class="p">.</span><span class="nx">constructor</span><span class="p">,</span> <span class="nx">Lidoc</span><span class="p">.</span><span class="nx">Project</span>
+
+          <span class="s1">&#39;.node&#39;</span><span class="o">:</span> <span class="p">(</span><span class="nx">page</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">node</span> <span class="o">=</span> <span class="nx">page</span><span class="p">.</span><span class="nx">node</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">node</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="nx">page</span><span class="p">.</span><span class="nx">title</span>
+
+        <span class="s1">&#39;parenting&#39;</span><span class="o">:</span>
+          <span class="nv">topic: </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">page</span>   <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">]</span>
+            <span class="nx">parent</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides&#39;</span><span class="p">]</span>
+
+            <span class="p">[</span><span class="nx">page</span><span class="p">,</span> <span class="nx">parent</span><span class="p">]</span>
+
+          <span class="s1">&#39;.parentNode&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">page</span><span class="p">,</span> <span class="nx">parent</span><span class="p">])</span> <span class="o">-&gt;</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">page</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">,</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">node</span>
+
+          <span class="s1">&#39;.parentPage&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">page</span><span class="p">,</span> <span class="nx">parent</span><span class="p">])</span> <span class="o">-&gt;</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">page</span><span class="p">.</span><span class="nx">parentPage</span><span class="p">,</span> <span class="nx">parent</span>
+
+      <span class="s1">&#39;PageNode&#39;</span><span class="o">:</span>
+        <span class="nv">topic: </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+          <span class="nx">page</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">]</span>
+          <span class="p">[</span><span class="nx">project</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">page</span><span class="p">.</span><span class="nx">node</span><span class="p">]</span>
+
+        <span class="s1">&#39;.project&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">node</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">node</span><span class="p">.</span><span class="nx">project</span><span class="p">,</span> <span class="nx">project</span>
+
+        <span class="s1">&#39;.page&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">node</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">node</span><span class="p">.</span><span class="nx">page</span><span class="p">,</span> <span class="nx">page</span>
+
+        <span class="s1">&#39;.breadcrumbs&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">node</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">crumbs</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">breadcrumbs</span>
+
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">crumbs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pageTree</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">crumbs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides&#39;</span><span class="p">].</span><span class="nx">node</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">crumbs</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">node</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">crumbs</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">3</span>
+
+        <span class="s1">&#39;.ancestors&#39;</span><span class="o">:</span> <span class="p">([</span><span class="nx">project</span><span class="p">,</span> <span class="nx">page</span><span class="p">,</span> <span class="nx">node</span><span class="p">])</span> <span class="o">-&gt;</span>
+          <span class="nx">list</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">ancestors</span>
+
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pageTree</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">list</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides&#39;</span><span class="p">].</span><span class="nx">node</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="mi">2</span>
+
+      <span class="s1">&#39;PageNode.hasChildren&#39;</span><span class="o">:</span>
+        <span class="s1">&#39;true&#39;</span><span class="o">:</span> <span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+          <span class="nx">node</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">].</span><span class="nx">node</span>
+          <span class="nx">assert</span><span class="p">.</span><span class="nx">isFalse</span> <span class="nx">node</span><span class="p">.</span><span class="nx">hasChildren</span>
+
+      <span class="s1">&#39;PageNode.reference&#39;</span><span class="o">:</span>
+          <span class="s1">&#39;1&#39;</span><span class="o">:</span> <span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="nx">node</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">pages</span><span class="p">[</span><span class="s1">&#39;Guides: Getting started&#39;</span><span class="p">].</span><span class="nx">node</span>
+            <span class="nx">ref</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">reference</span>
+            <span class="nx">assert</span><span class="p">.</span><span class="nx">equal</span> <span class="nx">ref</span><span class="p">.</span><span class="nx">title</span><span class="p">,</span> <span class="s1">&#39;Guides&#39;</span>
+
+      <span class="s1">&#39;FileNode&#39;</span><span class="o">:</span> <span class="o">-&gt;</span>
+        <span class="nv">topic: </span><span class="p">(</span><span class="nx">project</span><span class="p">)</span> <span class="o">-&gt;</span>
+          <span class="nx">file</span> <span class="o">=</span> <span class="nx">project</span><span class="p">.</span><span class="nx">files</span><span class="p">[</span><span class="s1">&#39;test/fixture/guides/getting_started.md&#39;</span><span class="p">]</span>
+          <span class="p">[</span><span class="nx">project</span><span class="p">,</span> <span class="nx">file</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">node</span><span class="p">]</span>
+
+  <span class="p">.</span><span class="nx">export</span><span class="p">(</span><span class="nx">module</span><span class="p">)</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                lib              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                lidoc              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../lib/lidoc/builder.html#f' class='item file '>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                models              </button>
+              <ul class=''>
+                          <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                test              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/models_test.html#f' class='item file active'>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../script.js'></script>
+</body>
+</html>

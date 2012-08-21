@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Builder</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../style.css" />
+  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery-1.8.0.min.js'></script>
+</head>
+<body>
+  <div id="area">
+    <div class='file-header'>
+              <a href="https://github.com/rstacruz/lidoc/blob/master/lib/lidoc/builder.coffee">
+          <strong title='lib/lidoc/builder.coffee'>builder.coffee</strong>
+          <small>View source</small>
+        </a>
+          </div>
+
+    <table cellpadding="0" cellspacing="0" class="extension-coffee">
+      <thead>
+        <tr>
+          <th class="docs">
+          </th>
+          <th class="code">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+                                      
+          <tr id="Lidoc-Builder" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#Lidoc-Builder">&#182;</a>
+              </div>
+              <h1>Lidoc.Builder</h1>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-1" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Builds HTML/CSS files.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">fs</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;fs&#39;</span>
+<span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;path&#39;</span>
+<span class="nx">async</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;async&#39;</span>
+<span class="nx">mkdirp</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mkdirp&#39;</span><span class="p">).</span><span class="nx">sync</span>
+<span class="p">{</span><span class="nx">template</span><span class="p">,</span> <span class="nx">getResource</span><span class="p">,</span> <span class="nx">getFileDepth</span><span class="p">,</span> <span class="nx">strRepeat</span><span class="p">}</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;./helpers&#39;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="build" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#build">&#182;</a>
+              </div>
+              <h3>build()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-3" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Builds the HTML/CSS files in the path in <code>options.output</code>. The argument
+<code>project</code> is something that comes from {parse()}.</p>
+
+<pre><code>options = {
+  files: ['a.js', 'b.js'],
+  output: 'docs'
+};
+
+project = Lidoc.parse(options);
+Lidoc.build(project, options, callback);
+</code></pre>
+
+<p>This is accessible via {Lidoc#build()}.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">build</span> <span class="o">=</span> <span class="p">(</span><span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-4" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <ul>
+<li>Build the output directory.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">mkdirp</span> <span class="nx">options</span><span class="p">.</span><span class="nx">output</span>
+
+  <span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span> <span class="p">[</span>
+    <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">writeCSS</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">cb</span>
+    <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">writeFiles</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">cb</span>
+    <span class="p">(</span><span class="nx">cb</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nx">writeAssets</span> <span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">cb</span>
+  <span class="p">],</span> <span class="nx">callback</span>
+
+<span class="nx">compileCSS</span> <span class="o">=</span> <span class="p">(</span><span class="nx">css</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">stylus</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;stylus&#39;</span>
+  <span class="nx">nib</span> <span class="o">=</span> <span class="nx">require</span> <span class="s1">&#39;nib&#39;</span>
+
+  <span class="nx">stylus</span><span class="p">(</span><span class="nx">css</span><span class="p">).</span><span class="nx">use</span><span class="p">(</span><span class="nx">nib</span><span class="p">()).</span><span class="nx">render</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">actual</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="k">if</span> <span class="nx">err</span><span class="o">?</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s2">&quot;&quot;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s2">&quot;Stylus error (#{err.name}):&quot;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span>
+
+    <span class="nx">callback</span> <span class="nx">actual</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="writeCSS" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#writeCSS">&#182;</a>
+              </div>
+              <h3>writeCSS()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-6" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Writes CSS files to the output path.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">writeCSS</span> <span class="o">=</span> <span class="p">(</span><span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-7" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <ul>
+<li>Fetch the default CSS file.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">css</span> <span class="o">=</span> <span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">css</span><span class="o">?</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">readFileSync</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">css</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+  <span class="k">else</span>
+    <span class="nx">getResource</span><span class="p">(</span><span class="s1">&#39;default.css&#39;</span><span class="p">)</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-8" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <ul>
+<li>Render and write it</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">outFile</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="s1">&#39;style.css&#39;</span><span class="p">)</span>
+
+  <span class="nx">compileCSS</span> <span class="nx">css</span><span class="p">,</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span> <span class="nx">outFile</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="o">-&gt;</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s2">&quot;  &gt; #{outFile}&quot;</span>  <span class="nx">unless</span> <span class="nx">options</span><span class="p">.</span><span class="nx">quiet</span>
+      <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="writeAssets" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#writeAssets">&#182;</a>
+              </div>
+              <h3>writeAssets()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-10" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Takes care of other assets, supposedly...</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">writeAssets</span> <span class="o">=</span> <span class="p">(</span><span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">contents</span> <span class="o">=</span> <span class="nx">getResource</span><span class="p">(</span><span class="s1">&#39;script.js&#39;</span><span class="p">)</span>
+  <span class="nx">outFile</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="s1">&#39;script.js&#39;</span><span class="p">)</span>
+
+  <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span> <span class="nx">outFile</span><span class="p">,</span> <span class="nx">contents</span><span class="p">,</span> <span class="o">-&gt;</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s2">&quot;  &gt; #{outFile}&quot;</span>  <span class="nx">unless</span> <span class="nx">options</span><span class="p">.</span><span class="nx">quiet</span>
+    <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="kc">true</span>
+
+<span class="nx">getSourceUrl</span> <span class="o">=</span> <span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">github</span><span class="o">?</span> <span class="o">and</span> <span class="nx">options</span><span class="p">.</span><span class="nx">gitBranch</span><span class="o">?</span>
+    <span class="s2">&quot;https://github.com/#{options.github}/blob/#{options.gitBranch}/#{file.sourceFile}&quot;</span>
+  <span class="k">else</span>
+    <span class="kc">null</span>
+
+<span class="nx">treeFind</span> <span class="o">=</span> <span class="p">(</span><span class="nx">pageTree</span><span class="p">,</span> <span class="nx">page</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">current</span> <span class="o">=</span> <span class="nx">pageTree</span>
+  <span class="nx">page</span><span class="p">.</span><span class="nx">segments</span><span class="p">.</span><span class="nx">forEach</span> <span class="p">(</span><span class="nx">segment</span><span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nx">current</span> <span class="o">=</span> <span class="nx">current</span><span class="o">?</span><span class="p">.</span><span class="nx">paths</span><span class="o">?</span><span class="p">[</span><span class="nx">segment</span><span class="p">]</span>
+  <span class="nx">current</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="writeFiles" class="heading">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#writeFiles">&#182;</a>
+              </div>
+              <h3>writeFiles()</h3>            </td>
+            <td class="code">
+                          </td>
+          </tr>
+                                      
+          <tr id="section-12" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Writes HTML files to the output path.</p>            </td>
+            <td class="code">
+              <div class="highlight"><pre><span class="nx">writeFiles</span> <span class="o">=</span> <span class="p">(</span><span class="nx">project</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span>
+  <span class="nx">tpl</span> <span class="o">=</span> <span class="nx">template</span><span class="p">(</span><span class="nx">getResource</span><span class="p">(</span><span class="s1">&#39;default.html&#39;</span><span class="p">))</span>
+  <span class="nx">calls</span> <span class="o">=</span> <span class="p">[]</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-13" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <ul>
+<li>Write each of the HTML files.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="k">for</span> <span class="nx">fname</span><span class="p">,</span> <span class="nx">file</span> <span class="k">of</span> <span class="nx">project</span><span class="p">.</span><span class="nx">files</span>
+    <span class="nx">outFile</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="nx">options</span><span class="p">.</span><span class="nx">output</span><span class="p">,</span> <span class="nx">file</span><span class="p">.</span><span class="nx">htmlFile</span><span class="p">)</span>
+    <span class="nx">depth</span>   <span class="o">=</span> <span class="nx">getFileDepth</span><span class="p">(</span><span class="nx">file</span><span class="p">.</span><span class="nx">htmlFile</span><span class="p">)</span>
+    <span class="nx">root</span>    <span class="o">=</span> <span class="nx">strRepeat</span><span class="p">(</span><span class="s1">&#39;../&#39;</span><span class="p">,</span> <span class="nx">depth</span><span class="p">)</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-14" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <ul>
+<li>A file may or may not have a page (say if it has no H1).</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="nx">page</span>    <span class="o">=</span> <span class="nx">file</span><span class="p">.</span><span class="nx">page</span>
+
+    <span class="nx">output</span> <span class="o">=</span> <span class="nx">tpl</span>
+      <span class="nv">title: </span>      <span class="nx">page</span><span class="o">?</span><span class="p">.</span><span class="nx">title</span> <span class="o">?</span> <span class="nx">file</span><span class="p">.</span><span class="nx">baseHtmlFile</span>
+      <span class="nv">root: </span>       <span class="nx">root</span>                         <span class="c1"># Prefix for relative paths</span>
+      <span class="nv">css: </span>        <span class="s2">&quot;#{root}style.css&quot;</span>           <span class="c1"># URL path to CSS file</span>
+      <span class="nv">sourceUrl: </span>  <span class="nx">getSourceUrl</span><span class="p">(</span><span class="nx">file</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>  <span class="c1"># Github path</span>
+      <span class="nv">project: </span>    <span class="nx">project</span>
+      <span class="nv">depth: </span>      <span class="nx">depth</span>
+      <span class="nv">options: </span>    <span class="nx">options</span>
+      <span class="nv">sections: </span>   <span class="nx">file</span><span class="p">.</span><span class="nx">sections</span>
+      <span class="nv">reference: </span>  <span class="nx">page</span><span class="o">?</span><span class="p">.</span><span class="nx">node</span><span class="p">.</span><span class="nx">reference</span>
+      <span class="nv">current:</span>
+        <span class="nv">file: </span><span class="nx">file</span>
+        <span class="nv">page: </span><span class="nx">page</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-15" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <ul>
+<li>Queue up the mkdir/writeFile calls.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>    <span class="nx">calls</span><span class="p">.</span><span class="nx">push</span> <span class="nx">do</span> <span class="p">(</span><span class="nx">outFile</span><span class="p">,</span> <span class="nx">output</span><span class="p">)</span> <span class="o">-&gt;</span>
+      <span class="p">(</span><span class="nx">callback</span><span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="nx">mkdirp</span> <span class="nx">path</span><span class="p">.</span><span class="nx">dirname</span><span class="p">(</span><span class="nx">outFile</span><span class="p">)</span>
+        <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span> <span class="nx">outFile</span><span class="p">,</span> <span class="nx">output</span><span class="p">,</span> <span class="o">-&gt;</span>
+          <span class="nx">console</span><span class="p">.</span><span class="nx">warn</span> <span class="s2">&quot;  &gt; #{outFile}&quot;</span>  <span class="nx">unless</span> <span class="nx">options</span><span class="p">.</span><span class="nx">quiet</span>
+          <span class="nx">callback</span> <span class="kc">null</span><span class="p">,</span> <span class="nx">outFile</span></pre></div>            </td>
+          </tr>
+                                      
+          <tr id="section-16" class="">
+            <td class="docs">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <ul>
+<li>Invoke the queued up the write functions.</li>
+</ul>            </td>
+            <td class="code">
+              <div class="highlight"><pre>  <span class="nx">async</span><span class="p">.</span><span class="nx">parallel</span> <span class="nx">calls</span><span class="p">,</span> <span class="nx">callback</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span><span class="nx">build</span><span class="p">}</span>
+
+</pre></div>            </td>
+          </tr>
+              </tbody>
+    </table>
+
+    
+  </div>
+
+  <div id="sidebar">
+    <div class='header search'>
+      <input type='text' name='search' id='search-box' placeholder='Search...' />
+    </div>
+
+    <div class='header tabs'>
+      <button class='active' data-tab='pages'>Pages</button>
+      <button data-tab='files'>Files</button>
+    </div>
+
+    <div class='scroll-area'>
+      <!-- .multipage here means there will be a sidebar of many pages. -->
+      <div class='list pages multipage'>
+                  
+          <!-- Breadcrumbs -->
+                                  <ul class='breadcrumbs'>
+                              
+                <li class='page back'>
+                                  <a href='../../index.html'>Welcome to Lidoc</a>
+                                              
+                <li class='page back'>
+                                  <a href='../../lib/lidoc.html'>Lidoc</a>
+                                          </ul>
+          
+          <!-- The page and its headings -->
+          <ul class='current-page'>
+                        
+            <li class='page level-0'>
+              <a href='#'>Builder</a>
+                              <ul>
+                                                                              <li class='heading level-3'>
+                      <a href="#build">
+                        build()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#writeCSS">
+                        writeCSS()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#writeAssets">
+                        writeAssets()                      </a>
+                    </li>
+                                                                              <li class='heading level-3'>
+                      <a href="#writeFiles">
+                        writeFiles()                      </a>
+                    </li>
+                                  </ul>
+                          </li>
+          </ul>
+
+          <ul class='reference'>
+
+            <!-- The reference page -->
+                          <li class='page has-children level-0'>
+                                  <a href='../../lib/lidoc.html'>Lidoc</a>
+                              </li>
+            
+            <!-- Subpages of the ref -->
+                                                                                                                      
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/builder.html' class='active'>Builder</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/command.html' class=''>Command</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/helpers.html' class=''>Helpers</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/languages.html' class=''>Languages</a>
+                  
+                                                    </li>
+                                                                                              
+                <li class='page  level-1'>
+
+                                                        <a href='../../lib/lidoc/parser.html' class=''>Parser</a>
+                  
+                                                    </li>
+                          
+          </ul>
+              </div>
+
+      <div class='list files hidden'>
+        
+        <ul>
+                  <li class='level-1'>
+                                                    <a href='../../HISTORY.html#f' class='item file '>
+                <i></i>
+                HISTORY.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../TODO.html#f' class='item file '>
+                <i></i>
+                TODO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <a href='../../index.html#f' class='item file '>
+                <i></i>
+                INTRO.md              </a>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lib              </button>
+              <ul class=''>
+                          <li class='level-2'>
+                                                    <a href='../../lib/datastruct.html#f' class='item file '>
+                <i></i>
+                datastruct.js              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder expanded'>
+                <i></i>
+                lidoc              </button>
+              <ul class=''>
+                          <li class='level-3'>
+                                                    <a href='../../lib/lidoc/builder.html#f' class='item file active'>
+                <i></i>
+                builder.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/command.html#f' class='item file '>
+                <i></i>
+                command.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/helpers.html#f' class='item file '>
+                <i></i>
+                helpers.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/languages.html#f' class='item file '>
+                <i></i>
+                languages.coffee              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <button class='item folder '>
+                <i></i>
+                models              </button>
+              <ul class='hidden'>
+                          <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/file.html#f' class='item file '>
+                <i></i>
+                file.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/file_node.html#f' class='item file '>
+                <i></i>
+                file_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/heading.html#f' class='item file '>
+                <i></i>
+                heading.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/page.html#f' class='item file '>
+                <i></i>
+                page.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/page_node.html#f' class='item file '>
+                <i></i>
+                page_node.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/project.html#f' class='item file '>
+                <i></i>
+                project.coffee              </a>
+                      </li>
+                                                    <li class='level-4'>
+                                                    <a href='../../lib/lidoc/models/section.html#f' class='item file '>
+                <i></i>
+                section.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../lib/lidoc/parser.html#f' class='item file '>
+                <i></i>
+                parser.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../lib/lidoc.html#f' class='item file '>
+                <i></i>
+                lidoc.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                manual              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../manual/command_line.html#f' class='item file '>
+                <i></i>
+                command_line.md              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <button class='item folder '>
+                <i></i>
+                guides              </button>
+              <ul class='hidden'>
+                          <li class='level-3'>
+                                                    <a href='../../manual/guides/github_integration.html#f' class='item file '>
+                <i></i>
+                github_integration.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/makefiles.html#f' class='item file '>
+                <i></i>
+                makefiles.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/uploading_to_github_pages.html#f' class='item file '>
+                <i></i>
+                uploading_to_github_pages.md              </a>
+                      </li>
+                                                    <li class='level-3'>
+                                                    <a href='../../manual/guides/working_with_git.html#f' class='item file '>
+                <i></i>
+                working_with_git.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../manual/lidoc_standard.html#f' class='item file '>
+                <i></i>
+                lidoc_standard.md              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                    <li class='level-1'>
+                                                    <button class='item folder '>
+                <i></i>
+                test              </button>
+              <ul class='hidden'>
+                          <li class='level-2'>
+                                                    <a href='../../test/build_test.html#f' class='item file '>
+                <i></i>
+                build_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/datastruct_test.html#f' class='item file '>
+                <i></i>
+                datastruct_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/env.html#f' class='item file '>
+                <i></i>
+                env.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/file_tree_test.html#f' class='item file '>
+                <i></i>
+                file_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/lidoc_test.html#f' class='item file '>
+                <i></i>
+                lidoc_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/models_test.html#f' class='item file '>
+                <i></i>
+                models_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/page_tree_test.html#f' class='item file '>
+                <i></i>
+                page_tree_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/parser_test.html#f' class='item file '>
+                <i></i>
+                parser_test.coffee              </a>
+                      </li>
+                                                    <li class='level-2'>
+                                                    <a href='../../test/serialize_test.html#f' class='item file '>
+                <i></i>
+                serialize_test.coffee              </a>
+                      </li>
+                                                        </ul>
+            </li>
+                      </li>
+                                  </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src='../../script.js'></script>
+</body>
+</html>
