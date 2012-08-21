@@ -1,5 +1,4 @@
 # # Lidoc.Command
-
 # Lidoc command line tool.
 
 Lidoc = require '../lidoc'
@@ -7,7 +6,6 @@ Project = Lidoc.Project
 fs = require 'fs'
 
 # ### getOptions()
-
 # The command line parser.
 
 getOptions = ->
@@ -35,7 +33,6 @@ getOptions = ->
   options
 
 # ### work()
-
 # Parses command line arguments and performs actions.
 
 work = (argv) ->

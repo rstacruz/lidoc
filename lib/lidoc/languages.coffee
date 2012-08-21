@@ -5,6 +5,7 @@ path = require 'path'
 
 # ### languages
 # A dict object of languages.
+
 languages =
   ".coffee":  {name: "coffee-script", symbol: "#"}
   ".rb":      {name: "ruby", symbol: "#"}
@@ -52,7 +53,7 @@ for ext, l of languages
 #
 #     getLanguage(".py")
 #     #=> {name: "Python", commentMatcher: "..", commentFilter: "...", }
-#
+
 getLanguage = (source) -> languages[path.extname(source)]
 
 # ...

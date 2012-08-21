@@ -8,7 +8,7 @@ path = require 'path'
 # Read resource file `name` and return its content.
 #
 #     getResource('languages.json')
-#
+
 getResource = (name) ->
   fullPath = path.join __dirname, '..', '..', 'resources', name
   fs.readFileSync(fullPath).toString()
@@ -16,7 +16,7 @@ getResource = (name) ->
 # ### template()
 # Micro-templating, originally by John Resig, borrowed by way of
 # [Underscore.js](http://documentcloud.github.com/underscore/).
-#
+
 template = (str) ->
   new Function 'obj',
     'var p=[],print=function(){p.push.apply(p,arguments);};' +
@@ -35,7 +35,7 @@ template = (str) ->
 # Takes a given string `str` and normalizes it to be an alpha-numeric string.
 #
 #     slugify("50% off")  #=> "50-off"
-#
+
 slugify = (str, space='-') ->
   str.replace(/[^A-Za-z0-9]+/g, ' ').trim().replace(/\ +/g, space)
 
@@ -44,7 +44,7 @@ slugify = (str, space='-') ->
 #
 #     changeExtension("parser.js", ".html")
 #     #=> "parser.html"
-#
+
 changeExtension = (filename, ext) ->
   filename.replace(/(\.[^\.]+)?$/, ext)
 

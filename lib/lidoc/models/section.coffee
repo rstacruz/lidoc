@@ -1,5 +1,4 @@
 # # Models: Section
-
 # Represents a comment/code block pair.
 #
 #     {

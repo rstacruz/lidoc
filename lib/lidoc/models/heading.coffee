@@ -1,5 +1,4 @@
 # # Models: Heading
-
 # A h1, h2 or h3 heading. Looks like:
 #
 #     {
@@ -8,7 +7,6 @@
 #       level: 2,
 #       file: "lib/parser.html"
 #     }
-#
 
 datastruct = require '../../datastruct'
 

@@ -1,7 +1,6 @@
 # # Lidoc.Builder
-
 # Builds HTML/CSS files.
-#
+
 fs = require 'fs'
 path = require 'path'
 async = require 'async'
@@ -9,7 +8,6 @@ mkdirp = require('mkdirp').sync
 {template, getResource, getFileDepth, strRepeat} = require './helpers'
 
 # ### build()
-
 # Builds the HTML/CSS files in the path in `options.output`. The argument
 # `project` is something that comes from {parse()}.
 #
@@ -46,7 +44,6 @@ compileCSS = (css, callback) ->
     callback actual
 
 # ### writeCSS()
-
 # Writes CSS files to the output path.
 
 writeCSS = (project, options, callback) ->
@@ -65,7 +62,6 @@ writeCSS = (project, options, callback) ->
       callback null, true
 
 # ### writeAssets()
-
 # Takes care of other assets, supposedly...
 
 writeAssets = (project, options, callback) ->
@@ -89,7 +85,6 @@ treeFind = (pageTree, page) ->
   current
 
 # ### writeFiles()
-
 # Writes HTML files to the output path.
 
 writeFiles = (project, options, callback) ->

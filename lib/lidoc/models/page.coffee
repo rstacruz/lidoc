@@ -1,5 +1,4 @@
 # # Models: Page
-
 # Extracted from `<h1>`s of files. Looks like this:
 #
 #     {
@@ -36,11 +35,13 @@ class Page
 
   # ### file
   # Returns the page's associated `File`.
+
   @property 'file', hidden: true, get: ->
     @project.files[@fileID]
 
   # ### node
   # Returns the `Pagetree` node.
+
   @property 'node', hidden: true, get: ->
     node = @project.pageTree
     @segments.forEach (segment) -> node = node?.paths[segment]
@@ -48,11 +49,13 @@ class Page
 
   # ### parentNode
   # Returns the parent node.
+
   @property 'parentNode', hidden: true, get: ->
     @node.parent
 
   # ### parentPage
   # Returns the parent page.
+
   @property 'parentPage', hidden: true, get: ->
     @parentNode.page
 

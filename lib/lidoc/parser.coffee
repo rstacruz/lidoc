@@ -22,7 +22,7 @@ FileNode = require './models/file_node'
 # It takes an options hash with the option `files`.
 #
 #     parse files: ['a.js','b.js', 'c.js'], (project) ->
-#
+
 parse = (options, callback) ->
   files = options.files
   project = new Project
@@ -56,9 +56,11 @@ parse = (options, callback) ->
         callback project
 
 # ## Private API
+# Okay, these are mostly private stuff.
 
 # ### Project::buildIndices()
 # Builds the `index` stuff for file trees and such.
+
 Project::buildIndices = ->
   @pages = Page.createAll(this)
 
@@ -70,12 +72,10 @@ Project::buildIndices = ->
 
   this
 
-# Okay, these are mostly private stuff.
-
 # ### File.create()
 # Parses a given filename `source`.
 # When it's done, invokes `callback` with a new `File` instance.
-#
+
 File.create = (source, isIndex=false, project, callback) ->
   code = fs.readFileSync(source).toString()
   htmlFile = (if isIndex then 'index.html' else changeExtension(source, '.html'))
@@ -182,7 +182,7 @@ File::highlight = (callback) ->
 #         ...
 #       ]
 #     }
-#
+
 File::addHeadings = ->
   @sections.forEach (section, i) =>
     section.buildHeadings @htmlFile, i
@@ -198,7 +198,7 @@ File::addHeadings = ->
 #     }
 #
 # Returns an array of sections.
-#
+
 parseCode = (source, code) ->
   lines    = code.split '\n'
   sections = []
@@ -240,7 +240,7 @@ parseCode = (source, code) ->
 #
 # Returns an key/value object of `Page` instances, with keys being the Page
 # titles.
-#
+
 Page.createAll = (project) ->
   files = project.files
 
@@ -284,7 +284,7 @@ Page.createAll = (project) ->
 # ### Section::buildHeadings()
 # Sets `headings` and `anchor` for the section. The assumption is that this is
 # being done after the sections were pygmentized.
-#
+
 Section::buildHeadings = (htmlFile, i) ->
   @headings = []
 

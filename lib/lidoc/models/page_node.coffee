@@ -9,9 +9,9 @@ datastruct = require '../../datastruct'
 # wiht it.
 #
 # Accessed via `project.pageTree`. See {Project}.
-
+#
 # ### Example
-
+#
 #     project.pageTree == {
 #       title: '',
 #       page: null,
@@ -19,9 +19,9 @@ datastruct = require '../../datastruct'
 #         'Getting started': {
 #           name: 'Getting started',
 #           page: 'getting_started.html' } } }
-
+#
 # ### Using the PageNode
-
+#
 # Getting a pagenode:
 #
 #     // The `pageTree` itself is a node
@@ -67,16 +67,19 @@ class PageNode
 
   # ### page
   # Returns the `Page` instance associated with the node.
+
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
   # ### file
   # Returns the associated `File`.
+
   @property 'file', hidden: true, get: ->
     @page?.file
 
   # ### breadcrumbs
   # Returns an array of `PageNode`s, starting from the root, to this one.
+
   @property 'breadcrumbs', hidden: true, get: ->
     if @parent
       @parent.breadcrumbs.concat [this]
@@ -93,16 +96,19 @@ class PageNode
 
   # ### hasChildren
   # Returns true if it has children.
+
   @property 'hasChildren', hidden: true, get: ->
     Object.keys(@paths).length isnt 0
 
   # ### root
   # Returns the root node.
+
   @property 'root', hidden: true, get: ->
     @project.pageTree
 
   # ### reference
   # Go through each of the breadcrumbs and find one with children.
+
   @property 'reference', hidden: true, get: ->
     crumbs = @breadcrumbs
     output = @root
@@ -116,6 +122,7 @@ class PageNode
 
   # ### buildFrom(project)
   # Builds a tree from a given project.
+
   buildFrom: (@project) ->
     for i, page of project.pages
       @addPage page, page.segments, project
@@ -124,6 +131,7 @@ class PageNode
 
   # ### setPage
   # Absorbs properties of given page `page`.
+
   setPage: (page) ->
     @title   = page.title
     @pageID  = page.id

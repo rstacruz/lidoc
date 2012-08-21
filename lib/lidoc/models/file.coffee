@@ -1,5 +1,4 @@
 # # Models: File
-
 # Represents a source file and it's generated HTML file. Stores code/docs in
 # `sections`. Looks like this:
 #
@@ -51,11 +50,13 @@ class File
 
   # ### page
   # Returns the main `Page` associated with the file.
+
   @property 'page', hidden: true, get: ->
     @project.pages[@pageID]
 
   # ### node
   # Returns the associated `FileNode` node.
+
   @property 'node', hidden: true, get: ->
     node = @project.fileTree
     @segments.forEach (segment) -> node = node?.paths[segment]
@@ -63,6 +64,7 @@ class File
 
   # ### parentNode
   # Returns the parent file node.
+
   @property 'parentNode', hidden: true, get: ->
     @node.parent
 

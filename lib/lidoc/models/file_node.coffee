@@ -1,5 +1,4 @@
 # # Models: FileNode
-
 # Represents a hierarchal index of a bunch of files.
 #
 # Each node represents either a true file or a folder.  This means that each
@@ -48,11 +47,13 @@ class FileNode
 
   # ### file
   # Returns the associated `File`.
+
   @property 'file', hidden: true, get: ->
     @project.files[@fileID]
 
   # ### breadcrumbs
   # Returns an array of `FileNode`s, starting from the root, to this one.
+
   @property 'breadcrumbs', hidden: true, get: ->
     if @parent
       @parent.breadcrumbs.concat [this]
@@ -60,9 +61,8 @@ class FileNode
       []
 
   # ### buildFrom()
-
   # Takes `files` from a {Project} and builds a filetree from it.
-  #
+
   buildFrom: (@project) ->
     for i, file of @project.files
       name = file.htmlFile
@@ -75,8 +75,8 @@ class FileNode
     this
 
   # ### sort()
-
   # Ensures that the paths are sorted.
+
   sort: ->
     newPaths = {}
 
