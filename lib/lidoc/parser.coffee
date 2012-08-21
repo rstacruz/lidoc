@@ -6,10 +6,11 @@ fs = require 'fs'
 path = require 'path'
 {getLanguage} = require './languages'
 {slugify, changeExtension} = require './helpers'
+
 Section = require './models/section'
-File = require './models/file'
+File    = require './models/file'
 Project = require './models/project'
-Page = require './models/page'
+Page    = require './models/page'
 Heading = require './models/heading'
 
 # ### parse()
