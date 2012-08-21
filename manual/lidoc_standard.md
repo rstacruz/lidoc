@@ -33,14 +33,12 @@ content of that page.
 This is done by the markdown instruction `#`.
 
     # # Parser
-    
     # This is the parser.
     # It gets a bunch of things and outputs a bunch of stuff.
     
     class Parser
     
       # ### parse()
-    
       # Performs parsing on the given string.
     
       parse: (string) ->
@@ -50,7 +48,6 @@ This is done by the markdown instruction `#`.
 H3's are recommended for methods.
 
     # ### getDiscountedPrice()
-    
     # Applies merchant-specific discounts to the product and
     # returns the discounted price as a number.
     #
@@ -59,6 +56,6 @@ H3's are recommended for methods.
     #
     #     product.getDiscountedPrice();
     #     //=> 18.00
-    #
+    
     getDiscountedPrice: ->
       @price * (1.00 - @merchant.discount)
