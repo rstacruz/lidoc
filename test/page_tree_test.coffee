@@ -41,25 +41,25 @@ Vows
             assert.equal tree.title, 'Hello'
 
           'should have the right source file': ([project, tree]) ->
-            page = project.pages[tree.page]
+            page = project.pages[tree.pageID]
             file = project.files[page.file]
 
             assert.equal file.sourceFile, 'test/fixture/README.md'
 
         "'s 1st-level page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Guides']
-          assert.equal tree.paths['Guides'].page, 'Guides'
+          assert.equal tree.paths['Guides'].pageID, 'Guides'
 
         "'s 2nd-level page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Guides'].paths['Getting started']
-          assert.equal tree.paths['Guides'].paths['Getting started'].page, 'Guides: Getting started'
+          assert.equal tree.paths['Guides'].paths['Getting started'].pageID, 'Guides: Getting started'
 
         "'s inferred page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Recipes']
-          assert.isNull tree.paths['Recipes'].page
+          assert.isNull tree.paths['Recipes'].pageID
 
         "'s inferred page's child should exist": ([project, tree]) ->
           assert.isObject tree.paths['Recipes'].paths['Updating Git']
-          assert.isNull tree.paths['Recipes'].page
+          assert.isNull tree.paths['Recipes'].pageID
 
   .export(module)

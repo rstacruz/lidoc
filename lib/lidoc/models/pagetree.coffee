@@ -31,10 +31,10 @@ class Pagetree
   datastruct this
 
   @property
-    'id':     default: null
-    'title':  default: null
-    'page':   default: null
-    'paths':  default: {}, subtype: Pagetree
+    'id':       default: null
+    'title':    default: null
+    'pageID':   default: null
+    'paths':    default: {}, subtype: Pagetree
 
   constructor: (options={}, parent) ->
     if parent?.constructor is Pagetree
@@ -48,7 +48,7 @@ class Pagetree
   # ### getPage
   # Returns the `Page`
   @property 'getPage', hidden: true, get: ->
-    @project.pages[@page]
+    @project.pages[@pageID]
 
   # ### buildFrom(project)
   # Builds a tree from a given project.
@@ -61,8 +61,8 @@ class Pagetree
   # ### setPage
   # Absorbs properties of given page `page`.
   setPage: (page) ->
-    @title = page.title
-    @page  = page.id
+    @title   = page.title
+    @pageID  = page.id
 
   addPage: (page, segments, project) ->
     file = project.files[page.file]
