@@ -268,7 +268,7 @@ Page.createAll = (project) ->
           id:       current
           title:    segments[segments.length-1] ? heading.title
           segments: segments
-          file:     fileID
+          fileID:   fileID
           headings: []
         , project
 

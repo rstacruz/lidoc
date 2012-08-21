@@ -30,12 +30,17 @@ class Page
   @property
     'id':       default: null
     'title':    default: null
-    'file':     default: null
+    'fileID':   default: null
     'segments': default: []
     'headings': default: [], subtype: Heading
 
+  # ### file
+  # Returns the page's associated `File`.
+  @property 'file', hidden: true, get: ->
+    @project.files[@fileID]
+
   # ### node
-  # Returns the Pagetree node.
+  # Returns the `Pagetree` node.
   @property 'node', hidden: true, get: ->
     node = @project.pageTree
     @segments.forEach (segment) -> node = node?.paths[segment]

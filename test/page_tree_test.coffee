@@ -26,7 +26,7 @@ Vows
           assert.equal page.segments.join("/"), "Guides/Getting started"
 
         '.file': ([project, page]) ->
-          file = project.files[page.file]
+          file = page.file
           assert.equal file.sourceFile, 'test/fixture/guides/getting_started.md'
 
       'pageTree index':
@@ -40,11 +40,10 @@ Vows
           'should have a title': ([project, tree]) ->
             assert.equal tree.title, 'Hello'
 
-          'should have the right source file': ([project, tree]) ->
-            page = project.pages[tree.pageID]
-            file = project.files[page.file]
+          'should have the right source file': ([project, node]) ->
+            page = node.page
 
-            assert.equal file.sourceFile, 'test/fixture/README.md'
+            assert.equal page.file.sourceFile, 'test/fixture/README.md'
 
         "'s 1st-level page should exist": ([project, tree]) ->
           assert.isObject tree.paths['Guides']
