@@ -2,9 +2,9 @@ require 'test/env'
 
 files = [
   'test/fixture/README.md'
-  'test/fixture/tree-1.md'
-  'test/fixture/tree-2.md'
-  'test/fixture/tree-3.md'
+  'test/fixture/guides.md'
+  'test/fixture/guides/getting_started.md'
+  'test/fixture/recipes/using_git.md'
 ]
 
 Vows
@@ -27,7 +27,7 @@ Vows
 
         '.file': ([project, page]) ->
           file = project.files[page.file]
-          assert.equal file.sourceFile, 'test/fixture/tree-2.md'
+          assert.equal file.sourceFile, 'test/fixture/guides/getting_started.md'
 
       'pageTree index':
         topic: (project) ->
