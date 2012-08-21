@@ -17,13 +17,17 @@ Vows
 
       'A file':
         topic: (project) ->
-          project.files['test/fixture/guides/getting_started.md']
+          file = project.files['test/fixture/guides/getting_started.md']
+          [project, file]
 
-        'should be the right type': (file) ->
+        'should be the right type': ([project, file]) ->
           assert.equal file.constructor, Lidoc.File
 
-        'should have a project': (file) ->
+        '.project': ([project, file]) ->
           assert.equal file.project.constructor, Lidoc.Project
+
+        '.page': ([project, file]) ->
+          assert.equal file.page, project.pages['Guides: Getting started']
 
       'A page':
         '1':
