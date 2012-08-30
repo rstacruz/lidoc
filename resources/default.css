@@ -198,28 +198,31 @@ body .vg { color: #19469D }                     /* Name.Variable.Global */
 body .vi { color: #19469D }                     /* Name.Variable.Instance */
 body .il { color: #666666 }                     /* Literal.Number.Integer.Long */
 
-/* Different extensions */
-table.extension-md td.code,
-table.extension-md th.code {
-  background: transparent;
-  border-left: 0;
-}
+/* Text only mode */
+table.extension-md {
+  td.code,
+  th.code {
+    background: transparent;
+    border-left: 0;
+  }
 
-table.extension-md td.docs,
-table.extension-md th.docs {
-  min-width: 650px;
-  max-width: 650px;
-}
+  td.docs,
+  th.docs {
+    overflow-x: visible;
+    min-width: 650px;
+    max-width: 650px;
+  }
 
-table.extension-md td.docs pre {
-  background: #fafafa;
-  padding: 15px;
-  color: #707090;
-  border: solid 1px #ddd;
-  border-radius: 3px;
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.05);
+  td.docs pre {
+    background: #fafafa;
+    padding: 15px;
+    color: #707090;
+    border: solid 1px #ddd;
+    border-radius: 3px;
+    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.05);
 
-  overflow-x: auto;
+    overflow-x: auto;
+  }
 }
 
 /* Misc */
